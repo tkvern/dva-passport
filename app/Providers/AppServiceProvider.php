@@ -23,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton('dingtalk', function() {
+            return new \App\Services\DingTalk(
+                config('app.corpid'), config('app.corpsecret')
+            );
+        });
     }
 }
