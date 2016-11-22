@@ -47,4 +47,37 @@ Artisan::command('dingtalk:users {--department_id=0}', function() {
     $this->table($headers, $users);
 });
 
+Artisan::command('admin:grant {identity : 手机号或者邮箱}', function() {
+    $identity = $this->argument('identity');
+    $field = filter_var($identity, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
+    $user = App\Models\User::where($field, $identity)->first();
+    if (!$user) {
+        $this->error('请确认你输入是正确的邮箱或者手机号');
+        return;
+    } 
+    if (!$user->isadmin) {
+        $user->isadmin = true;
+        $user->save();
+        $this->info("{$user->name}被提升为超级管理员");
+    } else {
+        $this->comment("用户{$user->name}已经是超级管理员");
+    }
+})->describe('提升用户为超级管理员');
+
+Artisan::command('admin:revoke {identity : 手机号或者邮箱}', function() {
+    $identity = $this->argument('identity');
+    $field = filter_var($identity, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
+    $user = App\Models\User::where($field, $identity)->first();
+    if (!$user) {
+        $this->error('请确认你输入是正确的邮箱或者手机号');
+        return;
+    } 
+    if ($user->isadmin) {
+        $user->isadmin = false;
+        $user->save();
+        $this->info("{$user->name}超级管理员权限被收回");
+    } else {
+        $this->comment("用户{$user->name}还不是超级管理员");
+    }
+})->describe('注销用户的超级管理员权限');
 
