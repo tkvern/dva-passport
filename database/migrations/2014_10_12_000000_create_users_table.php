@@ -16,11 +16,11 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->comment('姓名');
-            $table->string('nickname')->comment('昵称');
-            $table->string('password')->comment('密码');
+            $table->string('nickname')->unique()->comment('昵称');
+            $table->string('password')->default('')->comment('密码');
             $table->string('mobile')->unique()->comment('手机号');
             $table->string('avatar')->default('')->comment('头像');
-            $table->tiny('status')->default(1)->commit('用户状态: 1-正常,2-禁止登录');
+            $table->tinyInteger('status')->default(1)->commit('用户状态: 1-正常,2-禁止登录');
             $table->string('tel')->nullable()->comment('分机号');
             $table->string('email')->nullable()->unique()->comment('电子邮箱');
             $table->boolean('isadmin')->default(false)->comment('是否是超管');

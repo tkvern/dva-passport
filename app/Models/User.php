@@ -27,4 +27,19 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /*
+     * 传入一个昵称生成唯一的昵称
+     */
+    public static function getUniqueNickname($nickname)
+    {
+        $origNickname = $nickname;
+        while(true) {
+            if (self::where('nickname', $nickname)->count() < 1) {
+                break;
+            } 
+            $nickname = $origNickname.str_pad(random_int(1, 999), 3, '0'); 
+        }
+        return $nickname;
+    }
 }
