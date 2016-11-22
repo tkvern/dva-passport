@@ -27,7 +27,7 @@ Artisan::command('dingtalk:departments', function() {
     $this->table($headers, $departments);
 })->describe('获取企业所有部门信息');
 
-Artisan::command('dingtalk:users {--department_id=0}', function() {
+Artisan::command('dingtalk:users {--department_id=0 : 部门ID}', function() {
     $department_id = $this->option('department_id');
     if (intval($department_id) === 0) {
         $_users = App\Support\Facades\DingTalk::getAllUsers();
@@ -45,7 +45,7 @@ Artisan::command('dingtalk:users {--department_id=0}', function() {
         }, $headers);
     }
     $this->table($headers, $users);
-});
+})->describe('获取部门员工信息或者公司所有员工信息');
 
 Artisan::command('admin:grant {identity : 手机号或者邮箱}', function() {
     $identity = $this->argument('identity');
