@@ -86,7 +86,7 @@
                 if (!$this.hasClass("current")) {
                     $this.addClass('current').siblings().removeClass('current');
                     $('.tab-contents .current').removeClass('current').siblings().addClass('current');
-                    $('#myform').reset()
+                    $('#myform')[0].reset();
                 }
             });
         })
