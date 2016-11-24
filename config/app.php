@@ -3,22 +3,6 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Ding Talk config
-    |--------------------------------------------------------------------------
-    | 
-    */
-    'corpid' => env('CORPID'),
-    'corpsecret' => env('CORPSECRET'),
-
-    /*
-     * sss cookie name
-     */
-    'sso_cookie_name' => env('SSO_COOKIE_NAME', 'sso_token'),
-    'sso_cookie_domain' => env('SSO_COOKIE_DOMAIN', ''),
-    'sso_cookie_expires' => env('SSO_COOKIE_EXPIRES', 60 * 24),
-
-    /*
-    |--------------------------------------------------------------------------
     | Application Name
     |--------------------------------------------------------------------------
     |

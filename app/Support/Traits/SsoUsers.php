@@ -20,8 +20,8 @@ trait SsoUsers
         $user = $request->user();
         $token = JWTAuth::fromUser($user);
         setcookie(
-            config('app.sso_cookie_name'), $token, time() + 60 * config('app.sso_cookie_expires'),
-            '/',  config('app.sso_cookie_domain')
+            config('sso.cookie_name'), $token, time() + 60 * config('sso.cookie_expires'),
+            '/',  config('sso.cookie_domain')
         );
     }
 
@@ -30,7 +30,7 @@ trait SsoUsers
      */
     protected function clearSsoToken()
     {
-        setcookie(config('app.sso_cookie_name'), null);
+        setcookie(config('sso.cookie_name'), null);
     }
 
 
@@ -39,7 +39,7 @@ trait SsoUsers
      */
     protected function getSSoClaims()
     {
-        $sso_token = Cookie::get(config('app.sso_token_name'));
+        $sso_token = Cookie::get(config('sso.cookie_name'));
         $manager = app('tymon.jwt.manager');
         return $manager->decode(new Token($sso_token));
     }
