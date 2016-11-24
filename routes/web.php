@@ -13,8 +13,8 @@
 use Illuminate\Http\Request;
 
 Auth::routes();
-Route::get('/login', 'Auth\LoginController@showLogin');
-Route::get('/auth/callback/dingtalk', 'Auth\OmniController@dingtalk');
+Route::get('/login', 'Auth\LoginController@showLogin')->name('sso_login');
+Route::get('/auth/callback/dingtalk', 'Auth\OmniController@dingtalk')->name('omni_dingtalk_cb');
 Route::get('*', function () {
     return view('index');
 });

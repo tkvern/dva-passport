@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use App\Support\Traits\SsoUsers;
 
 class LoginController extends Controller
 {
@@ -19,6 +21,7 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+    use SsoUsers;
 
     /**
      * Where to redirect users after login.
@@ -44,13 +47,42 @@ class LoginController extends Controller
     }
 
     // @override
-    protected function sendLoginResponse(Request $request)
+    public function showLoginForm(Request $request)
     {
-        $request->session()->regenerate();
+        $_redirect_url = $request->get('redirect_url');
+        $redirect_url = route('omni_dingtalk_cb', ['redirect_url' => $_redirect_url]);
+        $goto = "https://oapi.dingtalk.com/connect/oauth2/sns_authorize?".
+                "appid=dingoaowu4izq4tforez8h&response_type=code&scope=snsapi_login".
+                "&state=VISIONDK&redirect_uri=$redirect_url";
+        return view('auth.login', ['goto' => urlencode($goto)]);
+    }
 
-        $this->clearLoginAttempts($request);
+    // @override
+    protected function credentials(Request $request)
+    {
+        $identify = $request->get('identity');
+        $field = filter_var($identify, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
+        return [
+            $field => $identify,
+            'password' => $request->get('password')
+        ];
+    }
 
-        return $this->authenticated($request, $this->guard()->user())
-            ?: redirect()->intended($this->redirectPath());
+    // @override
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        $this->generateSsoToken();
+        $redirect_url = $request->get('redirect_url');
+        if (!empty($redirect_url)) {
+            return redirect($redirect_url);
+        }
+        return false;
     }
 }
