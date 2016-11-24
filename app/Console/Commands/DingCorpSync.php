@@ -3,17 +3,17 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Support\Facades\DingTalk;
+use App\Support\Facades\DingCorp;
 use App\Models\User;
 
-class DingTalkSync extends Command
+class DingCorpSync extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'dingtalk:syncusers {--department_id=0}';
+    protected $signature = 'dingcorp:syncusers {--department_id=0}';
 
     /**
      * The console command description.
@@ -49,15 +49,15 @@ class DingTalkSync extends Command
     protected function syncUsers($department_id)
     {
         if ($department_id === 0) {
-            $users = iterator_to_array(DingTalk::getAllUsers());
+            $users = iterator_to_array(DingCorp::getAllUsers());
         } else {
-            $users = DingTalk::getUsersByDepartmentId($department_id);
+            $users = DingCorp::getUsersByDepartmentId($department_id);
         }
         $userDingIds = array_pluck($users, 'dingId');
         $existDingIds = User::pluck('dingId')->toArray();
         $adds = array_diff($userDingIds, $existDingIds);
         $count = count($adds);
-        $this->info($count." users sync from dingtalk");
+        $this->info($count." users sync from DingCorp");
         if ($count < 1) {
             return;
         }
