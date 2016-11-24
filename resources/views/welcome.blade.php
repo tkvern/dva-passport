@@ -5,91 +5,90 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
+        <title>量子视觉-统一认证登录平台</title>
+        <link rel="stylesheet" type="text/css" href="/css/app.css">
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
-                    @endif
+        <div id="layout-container"><div id="header" class="login-header">
+            <window-operations>
+                <div class="window-operations">
+                    <ul>
+                        <li class="operation-button close-window""></li>
+                        <li class="operation-button mini-window""></li>
+                        <li class="operation-button expand-window"></li>
+                    </ul>
                 </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+            </window-operations>
+        </div>
+        <div class="login-form tab login-tab">
+            <ul class="tab-items">
+                <li class="tab-item current">扫码登录</li>
+                <li class="tab-item">密码登录</li>
+            </ul>
+            <div  class="tab-contents">
+                <div class="tab-content qrcode-login current" id="qrcode-login">
                 </div>
+                <div class="tab-content password-login">
+                    <form action="">
+                        <div class="avatar biger border-thick">
+                            <img src="/image/logo.png" class="country-img" alt="">
+                        </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                        <div class="clearfix">
+                            <input type="text" name="account" placeholder="请输入邮箱或手机号" required="" class="fm-input account">
+                        </div>
+                        <div class="clearfix">
+                            <input class="fm-input password" type="password" name="verification" placeholder="请输入密码" required="">
+                        </div>
+                        <button type="submit" class="blue big ng-binding disabled">登录</button>
+                        <!-- <div class="toast warning">手机号或密码错误，请重新输入</div> -->
+                    </form>
                 </div>
             </div>
         </div>
+        <div class="networkdetect">Copyright©2016 深圳市量子视觉科技有限公司 保留所有权利</div>
+        </div>
+
+        <script type="text/javascript" src="/js/app.js"></script>
+        <script type="text/javascript">
+        !function (window, document) {
+            function d(a) {
+                var e, c = document.createElement("iframe"),
+                    d = "https://login.dingtalk.com/login/qrcode.htm?goto=" + a.goto ;
+                d += a.style ? "&style=" + a.style : "",
+                    d += a.href ? "&href=" + a.href : "",
+                    c.src = d,
+                    c.frameBorder = "0",
+                    c.allowTransparency = "true",
+                    c.scrolling = "no",
+                    c.width = a.width || "365px",
+                    c.height = a.height || "400px",
+                    e = document.getElementById(a.id),
+                    e.innerHTML = "",
+                    e.appendChild(c)
+            }
+            window.DDLogin = d
+        }(window, document);
+
+        $(document).ready(function() {
+            var obj = DDLogin({
+                 id:"qrcode-login",
+                 goto: "",
+                 style: "",
+                 href: "",
+                 width : "365px",
+                 height: "316px"
+             });
+
+
+            $('.tab-items li').on('click', function(e) {
+                var $this = $(this);
+                if (!$this.hasClass("current")) {
+                    $this.addClass('current').siblings().removeClass('current');
+                    $('.tab-contents .current').removeClass('current').siblings().addClass('current');
+                }
+            });
+        })
+        </script>
     </body>
 </html>
