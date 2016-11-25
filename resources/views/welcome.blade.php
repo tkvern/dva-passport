@@ -86,7 +86,10 @@
                 if (!$this.hasClass("current")) {
                     $this.addClass('current').siblings().removeClass('current');
                     $('.tab-contents .current').removeClass('current').siblings().addClass('current');
-                    $('#myform')[0].reset();
+                    if ($('.tab-contents .current').hasClass('password-login')) {
+                        $('#myform')[0].reset();
+                        $("#myform input.account").focus();
+                    }
                 }
             });
         })
