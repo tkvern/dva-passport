@@ -29,7 +29,7 @@
                 <div class="tab-content qrcode-login current" id="qrcode-login">
                 </div>
                 <div class="tab-content password-login">
-                    <form action="" id="myform">
+                    <form action="" id="myform" method="post">
                         <div class="avatar biger border-thick">
                             <img src="/image/logo.png" class="country-img" alt="">
                         </div>

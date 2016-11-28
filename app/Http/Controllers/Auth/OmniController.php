@@ -31,7 +31,7 @@ class OmniController extends Controller
             $url = $request->get('redirect_url', '/');
             return redirect($url);
         } else {
-            return redirect()->route('sso_login')->withErrors(['identity' => '无权登录']);
+            return redirect()->route('sso_login')->withErrors(['ding' => '无权登录']);
         }
     }
 }
