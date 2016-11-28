@@ -29,7 +29,7 @@
                 <div class="tab-content qrcode-login current" id="qrcode-login">
                 </div>
                 <div class="tab-content password-login">
-                    <form action="">
+                    <form action="" id="myform">
                         <div class="avatar biger border-thick">
                             <img src="/image/logo.png" class="country-img" alt="">
                         </div>
@@ -94,6 +94,10 @@
                 if (!$this.hasClass("current")) {
                     $this.addClass('current').siblings().removeClass('current');
                     $('.tab-contents .current').removeClass('current').siblings().addClass('current');
+                    if ($('.tab-contents .current').hasClass('password-login')) {
+                        $('#myform')[0].reset();
+                        $("#myform input.account").focus();
+                    }
                 }
             });
         })
