@@ -21,6 +21,7 @@
             </window-operations>
         </div>
         <div class="login-form tab login-tab">
+            <div class="toast warning">手机号或密码错误，请重新输入</div>
             <ul class="tab-items">
                 <li class="tab-item current">扫码登录</li>
                 <li class="tab-item">密码登录</li>
