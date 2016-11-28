@@ -10,6 +10,6 @@ return [
      * sss cookie name
      */
     'cookie_name' => env('SSO_COOKIE_NAME', 'sso_token'),
-    'cookie_domain' => env('SSO_COOKIE_DOMAIN', ''),
+    'cookie_domain' => env('SSO_COOKIE_DOMAIN', 'corp.visiondk.com'),
     'cookie_expires' => env('SSO_COOKIE_EXPIRES', 60 * 12),
 ];

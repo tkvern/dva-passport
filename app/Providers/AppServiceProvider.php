@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->singleton('dingopenapi', function() {
             return new \App\Services\DingOpenAPI(
-                config('ding.corpid'), config('ding.corpsecret')
+                config('ding.appid'), config('ding.appsecret')
             );
         });
         if ($this->app->environment() !== 'production') {

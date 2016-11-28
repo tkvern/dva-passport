@@ -49,12 +49,11 @@ class LoginController extends Controller
     // @override
     public function showLoginForm(Request $request)
     {
-        $_redirect_url = $request->get('redirect_url');
-        $redirect_url = route('omni_dingtalk_cb', ['redirect_url' => $_redirect_url]);
+        $callback_url = route('omni_dingtalk_cb');
         $goto = "https://oapi.dingtalk.com/connect/oauth2/sns_authorize?".
                 "appid=dingoaowu4izq4tforez8h&response_type=code&scope=snsapi_login".
-                "&state=VISIONDK&redirect_uri=$redirect_url";
-        return view('auth.login', ['goto' => urlencode($goto)]);
+                "&state=VISIONDK&redirect_uri=";
+        return view('auth.login', ['goto' => urlencode($goto.$callback_url), 'redirect_url' => $goto.urlencode($callback_url)]);
     }
 
     // @override

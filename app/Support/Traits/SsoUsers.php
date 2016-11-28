@@ -9,6 +9,8 @@ namespace App\Support\Traits;
 
 use Illuminate\Support\Facades\Cookie;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Token;
+use Auth;
 
 trait SsoUsers
 {
@@ -17,7 +19,7 @@ trait SsoUsers
      */
     protected function generateSsoToken()
     {
-        $user = $request->user();
+        $user = Auth::user();
         $token = JWTAuth::fromUser($user);
         setcookie(
             config('sso.cookie_name'), $token, time() + 60 * config('sso.cookie_expires'),

@@ -8,6 +8,8 @@
         <title>Laravel</title>
     </head>
     <body>
-        <div id="app"></div>
+        <div id="app">
+            <h1>Index Page</h1>
+        </div>
     </body>
 </html>

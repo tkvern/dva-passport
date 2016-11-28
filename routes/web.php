@@ -12,11 +12,12 @@
 */
 use Illuminate\Http\Request;
 
-Auth::routes();
-Route::get('/login', 'Auth\LoginController@showLogin')->name('sso_login');
+//Auth::routes();
+Route::get('/login', 'Auth\LoginController@showLoginForm')->name('sso_login');
 Route::get('/auth/callback/dingtalk', 'Auth\OmniController@dingtalk')->name('omni_dingtalk_cb');
-Route::get('*', function () {
-    return view('index');
-});
 
 Route::post('/login', 'Auth\LoginController@login');
+
+Route::get('{any}', function () {
+    return view('index');
+})->where('any', '.*');
