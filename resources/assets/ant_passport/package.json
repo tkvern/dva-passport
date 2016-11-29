@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "dora --plugins \"proxy,webpack,webpack-hmr\"",
-    "build": "atool-build",
+    "build": "atool-build -o ../../../public",
     "test": "atool-test-mocha ./src/**/*-test.js"
   }
 }
