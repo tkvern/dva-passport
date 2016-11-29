@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
-const TaskShow = ({}) => {
+const UserShow = ({}) => {
 
 }
 
-export default TaskShow;
+export default UserShow;

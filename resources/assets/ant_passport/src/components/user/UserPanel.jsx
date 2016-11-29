@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Button } from 'antd';
 
-const TaskPanel = ({
+const UserPanel = ({
   onAdd
 }) => {
   return(
@@ -12,4 +12,4 @@ const TaskPanel = ({
   );
 }
 
-export default TaskPanel;
+export default UserPanel;

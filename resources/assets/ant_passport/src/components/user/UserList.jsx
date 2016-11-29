@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { Table, message, Popconfirm, Pagination, Menu, Dropdown, Icon, Progress, Badge } from 'antd';
-import { getTaskStatus, getProcessStatus } from '../../utils/helper';
+import { getUserStatus, getProcessStatus } from '../../utils/helper';
 
-const TaskList = ({
+const UserList = ({
   total,
   current,
   loading,
@@ -78,7 +78,7 @@ const TaskList = ({
   );
 }
 
-TaskList.propTypes = {
+UserList.propTypes = {
   total: PropTypes.any,
   current: PropTypes.any,
   loading: PropTypes.any,
@@ -86,4 +86,4 @@ TaskList.propTypes = {
   onPageChange: PropTypes.func,
 }
 
-export default TaskList;
+export default UserList;

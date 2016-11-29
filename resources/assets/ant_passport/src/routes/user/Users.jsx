@@ -3,12 +3,12 @@ import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
 
 import MainLayout from '../../components/layout/MainLayout';
-import TaskList from '../../components/task/TaskList';
-import TaskSearch from '../../components/task/TaskSearch';
-import TaskPanel from '../../components/task/TaskPanel';
-import TaskModal from '../../components/task//TaskModal';
+import UserList from '../../components/user/UserList';
+import UserSearch from '../../components/user/UserSearch';
+import UserPanel from '../../components/user/UserPanel';
+import UserModal from '../../components/user//UserModal';
 
-function Tasks({ location, dispatch, tasks }) {
+function Users({ location, dispatch, users }) {
   const {
     list,
     field,
@@ -20,9 +20,9 @@ function Tasks({ location, dispatch, tasks }) {
     currentItem,
     modalVisible,
     modalType,
-  } = tasks;
+  } = users;
 
-  const taskListProps = {
+  const userListProps = {
     total,
     current,
     loading,
@@ -30,20 +30,20 @@ function Tasks({ location, dispatch, tasks }) {
     onPageChange(page) {
       dispatch(
         routerRedux.push({
-          pathname: '/tasks',
+          pathname: '/users',
           query: { field, keyword, page },
         })
       );
     }
   }
 
-  const taskSearchProps = {
+  const userSearchProps = {
     field,
     keyword,
     expand,
     onExpand() {
       dispatch({
-        type: 'tasks/collapseExpand',
+        type: 'users/collapseExpand',
         payload: {
           'expand': !expand,
         }
@@ -54,37 +54,37 @@ function Tasks({ location, dispatch, tasks }) {
       console.log(fieldsValue);
       dispatch(
         routerRedux.push({
-          pathname: '/tasks',
+          pathname: '/users',
           query: { ...fieldsValue, page: 1 },
         })
       );
     },
   }
 
-  const taskModalProps = {
+  const userModalProps = {
     item: modalType === 'create' ? {} : currentItem,
     type: modalType,
     visible: modalVisible,
     onOk(data) {
       console.log(data);
       dispatch({
-        type: `tasks/${modalType}`,
+        type: `users/${modalType}`,
         payload: data,
       });
     },
 
     onCancel(){
       dispatch({
-        type: 'tasks/hideModal',
+        type: 'users/hideModal',
       });
     },
 
   }
 
-  const taskPanelProps = {
+  const userPanelProps = {
     onAdd() {
       dispatch({
-        type: 'tasks/showModal',
+        type: 'users/showModal',
         payload: {
           modalType: 'create',
         }
@@ -92,29 +92,29 @@ function Tasks({ location, dispatch, tasks }) {
     },
   }
 
-  const TaskModalGen = () =>
-    <TaskModal {...taskModalProps} />;
+  const UserModalGen = () =>
+    <UserModal {...userModalProps} />;
 
   return (
     <MainLayout>
       <div>
-        <TaskPanel {...taskPanelProps} />
-        <TaskSearch {...taskSearchProps} />
-        <TaskList {...taskListProps} />
-        <TaskModalGen />
+        <UserPanel {...userPanelProps} />
+        <UserSearch {...userSearchProps} />
+        <UserList {...userListProps} />
+        <UserModalGen />
       </div>
     </MainLayout>
   );
 }
 
-Tasks.propTypes = {
+Users.propTypes = {
   location: PropTypes.object,
   dispatch: PropTypes.func,
-  tasks: PropTypes.object,
+  users: PropTypes.object,
 }
 
-function mapStateToProps({ tasks }) {
-  return { tasks };
+function mapStateToProps({ users }) {
+  return { users };
 }
 
-export default connect(mapStateToProps)(Tasks);
+export default connect(mapStateToProps)(Users);

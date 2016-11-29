@@ -18,7 +18,7 @@ if (!global.tableListData) {
       'avatar': ()=>{
         return Random.image('125x125');
       },
-      'status|0-4': 1,
+      'status|1-2': 1,
       'email': ()=>{
         return Random.email('visiondk.com');
       },
@@ -42,7 +42,7 @@ if (!global.tableListData) {
 }
 
 module.exports = {
-  'GET /api/tasks' (req, res) {
+  'GET /api/users' (req, res) {
     const page = qs.parse(req.query);
     const pageSize = page.pageSize || 10;
     const currentPage = page.page || 1;
@@ -82,7 +82,7 @@ module.exports = {
     }, 200);
   },
 
-  'POST /api/tasks' (req, res) {
+  'POST /api/users' (req, res) {
     setTimeout(function () {
       const newData = qs.parse(req.body);
 
@@ -102,7 +102,7 @@ module.exports = {
     }, 200);
   },
 
-  'DELETE /api/tasks' (req, res) {
+  'DELETE /api/users' (req, res) {
     setTimeout(function () {
       const deleteItem = qs.parse(req.body);
 
@@ -127,7 +127,7 @@ module.exports = {
     }, 200);
   },
 
-  'PUT /api/tasks' (req, res) {
+  'PUT /api/users' (req, res) {
     setTimeout(function () {
       const editItem = qs.parse(req.body);
 

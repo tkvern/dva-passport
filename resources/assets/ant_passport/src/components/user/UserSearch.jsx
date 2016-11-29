@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Form, Row, Col, Input, Button, Icon, Radio, Checkbox, DatePicker } from 'antd';
-import './TaskSearch.less';
+import './UserSearch.less';
 
 const FormItem = Form.Item;
 const RadioButton = Radio.Button;
@@ -11,7 +11,7 @@ const dateFormat = 'YYYY/MM/DD';
 const monthFormat = 'YYYY/MM';
 const plainOptions = ['等待中', '运行中', '完成', '失败', '未知'];
 
-const TaskSearch = ({
+const UserSearch = ({
   field, keyword,
   expand,
   onExpand,
@@ -107,4 +107,4 @@ const TaskSearch = ({
   );
 }
 
-export default Form.create()(TaskSearch);
+export default Form.create()(UserSearch);

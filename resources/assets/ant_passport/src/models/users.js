@@ -1,11 +1,11 @@
 import { hashHistory } from 'dva/router';
-import { query, create, remvoe, update } from '../services/tasks';
+import { query, create, remvoe, update } from '../services/users';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
 
 export default {
   
-  namespace: 'tasks',
+  namespace: 'users',
 
   state: {
     list: [],
@@ -90,9 +90,9 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        // const match = pathToRegexp(`/tasks`).exec(pathname);
+        // const match = pathToRegexp(`/users`).exec(pathname);
 
-        if(location.pathname === '/tasks') {
+        if(location.pathname === '/users') {
           dispatch({
             type: 'query',
             payload: location.query,

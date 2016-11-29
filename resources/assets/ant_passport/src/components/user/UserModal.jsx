@@ -19,7 +19,7 @@ const plainOptions = [
 ];
 const defaultCheckedList = ['PREVIEW'];
 
-const TaskModal = ({
+const UserModal = ({
   item = {},
   onOk,
   visible,
@@ -134,7 +134,7 @@ const TaskModal = ({
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} wrapperCol={{ span: 19}} label="任务类型">
-              {getFieldDecorator('task_types[]', { initialValue: ['PREVIEW'] })(
+              {getFieldDecorator('user_types[]', { initialValue: ['PREVIEW'] })(
                 <CheckboxGroup options={plainOptions} />
               )}
             </FormItem>
@@ -166,4 +166,4 @@ const TaskModal = ({
   );
 }
 
-export default Form.create()(TaskModal);
+export default Form.create()(UserModal);

@@ -1,4 +1,4 @@
-export function getTaskStatus(status) {
+export function getUserStatus(status) {
   if (status == '1') {
     return { 'status': "default", 'text':"等待中" };
   } else if (status == '2') {

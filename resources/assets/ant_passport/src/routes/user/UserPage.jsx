@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'dva';
 
-function TaskPage(argument) {
+function UserPage(argument) {
   // body...
 }
 
-export default TaskPage;
+export default UserPage;
