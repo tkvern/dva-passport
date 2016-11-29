@@ -30,10 +30,14 @@ class UsersController extends Controller
     public function updateProfile(UserProfileRequest $request)
     {
         $user = $request->user();
-        $profile = $request->only(array_except(array_keys($request->rules()), ['old_password', 'password', 'password_confirmation']));
-        if (!emtpy($request->input('password'))) {
-            $user->password = bcrypt($request->input('password'));
+        $profile = $request->only(array_except(array_keys($request->rules()), ['old_password', 'new_password']));
+        $profile = array_filter($profile, function($k) use ($request){
+            return !is_null($request->input($k, null));
+        }, ARRAY_FILTER_USE_KEY);
+        if (!empty($request->input('new_password'))) {
+            $user->password = bcrypt($request->input('new_password'));
         }
         $user->update($profile);
+        return $this->successJsonResponse($user);
     }
 }

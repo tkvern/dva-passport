@@ -69,7 +69,7 @@ class Handler extends ExceptionHandler
             return $this->errorJsonResponse(ErrCode::E_NOT_AUTHENTICATED, 401);
         }
 
-        return redirect()->guest('login');
+        return redirect()->guest('sso_login');
     }
 
 
