@@ -28,7 +28,7 @@ function MainLayout({ children, location }) {
             <ul className="nav navbar-nav">
               <li className="dropdown">
                 <Dropdown overlay={menu} trigger={['click']}>
-                  <a className="ant-dropdown-link" href="#">
+                  <a className="ant-dropdown-link">
                     <Icon type="user" /> admin@admin.com <Icon type="down" />
                   </a>
                 </Dropdown>
@@ -38,9 +38,10 @@ function MainLayout({ children, location }) {
         </nav>
       </header>
       <aside className="ant-layout-sider">
-        <Menu mode="inline" theme="dark"
-          defaultSelectedKeys={['']} defaultOpenKeys={['sub1', 'sub2', 'sub3']}>
-          <Menu.Item key="1"><span><Icon type="appstore" />应用中心</span></Menu.Item>
+        <Menu mode="inline" theme="dark" defaultSelectedKeys={['']} defaultOpenKeys={['sub1', 'sub2', 'sub3']}>
+          <Menu.Item key="1">
+            <span><Icon type="appstore" />应用中心</span>
+          </Menu.Item>
           <SubMenu key="sub2" title={<span><Icon type="user" />用户中心</span>}>
             <Menu.Item key="5">用户管理</Menu.Item>
             <Menu.Item key="6">个人信息</Menu.Item>
@@ -71,7 +72,7 @@ function MainLayout({ children, location }) {
 }
 
 MainLayout.propTypes = {
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
 };
 
 export default connect()(MainLayout);

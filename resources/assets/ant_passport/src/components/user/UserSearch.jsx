@@ -23,7 +23,6 @@ const UserSearch = ({
     resetFields,
   },
 }) => {
-
   const formItemLayout = {
     labelCol: { span: 5 },
     wrapperCol: { span: 19 },
@@ -35,14 +34,13 @@ const UserSearch = ({
       if (!!errors) {
         return;
       }
-
       onSearch(getFieldsValue());
     });
-  };
+  }
 
   function handleReset() {
     resetFields();
-  };
+  }
 
   const children = [
     <Row key={1}>

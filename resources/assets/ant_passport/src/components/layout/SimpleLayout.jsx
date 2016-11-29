@@ -1,11 +1,9 @@
 import React from 'react';
-import styles from './SimpleLayout.css';
+import styles from './SimpleLayout.less';
 
 function SimpleLayout(props) {
   return (
-    <div className={styles.normal}>
-      Component: 'SimpleLayout'
-    </div>
+    <div className={styles.normal}>Component: SimpleLayout</div>
   );
 }
 

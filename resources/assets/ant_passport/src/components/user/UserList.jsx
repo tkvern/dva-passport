@@ -12,7 +12,7 @@ const UserList = ({
   const menu = (
     <Menu>
       <Menu.Item key="0">
-        <a href="#">重试</a>
+        <a>重试</a>
       </Menu.Item>
       <Menu.Item key="4">删除</Menu.Item>
       <Menu.Divider />
@@ -30,10 +30,13 @@ const UserList = ({
     render: (text, record, index) => {
       const imgUrl = 'https://gtms03.alicdn.com/tps/i3/TB1opXxHXXXXXahXpXXvBLt6FXX-230-230.png';
       return (
-        <img src={imgUrl} 
-             width={30}
-             height={30}
-             style={{ borderRadius: '50%' }} />
+        <img
+          src={imgUrl}
+          width={30}
+          height={30}
+          style={{ borderRadius: '50%' }}
+          role="presentation"
+        />
       );
     },
   }, {
@@ -73,10 +76,10 @@ const UserList = ({
     key: 'operation',
     render: () => (
       <div>
-        <a onClick={()=>{}}>详情</a>
+        <a onClick={() => {}}>详情</a>
         &nbsp;&nbsp;&nbsp;
         <Dropdown overlay={menu} trigger={['click']}>
-          <a className="ant-dropdown-link" href="#">
+          <a className="ant-dropdown-link">
             更多 <Icon type="down" />
           </a>
         </Dropdown>
@@ -105,9 +108,9 @@ const UserList = ({
 }
 
 UserList.propTypes = {
-  total: PropTypes.any,
-  current: PropTypes.any,
-  loading: PropTypes.any,
+  total: PropTypes.number,
+  current: PropTypes.number,
+  loading: PropTypes.bool,
   dataSource: PropTypes.array,
   onPageChange: PropTypes.func,
 }

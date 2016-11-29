@@ -20,5 +20,11 @@
   },
   "ecmaFeatures": {
     "experimentalObjectRestSpread": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "jsx": true
+    }
   }
 }

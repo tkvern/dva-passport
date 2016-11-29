@@ -4,6 +4,7 @@ import {
   Modal, Button, Icon,
   Radio, Checkbox, DatePicker,
   Tooltip, InputNumber, Switch } from 'antd';
+
 const FormItem = Form.Item;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -27,7 +28,7 @@ const UserModal = ({
   form: {
     getFieldDecorator,
     validateFields,
-    getFieldsValue
+    getFieldsValue,
   },
 }) => {
   function handleOk() {
@@ -41,7 +42,7 @@ const UserModal = ({
   }
 
   const modalOpts = {
-    title: "任务",
+    title: '任务',
     visible,
     onOk: handleOk,
     onCancel,
@@ -69,7 +70,7 @@ const UserModal = ({
                 )}
                 <div className="ant-input-group-wrap">
                   <Tooltip placement="top" title="转换Windows路径">
-                    <Button icon="retweet" className="ant-search-btn" size="large"/>
+                    <Button icon="retweet" className="ant-search-btn" size="large" />
                   </Tooltip>
                 </div>
               </InputGroup>
@@ -94,7 +95,7 @@ const UserModal = ({
               <Col span="8">
                 <FormItem >
                   {getFieldDecorator('payload.start_frame', { initialValue: 0 })(
-                    <InputNumber min={0} style={{ width: "100%" }} />
+                    <InputNumber min={0} style={{ width: '100%' }} />
                   )}
                 </FormItem>
               </Col>
@@ -104,7 +105,7 @@ const UserModal = ({
               <Col span="8">
                 <FormItem>
                   {getFieldDecorator('payload.end_frame', { initialValue: 0 })(
-                    <InputNumber min={0} style={{ width: "100%" }} />
+                    <InputNumber min={0} style={{ width: '100%' }} />
                   )}
                 </FormItem>
               </Col>
@@ -133,7 +134,7 @@ const UserModal = ({
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} wrapperCol={{ span: 19}} label="任务类型">
+            <FormItem {...formItemLayout} wrapperCol={{ span: 19 }} label="任务类型">
               {getFieldDecorator('user_types[]', { initialValue: ['PREVIEW'] })(
                 <CheckboxGroup options={plainOptions} />
               )}
@@ -141,14 +142,14 @@ const UserModal = ({
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="颜色调整">
-              {getFieldDecorator('payload.enable_coloradjust', { initialValue: false} )(
+              {getFieldDecorator('payload.enable_coloradjust', { initialValue: false })(
                 <Switch checkedChildren={'开'} unCheckedChildren={'关'} />
               )}
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} extra="请就任务紧急程度度选择，以免延迟其他任务" label="是否紧急">
-              {getFieldDecorator('priority', { initialValue: false} )(
+              {getFieldDecorator('priority', { initialValue: false })(
                 <Switch checkedChildren={'是'} unCheckedChildren={'否'} style={{ marginRight: 8 }} />
               )}
             </FormItem>

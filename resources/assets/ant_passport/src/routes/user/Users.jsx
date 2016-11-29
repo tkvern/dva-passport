@@ -32,9 +32,9 @@ function Users({ location, dispatch, users }) {
         routerRedux.push({
           pathname: '/users',
           query: { field, keyword, page },
-        })
+        }),
       );
-    }
+    },
   }
 
   const userSearchProps = {
@@ -45,18 +45,17 @@ function Users({ location, dispatch, users }) {
       dispatch({
         type: 'users/collapseExpand',
         payload: {
-          'expand': !expand,
-        }
+          expand: !expand,
+        },
       });
     },
 
     onSearch(fieldsValue) {
-      console.log(fieldsValue);
       dispatch(
         routerRedux.push({
           pathname: '/users',
           query: { ...fieldsValue, page: 1 },
-        })
+        }),
       );
     },
   }
@@ -66,14 +65,13 @@ function Users({ location, dispatch, users }) {
     type: modalType,
     visible: modalVisible,
     onOk(data) {
-      console.log(data);
       dispatch({
         type: `users/${modalType}`,
         payload: data,
       });
     },
 
-    onCancel(){
+    onCancel() {
       dispatch({
         type: 'users/hideModal',
       });
@@ -87,7 +85,7 @@ function Users({ location, dispatch, users }) {
         type: 'users/showModal',
         payload: {
           modalType: 'create',
-        }
+        },
       });
     },
   }
