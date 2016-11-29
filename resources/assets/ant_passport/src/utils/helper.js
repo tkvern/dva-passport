@@ -1,45 +1,29 @@
 export function getUserStatus(status) {
-  if (status == '1') {
-    return { 'status': "default", 'text':"等待中" };
-  } else if (status == '2') {
-    return { 'status': "processing", 'text':"运行中" };
-  } else if (status == '3') {
-    return { 'status': "success", 'text':"完成" };
-  } else if (status == '4') {
-    return { 'status': "error", 'text':"失败" };
-  } else if (status == '5'){
-    return { 'status': "warning", 'text':"未知" };
+  if (status === 1) {
+    return { status: 'success', text: '正常' };
   } else {
-    return { 'status': "warning", 'text':"未知" };
+    return { status: 'default', text: '禁用' };
   }
 }
 
-export function getProcessStatus(status) {
-  if (status == '1') {
-    return { 'status': "normal" };
-  } else if (status == '2') {
-    return { 'status': "active" };
-  } else if (status == '3') {
-    return { 'status': "success" };
-  } else if (status == '4') {
-    return { 'status': "exception" };
-  } else if (status == '5'){
-    return { 'status': "normal" };
+export function checkIsAdmin(status) {
+  if (status === 1) {
+    return { status: 'success', text: '是' };
   } else {
-    return { 'status': "normal" };
+    return { status: 'default', text: '否' };
   }
 }
 
 export function getCookie(name) {
-  const reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)')
-  const arr = document.cookie.match(reg)
+  const reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)');
+  const arr = document.cookie.match(reg);
   if (arr) {
-    return decodeURIComponent(arr[2])
+    return decodeURIComponent(arr[2]);
   } else {
-    return null
+    return null;
   }
 }
 
 export function checkUser() {
-  
+
 }

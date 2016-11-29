@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Table, message, Popconfirm, Pagination, Menu, Dropdown, Icon, Progress, Badge } from 'antd';
-import { getUserStatus, getProcessStatus } from '../../utils/helper';
+import { getUserStatus, checkIsAdmin } from '../../utils/helper';
 
 const UserList = ({
   total,
@@ -52,10 +52,22 @@ const UserList = ({
     title: '状态',
     dataIndex: 'status',
     key: 'status',
+    render: (text, record, index) => {
+      const userStatus = getUserStatus(record.status);
+      return (
+        <Badge status={userStatus.status} text={userStatus.text} />
+      );
+    },
   }, {
     title: '管理员',
     dataIndex: 'isadmin',
     key: 'isadmin',
+    render: (text, record, index) => {
+      const adminStatus = checkIsAdmin(record.isadmin);
+      return (
+        <Badge status={adminStatus.status} text={adminStatus.text} />
+      );
+    },
   }, {
     title: '操作',
     key: 'operation',

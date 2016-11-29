@@ -1,7 +1,7 @@
-import './index.html';
 import dva from 'dva';
 
 import 'antd/dist/antd.less';
+import './index.html';
 import './index.less';
 
 // 1. Initialize

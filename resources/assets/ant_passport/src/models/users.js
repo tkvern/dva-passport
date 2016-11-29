@@ -1,10 +1,10 @@
 import { hashHistory } from 'dva/router';
-import { query, create, remvoe, update } from '../services/users';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
+import { query, create, remvoe, update } from '../services/users';
 
 export default {
-  
+
   namespace: 'users',
 
   state: {
@@ -39,15 +39,15 @@ export default {
     createSuccess(state, action) {
       return { ...state, ...action.payload, loading: false };
     },
-    deleteSuccess(){},
-    updateSuccess(){},
+    deleteSuccess() {},
+    updateSuccess() {},
     updateQueryKey(state, action) {
       return { ...state, ...action.payload };
     },
   },
 
   effects: {
-    *query({payload}, { select, call, put }) {
+    *query({ payload }, { select, call, put }) {
       yield put({ type: 'showLoading' });
       yield put({
         type: 'updateQueryKey',
@@ -62,15 +62,15 @@ export default {
             list: data.data,
             total: data.page.total,
             current: data.page.current,
-          }
+          },
         });
       }
     },
-    *create({ payload }, { call, put }){
+    *create({ payload }, { call, put }) {
       yield put({ type: 'hideModal' });
       yield put({ type: 'showLoading' });
       const { data } = yield call(create, payload);
-      if(data && data.success) {
+      if (data && data.success) {
         yield put({
           type: 'createSuccess',
           payload: {
@@ -83,16 +83,16 @@ export default {
         });
       }
     },
-    *'delete'(){},
-    *update(){},
+    *'delete'() {},
+    *update() {},
   },
 
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen(location => {
+      history.listen((location) => {
         // const match = pathToRegexp(`/users`).exec(pathname);
 
-        if(location.pathname === '/users') {
+        if (location.pathname === '/users') {
           dispatch({
             type: 'query',
             payload: location.query,
