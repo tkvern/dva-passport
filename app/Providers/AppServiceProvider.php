@@ -23,10 +23,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('dingtalk', function() {
-            return new \App\Services\DingTalk(
-                config('app.corpid'), config('app.corpsecret')
+        $this->app->singleton('dingcorp', function() {
+            return new \App\Services\DingCorp(
+                config('ding.corpid'), config('ding.corpsecret')
             );
         });
+        $this->app->singleton('dingopenapi', function() {
+            return new \App\Services\DingOpenAPI(
+                config('ding.appid'), config('ding.appsecret')
+            );
+        });
+        if ($this->app->environment() !== 'production') {
+            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+        }
     }
 }

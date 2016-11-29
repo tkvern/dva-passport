@@ -21,6 +21,7 @@
             </window-operations>
         </div>
         <div class="login-form tab login-tab">
+            <div class="toast warning">手机号或密码错误，请重新输入</div>
             <ul class="tab-items">
                 <li class="tab-item current">扫码登录</li>
                 <li class="tab-item">密码登录</li>
@@ -35,13 +36,15 @@
                         </div>
 
                         <div class="clearfix">
-                            <input type="text" name="account" placeholder="请输入邮箱或手机号" required="" class="fm-input account">
+                            <input type="text" name="identity" placeholder="请输入邮箱或手机号" required="" class="fm-input account">
                         </div>
                         <div class="clearfix">
                             <input class="fm-input password" type="password" name="verification" placeholder="请输入密码" required="">
                         </div>
                         <button type="submit" class="blue big ng-binding disabled">登录</button>
-                        <!-- <div class="toast warning">手机号或密码错误，请重新输入</div> -->
+                        @if(count($errors) > 0)
+                            <div class="toast warning">{{ $errors->first('identity') || $errors->first('password') }}</div>
+                        @endif
                     </form>
                 </div>
             </div>
@@ -73,13 +76,19 @@
         $(document).ready(function() {
             var obj = DDLogin({
                  id:"qrcode-login",
-                 goto: "",
+                 goto: "{{ $goto }}",
                  style: "",
                  href: "",
                  width : "365px",
                  height: "316px"
              });
 
+            $(window).on('message', function(e) {
+                var loginTmpCode = e.originalEvent.data;
+                var href = "{{ $redirect_url }}&loginTmpCode="+loginTmpCode;
+                console.log(href);
+                window.location.href = href;
+            });
 
             $('.tab-items li').on('click', function(e) {
                 var $this = $(this);

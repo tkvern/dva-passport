@@ -6,5 +6,7 @@
 Homestead.json
 Homestead.yaml
 .env
+_ide_helper.php
+.phpstorm.meta.php
 .DS_Store
-
+npm-debug.log

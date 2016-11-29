@@ -5,7 +5,7 @@ use GuzzleHttp\Client;
 use Cache;
 use Log;
 
-class DingTalk 
+class DingCorp
 {
     private $corpid;
     private $corpsecret;
@@ -75,7 +75,7 @@ class DingTalk
      */
     protected function getAccessToken()
     {
-        return Cache::store('file')->remember('dingtalk-accesstoken', 110, function() {
+        return Cache::store('file')->remember('dingcorp-accesstoken', 110, function() {
             $response = $this->client->request('GET', 'gettoken', [
                 'query' => [
                     'corpid' => $this->corpid,
