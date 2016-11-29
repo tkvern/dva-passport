@@ -12,8 +12,8 @@ Trait JsonResponse {
     protected  function successJsonResponse($data, $statusCode=200)
     {
         return response()->json([
-            'errCode' => '0',
-            'errMsg' => 'SUCCESS',
+            'err_code' => '0',
+            'err_msg' => 'SUCCESS',
             'data' => $data
         ], $statusCode);
     }
@@ -21,8 +21,8 @@ Trait JsonResponse {
     protected function errorJsonResponse($errCode, $statusCode=400, $errors=null)
     {
         return response()->json([
-            'errCode' => $errCode,
-            'errMsg' => ErrCode::errorMessage($errCode),
+            'err_code' => $errCode,
+            'err_msg' => ErrCode::errorMessage($errCode),
             'detail' => $errors
         ], $statusCode);
     }
