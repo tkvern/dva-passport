@@ -20,7 +20,7 @@ function MainLayout({ children, location }) {
     <div className="ant-layout-aside">
       <header className="main-header">
         <a href="/" className="logo">
-          <span className="logo-lg"><b>DK</b> VISION</span>
+          <span className="logo-lg">量子密盾</span>
         </a>
         <nav className="navbar navbar-static-top">
 
@@ -39,16 +39,11 @@ function MainLayout({ children, location }) {
       </header>
       <aside className="ant-layout-sider">
         <Menu mode="inline" theme="dark"
-          defaultSelectedKeys={['1']} defaultOpenKeys={['sub1', 'sub2', 'sub3']}>
-          <SubMenu key="sub1" title={<span><Icon type="video-camera" />素材生产</span>}>
-            <Menu.Item key="1">任务管理</Menu.Item>
-          </SubMenu>
+          defaultSelectedKeys={['']} defaultOpenKeys={['sub1', 'sub2', 'sub3']}>
+          <Menu.Item key="1"><span><Icon type="appstore" />应用中心</span></Menu.Item>
           <SubMenu key="sub2" title={<span><Icon type="user" />用户中心</span>}>
-            <Menu.Item key="5">个人信息</Menu.Item>
-            <Menu.Item key="6">用户管理</Menu.Item>
-          </SubMenu>
-          <SubMenu key="sub3" title={<span><Icon type="setting" />系统设置</span>}>
-            <Menu.Item key="10">运维监控</Menu.Item>
+            <Menu.Item key="5">用户管理</Menu.Item>
+            <Menu.Item key="6">个人信息</Menu.Item>
           </SubMenu>
         </Menu>
       </aside>

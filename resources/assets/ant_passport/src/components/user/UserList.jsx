@@ -23,6 +23,20 @@ const UserList = ({
   );
 
   const columns = [{
+    title: '',
+    dataIndex: 'avatar',
+    key: 'avatar',
+    width: '47px',
+    render: (text, record, index) => {
+      const imgUrl = 'https://gtms03.alicdn.com/tps/i3/TB1opXxHXXXXXahXpXXvBLt6FXX-230-230.png';
+      return (
+        <img src={imgUrl} 
+             width={30}
+             height={30}
+             style={{ borderRadius: '50%' }} />
+      );
+    },
+  }, {
     title: '姓名',
     dataIndex: 'name',
     key: 'name',

@@ -24,10 +24,10 @@ if (!global.tableListData) {
       },
       'isadmin|0-1': 1,
       'created_at': ()=>{
-        return Random.datetime('y-MM-dd HH:mm:ss');
+        return Random.datetime('yyyy-MM-dd HH:mm:ss');
       },
       'updated_at': ()=>{
-        return Random.datetime('y-MM-dd HH:mm:ss');
+        return Random.datetime('yyyy-MM-dd HH:mm:ss');
       },
     }],
     page: {

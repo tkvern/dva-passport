@@ -45,30 +45,19 @@ const UserSearch = ({
   };
 
   const children = [
-    <Row key={0}>
-      <Col span={8}>
-        <FormItem {...formItemLayout} label="范围">
-            <RadioGroup defaultValue="a">
-              <RadioButton value="a">我的任务</RadioButton>
-              <RadioButton value="b">全部任务</RadioButton>
-            </RadioGroup>
-        </FormItem>
-      </Col>
-    </Row>
-    ,
     <Row key={1}>
       <Col span={8}>
-        <FormItem {...formItemLayout} label="任务名称">
+        <FormItem {...formItemLayout} label="姓名">
           {getFieldDecorator('keyword', {
             initialValue: keyword || '',
           })(
-            <Input placeholder="请输入任务名称" />
+            <Input placeholder="请输入姓名" />
           )}
         </FormItem>
       </Col>
       <Col span={8}>
-        <FormItem {...formItemLayout} label="创建人">
-          <Input placeholder="请输入创建人" />
+        <FormItem {...formItemLayout} label="手机">
+          <Input placeholder="请输入手机" />
         </FormItem>
       </Col>
       <Col span={8}>

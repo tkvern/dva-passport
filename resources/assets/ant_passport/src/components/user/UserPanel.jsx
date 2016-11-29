@@ -8,7 +8,7 @@ const UserPanel = ({
     <Button type="primary" 
             onClick={onAdd} 
             size="large" 
-            style={{ marginBottom: '15px' }}>创建任务</Button>
+            style={{ marginBottom: '15px' }}>创建用户</Button>
   );
 }
 
