@@ -25,13 +25,17 @@ class OmniController extends Controller
         $dingId = $userInfo['user_info']['dingId'];
         $user = User::where('dingid', $dingId)->first();
         if ($user) {
-            info('ssouser: '.$user->name);
             Auth::login($user);
             $this->generateSsoToken();
-            $url = $request->get('redirect_url', '/');
+            $url = $request->session()->get('return_url');
+            if(!empty($url)) {
+                $request->session()->forget('return_url');
+            } else {
+                $url = '/';
+            }
             return redirect($url);
         } else {
-            return redirect()->route('sso_login')->withErrors(['ding' => '无权登录']);
+            return redirect()->route('sso_login')->withErrors(['identity' => '无权登录']);
         }
     }
 }

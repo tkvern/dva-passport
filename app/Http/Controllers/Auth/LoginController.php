@@ -49,7 +49,12 @@ class LoginController extends Controller
     // @override
     public function showLoginForm(Request $request)
     {
+        $return_url = $request->get('redirect_url');
+        if(!empty($return_url)) {
+            $request->session()->set('return_url', $return_url);
+        }
         $callback_url = route('omni_dingtalk_cb');
+        info('callback_url: '.$callback_url);
         $goto = "https://oapi.dingtalk.com/connect/oauth2/sns_authorize?".
                 "appid=dingoaowu4izq4tforez8h&response_type=code&scope=snsapi_login".
                 "&state=VISIONDK&redirect_uri=";
@@ -59,10 +64,10 @@ class LoginController extends Controller
     // @override
     protected function credentials(Request $request)
     {
-        $identify = $request->get('identity');
+        $identity = $request->get('identity');
         $field = filter_var($identify, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
         return [
-            $field => $identify,
+            $field => $identity,
             'password' => $request->get('password')
         ];
     }
@@ -78,9 +83,10 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         $this->generateSsoToken();
-        $redirect_url = $request->get('redirect_url');
-        if (!empty($redirect_url)) {
-            return redirect($redirect_url);
+        $url = $request->session()->get('return_url');
+        if(!empty($url)) {
+            $request->session()->forget('return_url');
+            return redirect($url);
         }
         return false;
     }

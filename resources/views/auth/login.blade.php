@@ -21,7 +21,9 @@
             </window-operations>
         </div>
         <div class="login-form tab login-tab">
-            <div class="toast warning">手机号或密码错误，请重新输入</div>
+            @if(count($errors) > 0)
+            <div class="toast warning">{{ $errors->first('identity') }}</div>
+            @endif
             <ul class="tab-items">
                 <li class="tab-item current">扫码登录</li>
                 <li class="tab-item">密码登录</li>
@@ -31,6 +33,7 @@
                 </div>
                 <div class="tab-content password-login">
                     <form action="" id="myform" method="post">
+                        {{ csrf_field() }}
                         <div class="avatar biger border-thick">
                             <img src="/image/logo.png" class="country-img" alt="">
                         </div>
@@ -42,9 +45,6 @@
                             <input class="fm-input password" type="password" name="verification" placeholder="请输入密码" required="">
                         </div>
                         <button type="submit" class="blue big ng-binding disabled">登录</button>
-                        @if(count($errors) > 0)
-                            <div class="toast warning">{{ $errors->first('identity') || $errors->first('password') }}</div>
-                        @endif
                     </form>
                 </div>
             </div>

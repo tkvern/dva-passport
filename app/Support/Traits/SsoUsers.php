@@ -7,7 +7,7 @@
  */
 namespace App\Support\Traits;
 
-use Illuminate\Support\Facades\Cookie;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Token;
 use Auth;
@@ -41,13 +41,18 @@ trait SsoUsers
      */
     protected function getSSoClaims()
     {
-        $sso_token = Cookie::get(config('sso.cookie_name'));
+        $sso_token = array_get($_COOKIE, config('sso.cookie_name'), '');
         $manager = app('tymon.jwt.manager');
         return $manager->decode(new Token($sso_token));
     }
 
     protected function checkSsoToken()
     {
-        return $this->getSSoClaims();
+        try {
+            $claims =  $this->getSSoClaims();
+            return true;
+        } catch (JWTException $e) {
+            return false;
+        }
     }
 }
