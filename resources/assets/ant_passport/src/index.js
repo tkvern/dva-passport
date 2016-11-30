@@ -5,7 +5,11 @@ import './index.html';
 import './index.less';
 
 // 1. Initialize
-const app = dva();
+const app = dva({
+  onError(e) {
+    alert(e);
+  },
+});
 
 // 2. Plugins
 //app.use({});

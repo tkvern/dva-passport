@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
 import { Router, Route, IndexRoute, Link } from 'dva/router';
 import Users from './routes/user/Users';
-import { getCookie } from './utils/helper';
+import { query } from './services/auth';
 
 export default function({ history }) {
-  console.log(getCookie('sso_token'));
+  console.log(query());
   return (
     <Router history={history}>
       <Route path="/" component={Users} />

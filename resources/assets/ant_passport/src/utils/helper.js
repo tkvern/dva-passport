@@ -1,3 +1,4 @@
+// Replace Status text
 export function getUserStatus(status) {
   if (status === 1) {
     return { status: 'success', text: '正常' };
@@ -6,7 +7,7 @@ export function getUserStatus(status) {
   }
 }
 
-export function checkIsAdmin(status) {
+export function getIsAdminStatus(status) {
   if (status === 1) {
     return { status: 'success', text: '是' };
   } else {
@@ -14,6 +15,7 @@ export function checkIsAdmin(status) {
   }
 }
 
+// Operation Cookie
 export function getCookie(name) {
   const reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)');
   const arr = document.cookie.match(reg);
@@ -24,6 +26,13 @@ export function getCookie(name) {
   }
 }
 
-export function checkUser() {
-
+// Operation LocalStorage
+export function setLocalStorage(key, vaule) {
+  return localStorage.setItem(key, JSON.stringify(vaule));
 }
+
+export function getLocalStorage(key) {
+  const value = JSON.parse(localStorage.getItem(key));
+  return value;
+}
+

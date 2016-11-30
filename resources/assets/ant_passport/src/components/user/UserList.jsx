@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Table, message, Popconfirm, Pagination, Menu, Dropdown, Icon, Progress, Badge } from 'antd';
-import { getUserStatus, checkIsAdmin } from '../../utils/helper';
+import { getUserStatus, getIsAdminStatus } from '../../utils/helper';
 
 const UserList = ({
   total,
@@ -66,7 +66,7 @@ const UserList = ({
     dataIndex: 'isadmin',
     key: 'isadmin',
     render: (text, record, index) => {
-      const adminStatus = checkIsAdmin(record.isadmin);
+      const adminStatus = getIsAdminStatus(record.isadmin);
       return (
         <Badge status={adminStatus.status} text={adminStatus.text} />
       );
