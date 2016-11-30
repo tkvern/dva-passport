@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\UserProfileRequest;
+use App\Http\Requests\ChangeUserRequest;
 use App\Models\User;
 
 class UsersController extends Controller
@@ -22,9 +23,18 @@ class UsersController extends Controller
         return $this->paginateJsonResponse($users);
     }
 
-    public function update(Request $request)
+    public function update(ChangeUserRequest $request, $user_id)
     {
-        $user = $request->user();
+        $user = User::find($user_id);
+        $changeSet = $request->only(array_except(array_keys($request->rules()), ['password'])) ;
+        $changeSet = array_filter($changeSet, function($k) use ($request) {
+            return !is_null($request->input($k));
+        }, ARRAY_FILTER_USE_KEY);
+        if (!empty($request->input('password'))) {
+            $user->password = bcrypt($request->input('password'));
+        }
+        $user->update($changeSet);
+        return $this->successJsonResponse($user);
     }
 
     public function updateProfile(UserProfileRequest $request)
@@ -39,5 +49,12 @@ class UsersController extends Controller
         }
         $user->update($profile);
         return $this->successJsonResponse($user);
+    }
+
+    public function deny(User $user)
+    {
+        $user->status = User::STATE_DENY;
+        $user->save();
+        return $this->successJsonResponse();
     }
 }

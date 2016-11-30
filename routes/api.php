@@ -13,8 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['middleware'=> 'auth:api'], function() {
+Route::group(['middleware'=> ['auth:api']], function() {
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Headers: Access-Control-Allow-Headers, Origin, Accept, Authorization, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
     Route::get('/user', 'UsersController@current');
-    Route::get('/users', 'UsersController@index');
     Route::put('/user', 'UsersController@updateProfile');
+    Route::get('/users', 'UsersController@index');
+    Route::put('/users/{user_id}', 'UsersController@update');
+    Route::post('/users/{user}/action/deny', 'UsersController@deny');
 });

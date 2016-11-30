@@ -94,10 +94,6 @@ class Handler extends ExceptionHandler
      */
     protected function badInput(ValidationException $e, $request)
     {
-        if ($e->response) {
-            return $e->response;
-        }
-
         $errors = $e->validator->errors()->getMessages();
 
         if ($request->expectsJson()) {

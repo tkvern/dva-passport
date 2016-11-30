@@ -9,13 +9,16 @@ namespace App\Support\Traits;
 use App\Support\ErrCode;
 
 Trait JsonResponse {
-    protected  function successJsonResponse($data, $statusCode=200)
+    protected  function successJsonResponse($data=null, $statusCode=200)
     {
-        return response()->json([
+        $ret = [
             'err_code' => '0',
             'err_msg' => 'SUCCESS',
-            'data' => $data
-        ], $statusCode);
+        ];
+        if (!is_null($data)) {
+            $ret['data'] = $data;
+        }
+        return response()->json($ret, $statusCode);
     }
 
     protected function errorJsonResponse($errCode, $statusCode=400, $errors=null)

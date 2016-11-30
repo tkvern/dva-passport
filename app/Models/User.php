@@ -10,6 +10,9 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
+    const STATE_NORMAL = 1;
+    const STATE_DENY = 2;
+
     /**
      * The attributes that are mass assignable.
      *
