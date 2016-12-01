@@ -21,4 +21,13 @@ Route::group(['middleware'=> ['auth:api']], function() {
     Route::get('/users', 'UsersController@index');
     Route::put('/users/{user_id}', 'UsersController@update');
     Route::post('/users/{user}/action/deny', 'UsersController@deny');
+
+    //user roles
+    Route::get('/users/{user}/roles', 'UserRoleController@index');
+    Route::post('/users/{user}/action/onroles', 'UserRoleController@onRoles');
+
+    //roles
+    Route::get('/roles', 'RolesController@index');
+    Route::post('/roles', 'RolesController@create');
+    Route::put('/roles/{role}', 'RolesController@update');
 });

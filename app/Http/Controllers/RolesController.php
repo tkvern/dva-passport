@@ -7,6 +7,12 @@ use App\Models\Role;
 
 class RolesController extends Controller
 {
+    public function index(Request $request)
+    {
+        $roles = Role::paginate($request->input('page_size', 10));
+        return $this->paginateJsonResponse($roles);
+    }
+
     //
     public function create(Request $request)
     {
@@ -25,6 +31,6 @@ class RolesController extends Controller
         ]);
         $role->name = $request->input('name');
         $role->save();
-        $this->successJsonResponse($role);
+        return $this->successJsonResponse($role);
     }
 }
