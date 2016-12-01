@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 
 //Auth::routes();
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('sso_login');
+Route::delete('/logout', 'Auth\LoginController@logout');
 Route::get('/auth/callback/dingtalk', 'Auth\OmniController@dingtalk')->name('omni_dingtalk_cb');
 
 Route::post('/login', 'Auth\LoginController@login');
