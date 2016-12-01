@@ -6,9 +6,10 @@ import { errorHandle } from './utils/auth';
 
 // 1. Initialize
 const app = dva({
-  onError(error) {
-    errorHandle(error);
-  },
+  // onError(error) {
+  //   console.log(error);
+  //   errorHandle(error);
+  // },
 });
 
 // 2. Plugins

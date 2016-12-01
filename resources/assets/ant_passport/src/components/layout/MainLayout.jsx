@@ -3,19 +3,28 @@ import { connect } from 'dva';
 import { Link } from 'dva/router';
 import { Menu, Breadcrumb, Dropdown, Icon } from 'antd';
 import styles from './MainLayout.less';
+import { logOut } from '../../utils/auth';
 
 const SubMenu = Menu.SubMenu;
 
-const menu = (
-  <Menu>
-    <Menu.Item key="0">
-      <a href="http://www.alipay.com/"><Icon type="edit" /> 个人信息</a>
-    </Menu.Item>
-    <Menu.Item key="3"><Icon type="logout" /> 安全退出</Menu.Item>
-  </Menu>
-);
 
 function MainLayout({ children, location }) {
+
+  function handleClick(e) {
+    if (e.key == 3) {
+      logOut();
+    }
+  }
+
+  const menu = (
+    <Menu onClick={handleClick}>
+      <Menu.Item key="0">
+        <a href="http://www.alipay.com/"><Icon type="edit" /> 个人信息</a>
+      </Menu.Item>
+      <Menu.Item key="3"><Icon type="logout" /> 安全退出</Menu.Item>
+    </Menu>
+  );
+
   return (
     <div className="ant-layout-aside">
       <header className="main-header">
@@ -29,7 +38,7 @@ function MainLayout({ children, location }) {
               <li className="dropdown">
                 <Dropdown overlay={menu} trigger={['click']}>
                   <a className="ant-dropdown-link">
-                    <Icon type="user" /> admin@admin.com <Icon type="down" />
+                    <Icon type="user" /><Icon type="down" />
                   </a>
                 </Dropdown>
               </li>
@@ -75,4 +84,8 @@ MainLayout.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-export default connect()(MainLayout);
+function mapStateToProps({ auth }) {
+  return { auth };
+}
+
+export default connect(mapStateToProps)(MainLayout);

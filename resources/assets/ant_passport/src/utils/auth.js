@@ -1,6 +1,6 @@
 import { query } from '../services/auth';
 import config from '../config';
-import { getCookie, getLocalStorage } from './helper';
+import { getCookie, delCookie, getLocalStorage } from './helper';
 
 // Auth
 export function getAuthHeader(sso_token) {
@@ -13,12 +13,13 @@ export function getAuthHeader(sso_token) {
 }
 
 export function redirectLogin() {
-  return window.location.href = config.redirectUrl + window.location.href;
+  return window.location.href = config.redirectUrl + window.location.origin;
 }
 
 export function errorHandle(error) {
+  console.log('Error');
   const response = error.response;
-  if (response.status === 401) {
+  if (response && response.status === 401) {
     redirectLogin();
   }
 }
@@ -28,4 +29,13 @@ export function authenticated() {
   if (!sso_token) {
     redirectLogin();
   }
+}
+
+export function logOut() {
+  delCookie({
+    name: 'sso_token',
+    path: '/',
+    domain: '.corp.visiondk.com',
+  });
+  redirectLogin();
 }

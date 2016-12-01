@@ -10,7 +10,12 @@ export default {
   namespace: 'anth',
 
   state: {
-    loading: false,
+    name: '',
+    mobile: '',
+    dingid: '',
+    id: null,
+    email: null,
+    status: '',
   },
 
   reducers: {

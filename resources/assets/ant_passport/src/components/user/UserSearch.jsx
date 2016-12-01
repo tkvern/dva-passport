@@ -46,8 +46,8 @@ const UserSearch = ({
     <Row key={1}>
       <Col span={8}>
         <FormItem {...formItemLayout} label="姓名">
-          {getFieldDecorator('keyword', {
-            initialValue: keyword || '',
+          {getFieldDecorator('name', {
+            initialValue: keyword.name || '',
           })(
             <Input placeholder="请输入姓名" />
           )}
@@ -55,14 +55,11 @@ const UserSearch = ({
       </Col>
       <Col span={8}>
         <FormItem {...formItemLayout} label="手机">
-          <Input placeholder="请输入手机" />
-        </FormItem>
-      </Col>
-      <Col span={8}>
-        <FormItem {...formItemLayout} label="创建日期">
-          <RangePicker
-            format={dateFormat}
-          />
+          {getFieldDecorator('mobile', {
+            initialValue: keyword.mobile || '',
+          })(
+            <Input placeholder="请输入手机" />
+          )}
         </FormItem>
       </Col>
     </Row>

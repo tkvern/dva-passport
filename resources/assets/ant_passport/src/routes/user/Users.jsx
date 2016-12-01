@@ -54,7 +54,7 @@ function Users({ location, dispatch, users }) {
       dispatch(
         routerRedux.push({
           pathname: '/users',
-          query: { ...fieldsValue, page: 1 },
+          query: { page: 1, ...fieldsValue },
         }),
       );
     },
@@ -96,7 +96,6 @@ function Users({ location, dispatch, users }) {
   return (
     <MainLayout>
       <div>
-        <UserPanel {...userPanelProps} />
         <UserSearch {...userSearchProps} />
         <UserList {...userListProps} />
         <UserModalGen />

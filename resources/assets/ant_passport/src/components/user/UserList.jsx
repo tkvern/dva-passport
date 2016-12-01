@@ -28,7 +28,7 @@ const UserList = ({
     key: 'avatar',
     width: '47px',
     render: (text, record, index) => {
-      const imgUrl = 'https://gtms03.alicdn.com/tps/i3/TB1opXxHXXXXXahXpXXvBLt6FXX-230-230.png';
+      const imgUrl = record.avatar || 'https://gtms03.alicdn.com/tps/i3/TB1opXxHXXXXXahXpXXvBLt6FXX-230-230.png';
       return (
         <img
           src={imgUrl}

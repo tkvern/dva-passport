@@ -2,7 +2,6 @@ import { hashHistory } from 'dva/router';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
 import { query, create, remvoe, update } from '../services/users';
-// import { querys } from '../services/auth';
 
 export default {
 
@@ -54,15 +53,14 @@ export default {
         type: 'updateQueryKey',
         payload: { page: 1, field: '', keyword: '', ...payload },
       });
-
       const { data } = yield call(query, parse(payload));
       if (data) {
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.data,
-            total: data.page.total,
-            current: data.page.current,
+            list: data.data.list,
+            total: data.data.total,
+            current: data.data.current,
           },
         });
       }
@@ -75,9 +73,9 @@ export default {
         yield put({
           type: 'createSuccess',
           payload: {
-            list: data.data,
-            total: data.page.total,
-            current: data.page.current,
+            list: data.data.list,
+            total: data.data.total,
+            current: data.data.current,
             field: '',
             keyword: '',
           },
