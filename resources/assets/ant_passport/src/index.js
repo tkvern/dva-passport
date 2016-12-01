@@ -1,13 +1,13 @@
 import dva from 'dva';
-
 import 'antd/dist/antd.less';
 import './index.html';
 import './index.less';
+import { errorHandle } from './utils/auth';
 
 // 1. Initialize
 const app = dva({
-  onError(e) {
-    alert(e);
+  onError(error) {
+    errorHandle(error);
   },
 });
 
@@ -15,6 +15,7 @@ const app = dva({
 //app.use({});
 
 // 3. Model
+app.model(require('./models/auth'));
 app.model(require('./models/users'));
 
 // 4. Router

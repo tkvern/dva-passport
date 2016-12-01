@@ -19,9 +19,9 @@ function MainLayout({ children, location }) {
   return (
     <div className="ant-layout-aside">
       <header className="main-header">
-        <a href="/" className="logo">
+        <Link to="/" className="logo">
           <span className="logo-lg">量子密盾</span>
-        </a>
+        </Link>
         <nav className="navbar navbar-static-top">
 
           <div className="navbar-custom-menu">
@@ -43,7 +43,7 @@ function MainLayout({ children, location }) {
             <span><Icon type="appstore" />应用中心</span>
           </Menu.Item>
           <SubMenu key="sub2" title={<span><Icon type="user" />用户中心</span>}>
-            <Menu.Item key="5">用户管理</Menu.Item>
+            <Menu.Item key="5"><Link to="/users">用户管理</Link></Menu.Item>
             <Menu.Item key="6">个人信息</Menu.Item>
           </SubMenu>
         </Menu>

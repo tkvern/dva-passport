@@ -2,7 +2,7 @@ import { hashHistory } from 'dva/router';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
 import { query, create, remvoe, update } from '../services/users';
-import { querys } from '../services/auth';
+// import { querys } from '../services/auth';
 
 export default {
 
@@ -90,10 +90,10 @@ export default {
 
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen((location) => {
-        // const match = pathToRegexp(`/users`).exec(pathname);
+      history.listen(location => {
+        const match = pathToRegexp(`/users`).exec(location.pathname);
 
-        if (location.pathname === '/users') {
+        if (match) {
           dispatch({
             type: 'query',
             payload: location.query,

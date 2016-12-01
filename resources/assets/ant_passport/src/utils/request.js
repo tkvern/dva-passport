@@ -8,30 +8,14 @@ function parseJSON(response) {
 }
 
 function checkStatus(response) {
-  console.log(response.status);
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
-
-  if (response.status == 401) {
-    // throw new Error('未登录');
-    // console.log(config.domain + config.ssoLoginUrl + window.location.href.split("?_k")[0]);
-    window.location.href = config.domain + config.ssoLoginUrl + window.location.href.split("?_k")[0];
-  }
-
 
   const error = new Error(response.statusText);
   error.response = response;
   throw error;
 }
-
-// function parseErrorMessage({ data }) {
-//   const { status, message } = data;
-//   if (status === 'error') {
-//     throw new Error(message);
-//   }
-//   return { data };
-// }
 
 /**
  * Requests a URL, returning a promise.
@@ -47,5 +31,4 @@ export default function request(url, options) {
     .then(checkStatus)
     .then(parseJSON)
     .then((data) => ({ data }));
-    // .catch((err) => { throw new Error(err) });
 }

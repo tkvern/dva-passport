@@ -6,7 +6,7 @@ import MainLayout from '../../components/layout/MainLayout';
 import UserList from '../../components/user/UserList';
 import UserSearch from '../../components/user/UserSearch';
 import UserPanel from '../../components/user/UserPanel';
-import UserModal from '../../components/user//UserModal';
+import UserModal from '../../components/user/UserModal';
 
 function Users({ location, dispatch, users }) {
   const {
