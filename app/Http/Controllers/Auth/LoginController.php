@@ -54,7 +54,6 @@ class LoginController extends Controller
             $request->session()->set('return_url', $return_url);
         }
         $callback_url = route('omni_dingtalk_cb');
-        info('callback_url: '.$callback_url);
         $goto = "https://oapi.dingtalk.com/connect/oauth2/sns_authorize?".
                 "appid=dingoaowu4izq4tforez8h&response_type=code&scope=snsapi_login".
                 "&state=VISIONDK&redirect_uri=";
