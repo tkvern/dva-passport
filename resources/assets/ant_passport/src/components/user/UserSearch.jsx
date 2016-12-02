@@ -45,20 +45,11 @@ const UserSearch = ({
   const children = [
     <Row key={1}>
       <Col span={8}>
-        <FormItem {...formItemLayout} label="姓名">
-          {getFieldDecorator('name', {
-            initialValue: keyword.name || '',
+        <FormItem {...formItemLayout} label="关键字">
+          {getFieldDecorator('keyword', {
+            initialValue: keyword || '',
           })(
-            <Input placeholder="请输入姓名" />
-          )}
-        </FormItem>
-      </Col>
-      <Col span={8}>
-        <FormItem {...formItemLayout} label="手机">
-          {getFieldDecorator('mobile', {
-            initialValue: keyword.mobile || '',
-          })(
-            <Input placeholder="请输入手机" />
+            <Input placeholder="请输入关键字查询" maxLength={20} />
           )}
         </FormItem>
       </Col>
@@ -81,9 +72,9 @@ const UserSearch = ({
             <Button style={{ marginLeft: 8 }} onClick={handleReset}>
               清空
             </Button>
-            <a style={{ marginLeft: 8, fontSize: 12 }} onClick={onExpand}>
+            {/*<a style={{ marginLeft: 8, fontSize: 12 }} onClick={onExpand}>
               高级搜索 <Icon type={expand ? 'up' : 'down'} />
-            </a>
+            </a>*/}
           </Col>
         </Col>
       </Row>

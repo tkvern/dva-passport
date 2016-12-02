@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Router, Route, IndexRoute, Link } from 'dva/router';
-import Users from './routes/user/Users';
+import Users from './routes/Users';
 import Dashboard from './routes/Dashboard';
 import { authenticated } from './utils/auth';
 

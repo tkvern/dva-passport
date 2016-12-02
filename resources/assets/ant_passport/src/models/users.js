@@ -1,7 +1,7 @@
 import { hashHistory } from 'dva/router';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
-import { query, create, remvoe, update } from '../services/users';
+import { query, create, remvoe, update, deny } from '../services/users';
 
 export default {
 
@@ -9,7 +9,6 @@ export default {
 
   state: {
     list: [],
-    field: '',
     keyword: '',
     expand: false,
     total: null,
@@ -44,17 +43,28 @@ export default {
     updateQueryKey(state, action) {
       return { ...state, ...action.payload };
     },
+    denySuccess(state, action) {
+      const { id } = action.payload;
+      const newList = state.list.map(user => {
+        if (user.id === id) {
+          user.status = 2;
+          return { ...user };
+        }
+        return user;
+      });
+      return { ...state, list: newList };
+    },
   },
 
   effects: {
-    *query({ payload }, { select, call, put }) {
+    *query({ payload }, { call, put }) {
       yield put({ type: 'showLoading' });
       yield put({
         type: 'updateQueryKey',
-        payload: { page: 1, field: '', keyword: '', ...payload },
+        payload: { page: 1, keyword: '', ...payload },
       });
       const { data } = yield call(query, parse(payload));
-      if (data) {
+      if (data && data.err_msg == 'SUCCESS') {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -76,7 +86,6 @@ export default {
             list: data.data.list,
             total: data.data.total,
             current: data.data.current,
-            field: '',
             keyword: '',
           },
         });
@@ -84,6 +93,22 @@ export default {
     },
     *'delete'() {},
     *update() {},
+    *deny({ payload }, { call, put }) {
+      // yield put({ type: 'showLoading' });
+      yield put({
+        type: 'updateQueryKey',
+        payload: { page: 1, keyword: '', ...payload.query },
+      });
+      const { data } = yield call(deny, parse({id: payload.id, enable: true, }));
+      if (data && data.err_msg == 'SUCCESS') {
+        yield put({
+          type: 'denySuccess',
+          payload: {
+              id: payload.id,
+          },
+        })
+      }
+    }
   },
 
   subscriptions: {

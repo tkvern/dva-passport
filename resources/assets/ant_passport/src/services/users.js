@@ -26,3 +26,10 @@ export async function update(params) {
     body: qs.stringify(params),
   });
 }
+
+export async function deny(params) {
+  return request(`${config.domain}/api/users/${params.id}/action/deny`, {
+    method: 'post',
+    body: JSON.stringify(params),
+  })
+}

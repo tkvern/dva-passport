@@ -8,7 +8,8 @@ export function getAuthHeader(sso_token) {
     headers: {
       'Accept': 'application/json',
       'Authorization': 'Bearer ' + sso_token,
-    }
+      'Content-Type': 'application/json',
+    },
   });
 }
 
@@ -17,7 +18,6 @@ export function redirectLogin() {
 }
 
 export function errorHandle(error) {
-  console.log('Error');
   const response = error.response;
   if (response && response.status === 401) {
     redirectLogin();
@@ -27,6 +27,7 @@ export function errorHandle(error) {
 export function authenticated() {
   const sso_token = getCookie('sso_token');
   if (!sso_token) {
+    localStorage.clear();
     redirectLogin();
   }
 }
@@ -37,5 +38,5 @@ export function logOut() {
     path: '/',
     domain: '.corp.visiondk.com',
   });
-  redirectLogin();
+  authenticated();
 }
