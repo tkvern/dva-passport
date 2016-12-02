@@ -12,7 +12,7 @@ const monthFormat = 'YYYY/MM';
 const plainOptions = ['等待中', '运行中', '完成', '失败', '未知'];
 
 const UserSearch = ({
-  field, keyword,
+  keyword,
   expand,
   onExpand,
   onSearch,

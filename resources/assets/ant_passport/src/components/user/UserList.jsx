@@ -76,19 +76,21 @@ const UserList = ({
     title: '操作',
     key: 'operation',
     render: (text, record, index) => {
-      if (record.status == 1) {
-        return (<a onClick={() => onDeny(record.id)}>禁用</a>);
+      const { id, status } = record;
+      let enable,
+          displayText;
+
+      if ( status == 1) {
+        enable = true;
+        displayText = "禁用";
       } else {
-        return (<a onClick={() => {}}>启用</a>);
+        enable = false;
+        displayText = "启用";
       }
-     
-        {/*&nbsp;&nbsp;&nbsp;
-        <Dropdown overlay={menu} trigger={['click']}>
-          <a className="ant-dropdown-link">
-            更多 <Icon type="down" />
-          </a>
-        </Dropdown>
-        */}
+
+      return (
+        <a onClick={() => onDeny(id, enable)}>{displayText}</a>
+      );
     },
   }];
 

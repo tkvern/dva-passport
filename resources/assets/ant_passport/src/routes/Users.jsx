@@ -34,14 +34,12 @@ function Users({ location, dispatch, users }) {
         }),
       );
     },
-    onDeny(id) {
+    onDeny(id, enable) {
       dispatch({
         type: 'users/deny',
         payload: {
-          query: {
-            keyword,
-          },
           id: id,
+          enable: enable,
         }
       })
     },
