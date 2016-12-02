@@ -23,10 +23,21 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        // $user = $request->user();
         $pageSize = $request->input('page_size', 10);
-        $users = User::orderBy('id')->paginate($pageSize);
+        $keyword = $request->input('keyword');
+        if(!empty($keyword)) {
+            $likeVar = $keyword.'%';
+            $resource = User::where('name', 'like', $likeVar)->orWhere('email', 'like', $likeVar)->orWhere('mobile', 'like', $likeVar);
+        } else {
+            $resource = User::query();
+        }
+        $users = $resource->paginate($pageSize);
         return $this->paginateJsonResponse($users);
+    }
+
+    public function show(User $user)
+    {
+        return $this->successJsonResponse($user);
     }
 
     /*
@@ -68,7 +79,10 @@ class UsersController extends Controller
      */
     public function deny(Request $request, User $user)
     {
-        if ($request->input('enable')) {
+        $this->validate($request, [
+            'enable' => 'required|boolean'
+        ]);
+        if (is_true($request->input('enable'))) {
             $user->status = User::STATE_DENY;
         } else {
             $user->status = User::STATE_NORMAL;

@@ -4,6 +4,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use App\Support\Traits\JsonResponse;
 use App\Support\ErrCode;
@@ -52,6 +53,8 @@ class Handler extends ExceptionHandler
             return $this->unauthorized($request, $exception);
         } elseif ($exception instanceof ValidationException) {
             return $this->badInput($exception, $request);
+        } elseif ($exception instanceof ModelNotFoundException) {
+            return $this->modelNotFound($exception, $request);
         }
         return parent::render($request, $exception);
     }
@@ -102,5 +105,10 @@ class Handler extends ExceptionHandler
         }
 
         return redirect()->back()->withInput($request->input())->withErrors($errors);
+    }
+
+    protected function modelNotFound(ModelNotFoundException $e, $request)
+    {
+        return $this->errorJsonResponse(ErrCode::E_NOT_FOUND_MODEL);
     }
 }
