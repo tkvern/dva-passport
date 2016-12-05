@@ -13,8 +13,8 @@ class UserRoleController extends Controller
     public function onRoles(Request $request, User $user)
     {
         $this->validate($request, [
-            'grant_roles' => 'array',
-            'revoke_roles' => 'array'
+            'grant_roles' => 'required_without:revoke_roles|array',
+            'revoke_roles' => 'required_without:grant_roles|array'
         ], [], ['grant_roles' => '授予角色ID列表', 'revoke_roles' => '移除角色ID列表']);
         $grantRoles = $request->input('grant_roles');
         $revokeRoles = $request->input('revoke_roles');

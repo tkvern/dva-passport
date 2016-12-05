@@ -17,8 +17,8 @@ class RolePermissionController extends Controller
     public function onPermissions(Request $request, Role $role)
     {
         $this->validate($request, [
-            'grant_permissions' => 'array',
-            'revoke_permissions' => 'array'
+            'grant_permissions' => 'required_without:revoke_permissions|array',
+            'revoke_permissions' => 'required|without:grant_permissions|array'
         ], [], ['grant_permissions' => '授权权限ID列表', 'revoke_permissions' => '注销权限ID列表']);
         $grantPermissions = $request->input('grant_permissions');
         $revokePermissions = $request->input('revoke_permissions');
