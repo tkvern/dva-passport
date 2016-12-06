@@ -8,6 +8,7 @@ const UserList = ({
   loading,
   dataSource,
   onPageChange,
+  onDeny,
 }) => {
   const menu = (
     <Menu>
@@ -28,7 +29,7 @@ const UserList = ({
     key: 'avatar',
     width: '47px',
     render: (text, record, index) => {
-      const imgUrl = 'https://gtms03.alicdn.com/tps/i3/TB1opXxHXXXXXahXpXXvBLt6FXX-230-230.png';
+      const imgUrl = record.avatar || 'https://gtms03.alicdn.com/tps/i3/TB1opXxHXXXXXahXpXXvBLt6FXX-230-230.png';
       return (
         <img
           src={imgUrl}
@@ -74,17 +75,23 @@ const UserList = ({
   }, {
     title: '操作',
     key: 'operation',
-    render: () => (
-      <div>
-        <a onClick={() => {}}>详情</a>
-        &nbsp;&nbsp;&nbsp;
-        <Dropdown overlay={menu} trigger={['click']}>
-          <a className="ant-dropdown-link">
-            更多 <Icon type="down" />
-          </a>
-        </Dropdown>
-      </div>
-    ),
+    render: (text, record, index) => {
+      const { id, status } = record;
+      let enable,
+          displayText;
+
+      if ( status == 1) {
+        enable = true;
+        displayText = "禁用";
+      } else {
+        enable = false;
+        displayText = "启用";
+      }
+
+      return (
+        <a onClick={() => onDeny(id, enable)}>{displayText}</a>
+      );
+    },
   }];
 
   return (

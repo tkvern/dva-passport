@@ -2,16 +2,15 @@ import React, { Component, PropTypes } from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
 
-import MainLayout from '../../components/layout/MainLayout';
-import UserList from '../../components/user/UserList';
-import UserSearch from '../../components/user/UserSearch';
-import UserPanel from '../../components/user/UserPanel';
-import UserModal from '../../components/user//UserModal';
+import MainLayout from '../components/layout/MainLayout';
+import UserList from '../components/user/UserList';
+import UserSearch from '../components/user/UserSearch';
+import UserPanel from '../components/user/UserPanel';
+import UserModal from '../components/user/UserModal';
 
 function Users({ location, dispatch, users }) {
   const {
     list,
-    field,
     keyword,
     expand,
     total,
@@ -31,14 +30,22 @@ function Users({ location, dispatch, users }) {
       dispatch(
         routerRedux.push({
           pathname: '/users',
-          query: { field, keyword, page },
+          query: { keyword, page },
         }),
       );
+    },
+    onDeny(id, enable) {
+      dispatch({
+        type: 'users/deny',
+        payload: {
+          id: id,
+          enable: enable,
+        }
+      })
     },
   }
 
   const userSearchProps = {
-    field,
     keyword,
     expand,
     onExpand() {
@@ -54,7 +61,7 @@ function Users({ location, dispatch, users }) {
       dispatch(
         routerRedux.push({
           pathname: '/users',
-          query: { ...fieldsValue, page: 1 },
+          query: { page: 1, ...fieldsValue },
         }),
       );
     },
@@ -96,7 +103,6 @@ function Users({ location, dispatch, users }) {
   return (
     <MainLayout>
       <div>
-        <UserPanel {...userPanelProps} />
         <UserSearch {...userSearchProps} />
         <UserList {...userListProps} />
         <UserModalGen />
