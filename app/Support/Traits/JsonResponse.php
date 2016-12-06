@@ -34,11 +34,11 @@ Trait JsonResponse {
     {
         $result = [];
         $result['total'] = $data->total();
-        $result['current_page'] = $data->currentPage();
+        $result['current'] = $data->currentPage();
         $result['per_page'] = $data->perPage();
         $result['has_more_page'] = $data->hasMorePages();
         $result['last_page'] = $data->lastPage();
-        $result['data'] = $data->values();
+        $result['list'] = $data->values();
         return $this->successJsonResponse($result, $statusCode);
     }
 }

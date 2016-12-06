@@ -60,11 +60,31 @@ class LoginController extends Controller
         return view('auth.login', ['goto' => urlencode($goto.$callback_url), 'redirect_url' => $goto.urlencode($callback_url)]);
     }
 
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->flush();
+
+        $request->session()->regenerate();
+
+        $this->clearSsoToken();
+
+        return redirect('/login');
+    }
+
     // @override
     protected function credentials(Request $request)
     {
         $identity = $request->get('identity');
-        $field = filter_var($identify, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
+        $field = filter_var($identity, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
         return [
             $field => $identity,
             'password' => $request->get('password')
@@ -89,4 +109,5 @@ class LoginController extends Controller
         }
         return false;
     }
+
 }

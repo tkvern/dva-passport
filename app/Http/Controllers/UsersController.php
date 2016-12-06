@@ -9,20 +9,40 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
+    /*
+     * 当前用户
+     */
     public function current(Request $request)
     {
         $user = $request->user();
         return $this->successJsonResponse($user);
     }
 
+    /*
+     * 用户列表
+     */
     public function index(Request $request)
     {
-        // $user = $request->user();
         $pageSize = $request->input('page_size', 10);
-        $users = User::orderBy('id')->paginate($pageSize);
+        $keyword = $request->input('keyword');
+        if(!empty($keyword)) {
+            $likeVar = $keyword.'%';
+            $resource = User::where('name', 'like', $likeVar)->orWhere('email', 'like', $likeVar)->orWhere('mobile', 'like', $likeVar);
+        } else {
+            $resource = User::query();
+        }
+        $users = $resource->paginate($pageSize);
         return $this->paginateJsonResponse($users);
     }
 
+    public function show(User $user)
+    {
+        return $this->successJsonResponse($user);
+    }
+
+    /*
+     * 修改用户资料
+     */
     public function update(ChangeUserRequest $request, $user_id)
     {
         $user = User::find($user_id);
@@ -37,6 +57,9 @@ class UsersController extends Controller
         return $this->successJsonResponse($user);
     }
 
+    /*
+     * 用户资料管理
+     */
     public function updateProfile(UserProfileRequest $request)
     {
         $user = $request->user();
@@ -51,9 +74,19 @@ class UsersController extends Controller
         return $this->successJsonResponse($user);
     }
 
-    public function deny(User $user)
+    /*
+     * 禁用或激活用户
+     */
+    public function deny(Request $request, User $user)
     {
-        $user->status = User::STATE_DENY;
+        $this->validate($request, [
+            'enable' => 'required|boolean'
+        ]);
+        if (is_true($request->input('enable'))) {
+            $user->status = User::STATE_DENY;
+        } else {
+            $user->status = User::STATE_NORMAL;
+        }
         $user->save();
         return $this->successJsonResponse();
     }

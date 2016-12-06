@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\ErrCode;
 use Illuminate\Http\Request;
 use App\Models\Role;
 
 class RolesController extends Controller
 {
+    public function index(Request $request)
+    {
+        $roles = Role::paginate($request->input('page_size', 10));
+        return $this->paginateJsonResponse($roles);
+    }
+
     //
     public function create(Request $request)
     {
@@ -18,6 +25,11 @@ class RolesController extends Controller
         return $this->successJsonResponse($role);
     }
 
+    public function show(Role $role)
+    {
+        return $this->successJsonResponse($role);
+    }
+
     public function update(Request $request, Role $role)
     {
         $this->validate($request, [
@@ -25,6 +37,15 @@ class RolesController extends Controller
         ]);
         $role->name = $request->input('name');
         $role->save();
-        $this->successJsonResponse($role);
+        return $this->successJsonResponse($role);
+    }
+
+    public function delete(Role $role)
+    {
+        if ($role->users()->count() > 0) {
+            return $this->errorJsonResponse(ErrCode::E_HAS_ASSOCIATION, 422);
+        }
+        $role->delete();
+        return $this->successJsonResponse();
     }
 }
