@@ -1,6 +1,6 @@
 const config = {
   domain: 'http://passport.corp.visiondk.com',
-  ssoLoginUrl: '/login?redirect_url=',
+  redirectUrl: 'http://passport.corp.visiondk.com/login?redirect_url=',
   appName: 'ant_passport',
   appVision: '0.1',
   appAuthor: 'tkvern',

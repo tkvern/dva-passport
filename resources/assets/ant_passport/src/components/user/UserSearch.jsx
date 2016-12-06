@@ -12,7 +12,7 @@ const monthFormat = 'YYYY/MM';
 const plainOptions = ['等待中', '运行中', '完成', '失败', '未知'];
 
 const UserSearch = ({
-  field, keyword,
+  keyword,
   expand,
   onExpand,
   onSearch,
@@ -45,24 +45,12 @@ const UserSearch = ({
   const children = [
     <Row key={1}>
       <Col span={8}>
-        <FormItem {...formItemLayout} label="姓名">
+        <FormItem {...formItemLayout} label="关键字">
           {getFieldDecorator('keyword', {
             initialValue: keyword || '',
           })(
-            <Input placeholder="请输入姓名" />
+            <Input placeholder="请输入关键字查询" maxLength={20} />
           )}
-        </FormItem>
-      </Col>
-      <Col span={8}>
-        <FormItem {...formItemLayout} label="手机">
-          <Input placeholder="请输入手机" />
-        </FormItem>
-      </Col>
-      <Col span={8}>
-        <FormItem {...formItemLayout} label="创建日期">
-          <RangePicker
-            format={dateFormat}
-          />
         </FormItem>
       </Col>
     </Row>
@@ -84,9 +72,9 @@ const UserSearch = ({
             <Button style={{ marginLeft: 8 }} onClick={handleReset}>
               清空
             </Button>
-            <a style={{ marginLeft: 8, fontSize: 12 }} onClick={onExpand}>
+            {/*<a style={{ marginLeft: 8, fontSize: 12 }} onClick={onExpand}>
               高级搜索 <Icon type={expand ? 'up' : 'down'} />
-            </a>
+            </a>*/}
           </Col>
         </Col>
       </Row>

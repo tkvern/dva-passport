@@ -1,8 +1,7 @@
 import { hashHistory } from 'dva/router';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
-import { query, create, remvoe, update } from '../services/users';
-import { querys } from '../services/auth';
+import { query, create, remvoe, update, deny } from '../services/users';
 
 export default {
 
@@ -10,7 +9,6 @@ export default {
 
   state: {
     list: [],
-    field: '',
     keyword: '',
     expand: false,
     total: null,
@@ -45,24 +43,34 @@ export default {
     updateQueryKey(state, action) {
       return { ...state, ...action.payload };
     },
+    denySuccess(state, action) {
+      const { id, enable } = action.payload;
+      const newList = state.list.map(user => {
+        if (user.id === id) {
+          user.status = enable ? 2 : 1;;
+          return { ...user };
+        }
+        return user;
+      });
+      return { ...state, list: newList, loading: false };
+    },
   },
 
   effects: {
-    *query({ payload }, { select, call, put }) {
+    *query({ payload }, { call, put }) {
       yield put({ type: 'showLoading' });
       yield put({
         type: 'updateQueryKey',
-        payload: { page: 1, field: '', keyword: '', ...payload },
+        payload: { page: 1, keyword: '', ...payload },
       });
-
       const { data } = yield call(query, parse(payload));
-      if (data) {
+      if (data && data.err_msg == 'SUCCESS') {
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.data,
-            total: data.page.total,
-            current: data.page.current,
+            list: data.data.list,
+            total: data.data.total,
+            current: data.data.current,
           },
         });
       }
@@ -75,10 +83,9 @@ export default {
         yield put({
           type: 'createSuccess',
           payload: {
-            list: data.data,
-            total: data.page.total,
-            current: data.page.current,
-            field: '',
+            list: data.data.list,
+            total: data.data.total,
+            current: data.data.current,
             keyword: '',
           },
         });
@@ -86,14 +93,23 @@ export default {
     },
     *'delete'() {},
     *update() {},
+    *deny({ payload }, { call, put }) {
+      yield put({ type: 'showLoading' });
+      const { data } = yield call(deny, parse(payload));
+      if (data && data.err_msg == 'SUCCESS') {
+        yield put({
+          type: 'denySuccess',
+          payload,
+        });
+      }
+    }
   },
 
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen((location) => {
-        // const match = pathToRegexp(`/users`).exec(pathname);
-
-        if (location.pathname === '/users') {
+      history.listen(location => {
+        const match = pathToRegexp(`/users`).exec(location.pathname);
+        if (match) {
           dispatch({
             type: 'query',
             payload: location.query,
