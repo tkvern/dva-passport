@@ -10,9 +10,9 @@ const dateFormat = 'YYYY/MM/DD';
 const monthFormat = 'YYYY/MM';
 const plainOptions = ['等待中', '运行中', '完成', '失败', '未知'];
 
-const UserSearch = ({
-  keyword,
+const RoleSearch = ({
   expand,
+  keyword,
   onExpand,
   onSearch,
   form: {
@@ -71,9 +71,6 @@ const UserSearch = ({
             <Button style={{ marginLeft: 8 }} onClick={handleReset}>
               清空
             </Button>
-            {/*<a style={{ marginLeft: 8, fontSize: 12 }} onClick={onExpand}>
-              高级搜索 <Icon type={expand ? 'up' : 'down'} />
-            </a>*/}
           </Col>
         </Col>
       </Row>
@@ -81,4 +78,4 @@ const UserSearch = ({
   );
 }
 
-export default Form.create()(UserSearch);
+export default Form.create()(RoleSearch);

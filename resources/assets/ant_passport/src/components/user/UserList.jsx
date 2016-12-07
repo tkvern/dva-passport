@@ -89,7 +89,9 @@ const UserList = ({
       }
 
       return (
-        <a onClick={() => onDeny(id, enable)}>{displayText}</a>
+        <Popconfirm title='你确定要执行该操作吗?' onConfirm={() => onDeny(id, enable)}>
+          <a>{displayText}</a>
+        </Popconfirm>
       );
     },
   }];

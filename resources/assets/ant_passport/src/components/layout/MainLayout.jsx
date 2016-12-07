@@ -73,9 +73,10 @@ function MainLayout({ children, dispatch, location, auth }) {
           <Menu.Item key="1">
             <Link to="/"><Icon type="appstore" />应用中心</Link>
           </Menu.Item>
-          <SubMenu key="sub2" title={<span><Icon type="user" />用户中心</span>}>
+          <SubMenu key="sub2" title={<span><Icon type="user" />用户模块</span>}>
             <Menu.Item key="5"><Link to="/users">用户管理</Link></Menu.Item>
-            <Menu.Item key="6">个人信息</Menu.Item>
+            <Menu.Item key="6"><Link to="/roles">角色管理</Link></Menu.Item>
+            <Menu.Item key="7"><Link to="/permissions">权限管理</Link></Menu.Item>
           </SubMenu>
         </Menu>
       </aside>
