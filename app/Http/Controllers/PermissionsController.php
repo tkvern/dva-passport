@@ -11,7 +11,7 @@ class PermissionsController extends Controller
 {
     public function index(Request $request)
     {
-        $pageSize = $request->input('page_size');
+        $pageSize = $request->input('page_size', 10);
         $permissions = Permission::query()->paginate($pageSize);
         return $this->paginateJsonResponse($permissions);
     }
