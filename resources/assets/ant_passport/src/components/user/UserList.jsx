@@ -10,18 +10,6 @@ const UserList = ({
   onPageChange,
   onDeny,
 }) => {
-  const menu = (
-    <Menu>
-      <Menu.Item key="0">
-        <a>重试</a>
-      </Menu.Item>
-      <Menu.Item key="4">删除</Menu.Item>
-      <Menu.Divider />
-      <Menu.Item key="1">生成顶</Menu.Item>
-      <Menu.Item key="2">生成底</Menu.Item>
-      <Menu.Item key="3">生成顶和底</Menu.Item>
-    </Menu>
-  );
 
   const columns = [{
     title: '',

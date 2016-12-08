@@ -49,15 +49,6 @@ function Roles({ location, dispatch, roles }) {
         },
       });
     },
-    onDeny(id, enable) {
-      dispatch({
-        type: 'roles/deny',
-        payload: {
-          id: id,
-          enable: enable,
-        },
-      })
-    },
   }
 
   const roleSearchProps = {
