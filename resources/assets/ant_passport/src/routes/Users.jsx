@@ -40,7 +40,7 @@ function Users({ location, dispatch, users }) {
         payload: {
           id: id,
           enable: enable,
-        }
+        },
       })
     },
   }

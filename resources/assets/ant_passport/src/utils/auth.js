@@ -14,7 +14,7 @@ export function getAuthHeader(sso_token) {
 }
 
 export function redirectLogin() {
-  return window.location.href = config.redirectUrl + window.location.origin;
+  window.location.href = config.redirectUrl + window.location.origin;
 }
 
 export function errorHandle(error) {

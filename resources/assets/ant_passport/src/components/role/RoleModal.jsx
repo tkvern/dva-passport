@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {
   Form, Row, Col, Input,
-  Modal 
+  Modal,
 } from 'antd';
 
 const FormItem = Form.Item;
@@ -50,17 +50,17 @@ const RoleModal = ({
         <Row>
           <Col span={24}>
             <FormItem {...formItemLayout} label="key">
-              {getFieldDecorator('key', { 
+              {getFieldDecorator('key', {
                 ...config,
                 initialValue: item.key,
               })(
-                <Input placeholder="请输入角色 key" disabled={ !!item.key ? true : false } />
+                <Input placeholder="请输入角色 key" disabled={!!item.key ? true : false} />
               )}
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="名称">
-              {getFieldDecorator('name', { 
+              {getFieldDecorator('name', {
                 ...config,
                 initialValue: item.name,
               })(

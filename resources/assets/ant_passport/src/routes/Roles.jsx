@@ -55,7 +55,7 @@ function Roles({ location, dispatch, roles }) {
         payload: {
           id: id,
           enable: enable,
-        }
+        },
       })
     },
   }

@@ -7,7 +7,7 @@ import { errorHandle } from './utils/auth';
 // 1. Initialize
 const app = dva({
   onError(error) {
-    console.log(error);
+    // console.log(error);
     errorHandle(error);
   },
 });
@@ -18,7 +18,7 @@ const app = dva({
 // 3. Model
 app.model(require('./models/users'));
 
-app.model(require("./models/roles"));
+app.model(require('./models/roles'));
 
 app.model(require('./models/auth'));
 

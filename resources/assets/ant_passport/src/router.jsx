@@ -5,18 +5,12 @@ import Roles from './routes/Roles';
 import Dashboard from './routes/Dashboard';
 import { authenticated } from './utils/auth';
 
-export default function({ history }) {
+export default function ({ history }) {
   return (
     <Router history={history}>
-      <Route path="/"
-        component={Dashboard} 
-        onEnter={authenticated} />
-      <Route path="/users"
-        component={Users} 
-        onEnter={authenticated} />
-      <Route path="/roles"
-        component={Roles} 
-        onEnter={authenticated} />
+      <Route path="/" component={Dashboard} onEnter={authenticated} />
+      <Route path="/users" component={Users} onEnter={authenticated} />
+      <Route path="/roles" component={Roles} onEnter={authenticated} />
     </Router>
   );
 }

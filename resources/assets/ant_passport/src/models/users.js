@@ -45,9 +45,9 @@ export default {
     },
     denySuccess(state, action) {
       const { id, enable } = action.payload;
-      const newList = state.list.map(user => {
+      const newList = state.list.map((user) => {
         if (user.id === id) {
-          user.status = enable ? 2 : 1;;
+          user.status = enable ? 2 : 1;
           return { ...user };
         }
         return user;
@@ -64,7 +64,7 @@ export default {
         payload: { page: 1, keyword: '', ...payload },
       });
       const { data } = yield call(query, parse(payload));
-      if (data && data.err_msg == 'SUCCESS') {
+      if (data && data.err_msg === 'SUCCESS') {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -96,19 +96,19 @@ export default {
     *deny({ payload }, { call, put }) {
       yield put({ type: 'showLoading' });
       const { data } = yield call(deny, parse(payload));
-      if (data && data.err_msg == 'SUCCESS') {
+      if (data && data.err_msg === 'SUCCESS') {
         yield put({
           type: 'denySuccess',
           payload,
         });
       }
-    }
+    },
   },
 
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen(location => {
-        const match = pathToRegexp(`/users`).exec(location.pathname);
+      history.listen((location) => {
+        const match = pathToRegexp('/users').exec(location.pathname);
         if (match) {
           dispatch({
             type: 'query',

@@ -77,19 +77,19 @@ const UserList = ({
     key: 'operation',
     render: (text, record, index) => {
       const { id, status } = record;
-      let enable,
-          displayText;
+      let enable;
+      let displayText;
 
-      if ( status == 1) {
+      if (status === 1) {
         enable = true;
-        displayText = "禁用";
+        displayText = '禁用';
       } else {
         enable = false;
-        displayText = "启用";
+        displayText = '启用';
       }
 
       return (
-        <Popconfirm title='你确定要执行该操作吗?' onConfirm={() => onDeny(id, enable)}>
+        <Popconfirm title="你确定要执行该操作吗?" onConfirm={() => onDeny(id, enable)}>
           <a>{displayText}</a>
         </Popconfirm>
       );

@@ -39,7 +39,7 @@ export default {
     },
     updateSuccess(state, action) {
       const updateRole = action.payload;
-      const newList = state.list.map(role => {
+      const newList = state.list.map((role) => {
         if (role.id === updateRole.id) {
           return { ...role, ...updateRole };
         }
@@ -59,7 +59,7 @@ export default {
         payload: { page: 1, keyword: '', ...payload },
       });
       const { data } = yield call(query, parse(payload));
-      if (data && data.err_msg == 'SUCCESS') {
+      if (data && data.err_msg === 'SUCCESS') {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -74,7 +74,7 @@ export default {
       yield put({ type: 'hideModal' });
       yield put({ type: 'showLoading' });
       const { data } = yield call(create, payload);
-      if (data && data.err_msg == 'SUCCESS') {
+      if (data && data.err_msg === 'SUCCESS') {
         yield put({
           type: 'query',
         });
@@ -83,7 +83,7 @@ export default {
     *'delete'({ payload }, { call, put }) {
       yield put({ type: 'showLoading' });
       const { data } = yield call(remove, { id: payload });
-      if (data && data.err_msg == 'SUCCESS') {
+      if (data && data.err_msg === 'SUCCESS') {
         yield put({
           type: 'deleteSuccess',
           payload,
@@ -96,7 +96,7 @@ export default {
       const id = yield select(({ roles }) => roles.currentItem.id);
       const newRole = { ...payload, id };
       const { data } = yield call(update, newRole);
-      if (data && data.err_msg == 'SUCCESS') {
+      if (data && data.err_msg === 'SUCCESS') {
         yield put({
           type: 'updateSuccess',
           payload: newRole,
@@ -106,8 +106,8 @@ export default {
   },
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen(location => {
-        const match = pathToRegexp(`/roles`).exec(location.pathname);
+      history.listen((location) => {
+        const match = pathToRegexp('/roles').exec(location.pathname);
         if (match) {
           dispatch({
             type: 'query',

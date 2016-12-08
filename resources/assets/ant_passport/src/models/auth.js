@@ -36,7 +36,7 @@ export default {
     *query({ payload }, { select, call, put }) {
       const { data } = yield call(query, parse(payload));
 
-      if (data && data.err_msg == 'SUCCESS') {
+      if (data && data.err_msg === 'SUCCESS') {
         setLocalStorage('user', data);
         yield put({
           type: 'querySuccess',
@@ -48,10 +48,10 @@ export default {
             email: data.data.email,
             status: data.data.status,
             isadmin: data.data.isadmin,
-          }
+          },
         });
       }
-    }
+    },
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -75,6 +75,6 @@ export default {
           },
         });
       }
-    }
+    },
   },
 }
