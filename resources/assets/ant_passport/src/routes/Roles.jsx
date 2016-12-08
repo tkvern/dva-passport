@@ -12,7 +12,6 @@ function Roles({ location, dispatch, roles }) {
   const {
     list,
     keyword,
-    expand,
     total,
     loading,
     current,
@@ -53,16 +52,6 @@ function Roles({ location, dispatch, roles }) {
 
   const roleSearchProps = {
     keyword,
-    expand,
-    onExpand() {
-      dispatch({
-        type: 'roles/collapseExpand',
-        payload: {
-          expand: !expand,
-        },
-      });
-    },
-
     onSearch(fieldsValue) {
       dispatch(
         routerRedux.push({

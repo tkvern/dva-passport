@@ -11,7 +11,6 @@ const monthFormat = 'YYYY/MM';
 const plainOptions = ['等待中', '运行中', '完成', '失败', '未知'];
 
 const RoleSearch = ({
-  expand,
   keyword,
   onExpand,
   onSearch,
@@ -55,7 +54,7 @@ const RoleSearch = ({
     </Row>
   ];
 
-  const showCount = expand ? children.length : 1;
+  const showCount = true ? children.length : 1;
 
   return (
     <Form

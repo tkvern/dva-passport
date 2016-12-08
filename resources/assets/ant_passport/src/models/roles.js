@@ -7,7 +7,6 @@ export default {
   namespace: 'roles',
   state: {
     list: [],
-    expand: false,
     keyword: '',
     total: null,
     loading: false,
