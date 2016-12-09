@@ -11,4 +11,8 @@ const UserPanel = ({
   );
 }
 
+UserPanel.propTypes = {
+  onAdd: PropTypes.func,
+}
+
 export default UserPanel;

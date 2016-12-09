@@ -60,6 +60,15 @@ function Roles({ location, dispatch, roles }) {
         }),
       );
     },
+
+    onReset() {
+      dispatch({
+        type: 'roles/updateQueryKey',
+        payload: {
+          keyword: '',
+        },
+      });
+    },
   }
 
   const roleModalProps = {

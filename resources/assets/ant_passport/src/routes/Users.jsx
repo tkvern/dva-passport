@@ -65,6 +65,15 @@ function Users({ location, dispatch, users }) {
         }),
       );
     },
+
+    onReset() {
+      dispatch({
+        type: 'users/updateQueryKey',
+        payload: {
+          keyword: '',
+        },
+      });
+    },
   }
 
   const userModalProps = {

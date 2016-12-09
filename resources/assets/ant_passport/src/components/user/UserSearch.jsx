@@ -15,6 +15,7 @@ const UserSearch = ({
   expand,
   onExpand,
   onSearch,
+  onReset,
   form: {
     getFieldDecorator,
     validateFields,
@@ -39,6 +40,7 @@ const UserSearch = ({
 
   function handleReset() {
     resetFields();
+    onReset();
   }
 
   const children = [
@@ -79,6 +81,14 @@ const UserSearch = ({
       </Row>
     </Form>
   );
+}
+
+UserSearch.propTypes = {
+  keyword: PropTypes.string,
+  expand: PropTypes.bool,
+  onExpand: PropTypes.func,
+  onSearch: PropTypes.func,
+  onReset: PropTypes.func,
 }
 
 export default Form.create()(UserSearch);

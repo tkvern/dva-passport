@@ -60,6 +60,15 @@ function Permissions({ location, dispatch, permissions }) {
         }),
       );
     },
+
+    onReset() {
+      dispatch({
+        type: 'permissions/updateQueryKey',
+        payload: {
+          keyword: '',
+        },
+      });
+    },
   }
 
   const permissionModalProps = {

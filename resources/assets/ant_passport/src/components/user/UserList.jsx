@@ -110,6 +110,7 @@ UserList.propTypes = {
   loading: PropTypes.bool,
   dataSource: PropTypes.array,
   onPageChange: PropTypes.func,
+  onDeny: PropTypes.func,
 }
 
 export default UserList;

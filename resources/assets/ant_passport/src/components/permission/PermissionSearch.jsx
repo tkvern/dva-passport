@@ -12,8 +12,8 @@ const plainOptions = ['等待中', '运行中', '完成', '失败', '未知'];
 
 const PermissionSearch = ({
   keyword,
-  onExpand,
   onSearch,
+  onReset,
   form: {
     getFieldDecorator,
     validateFields,
@@ -38,6 +38,7 @@ const PermissionSearch = ({
 
   function handleReset() {
     resetFields();
+    onReset();
   }
 
   const children = [
