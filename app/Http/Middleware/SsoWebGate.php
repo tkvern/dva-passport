@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Tymon\JWTAuth\Token;
+use Illuminate\Support\Facades\Auth;
 use App\Support\Traits\SsoUsers;
 
 class SsoWebGate
@@ -19,11 +19,10 @@ class SsoWebGate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if(!Auth::guard($guard)->check()) {
+        if(!Auth::guard($guard)->check() || !$this->checkSsoToken()) {
             $this->clearSsoToken();
             return redirect()->route('sso_login');
         }
-        $this->checkSsoToken();
         return $next($request);
     }
 }

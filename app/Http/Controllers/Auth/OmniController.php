@@ -7,6 +7,7 @@
  */
 namespace App\Http\Controllers\Auth;
 
+use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Support\Facades\DingOpenAPI;
@@ -21,17 +22,25 @@ class OmniController extends Controller
     public function dingtalk(Request $request)
     {
         $code = $request->get('code');
-        $userInfo = DingOpenAPI::getUserInfo($code);
+        try {
+            $userInfo = DingOpenAPI::getUserInfo($code);
+        } catch(ConnectException $e) {
+            return redirect()->route('sso_login')->withErrors(['ding' => '当前服务不可用']);
+        }
         $dingId = $userInfo['user_info']['dingId'];
         $user = User::where('dingid', $dingId)->first();
         if ($user) {
-            info('ssouser: '.$user->name);
             Auth::login($user);
             $this->generateSsoToken();
-            $url = $request->get('redirect_url', '/');
+            $url = $request->session()->get('return_url');
+            if(!empty($url)) {
+                $request->session()->forget('return_url');
+            } else {
+                $url = '/';
+            }
             return redirect($url);
         } else {
-            return redirect()->route('sso_login')->withErrors(['identity' => '无权登录']);
+            return redirect()->route('sso_login')->withErrors(['ding' => '无权登录']);
         }
     }
 }

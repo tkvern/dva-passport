@@ -178,7 +178,7 @@ body {
 
 .login-form .toast {
   position: absolute;
-  top: 52px;
+  top: -52px;
   left: 50%;
   width: 300px;
   margin-left: -150px; }

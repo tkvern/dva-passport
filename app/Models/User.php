@@ -10,6 +10,9 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
+    const STATE_NORMAL = 1;
+    const STATE_DENY = 2;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -28,6 +31,11 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany('App\Models\Role', 'user_role');
+    }
 
     /**
      * @return array

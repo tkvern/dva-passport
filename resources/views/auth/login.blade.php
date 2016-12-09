@@ -21,16 +21,19 @@
             </window-operations>
         </div>
         <div class="login-form tab login-tab">
-            <div class="toast warning">手机号或密码错误，请重新输入</div>
+            @if(count($errors) > 0)
+            <div class="toast warning">{{ $errors->first('ding') ?: $errors->first('identity') }}</div>
+            @endif
             <ul class="tab-items">
-                <li class="tab-item current">扫码登录</li>
-                <li class="tab-item">密码登录</li>
+                <li class="tab-item {{ !$errors->has('identity') ? 'current' : '' }}">扫码登录</li>
+                <li class="tab-item {{ $errors->has('identity') ? 'current' : '' }}">密码登录</li>
             </ul>
             <div  class="tab-contents">
-                <div class="tab-content qrcode-login current" id="qrcode-login">
+                <div class="tab-content qrcode-login {{ !$errors->has('identity') ? 'current' : '' }}" id="qrcode-login">
                 </div>
-                <div class="tab-content password-login">
-                    <form action="" id="myform">
+                <div class="tab-content password-login {{ $errors->has('identity') ? 'current' : '' }}" >
+                    <form action="" id="myform" method="post">
+                        {{ csrf_field() }}
                         <div class="avatar biger border-thick">
                             <img src="/image/logo.png" class="country-img" alt="">
                         </div>
@@ -39,12 +42,9 @@
                             <input type="text" name="identity" placeholder="请输入邮箱或手机号" required="" class="fm-input account">
                         </div>
                         <div class="clearfix">
-                            <input class="fm-input password" type="password" name="verification" placeholder="请输入密码" required="">
+                            <input class="fm-input password" type="password" name="password" placeholder="请输入密码" required="">
                         </div>
                         <button type="submit" class="blue big ng-binding disabled">登录</button>
-                        @if(count($errors) > 0)
-                            <div class="toast warning">{{ $errors->first('identity') || $errors->first('password') }}</div>
-                        @endif
                     </form>
                 </div>
             </div>
@@ -54,6 +54,7 @@
 
         <script type="text/javascript" src="/js/app.js"></script>
         <script type="text/javascript">
+            console.log("{{$errors->toJson()}}");
         !function (window, document) {
             function d(a) {
                 var e, c = document.createElement("iframe"),

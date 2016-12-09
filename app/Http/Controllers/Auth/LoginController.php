@@ -49,6 +49,10 @@ class LoginController extends Controller
     // @override
     public function showLoginForm(Request $request)
     {
+        $return_url = $request->get('redirect_url');
+        if(!empty($return_url)) {
+            $request->session()->set('return_url', $return_url);
+        }
         $callback_url = route('omni_dingtalk_cb');
         $goto = "https://oapi.dingtalk.com/connect/oauth2/sns_authorize?".
                 "appid=dingoaowu4izq4tforez8h&response_type=code&scope=snsapi_login".
@@ -56,13 +60,33 @@ class LoginController extends Controller
         return view('auth.login', ['goto' => urlencode($goto.$callback_url), 'redirect_url' => $goto.urlencode($callback_url)]);
     }
 
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->flush();
+
+        $request->session()->regenerate();
+
+        $this->clearSsoToken();
+
+        return redirect('/login');
+    }
+
     // @override
     protected function credentials(Request $request)
     {
-        $identify = $request->get('identity');
-        $field = filter_var($identify, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
+        $identity = $request->get('identity');
+        $field = filter_var($identity, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
         return [
-            $field => $identify,
+            $field => $identity,
             'password' => $request->get('password')
         ];
     }
@@ -78,10 +102,12 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         $this->generateSsoToken();
-        $redirect_url = $request->get('redirect_url');
-        if (!empty($redirect_url)) {
-            return redirect($redirect_url);
+        $url = $request->session()->get('return_url');
+        if(!empty($url)) {
+            $request->session()->forget('return_url');
+            return redirect($url);
         }
         return false;
     }
+
 }
