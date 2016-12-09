@@ -25,3 +25,14 @@ export async function update(params) {
     body: JSON.stringify(params),
   });
 }
+
+export async function grant(params) {
+  return request(`${config.domain}/api/roles/${params.id}/action/onpermissions`, {
+    method: 'POST',
+    body: JSON.stringify(params),
+  })
+}
+
+export async function rolePermissions(params) {
+  return request(`${config.domain}/api/roles/${params.id}/permissions`);
+}

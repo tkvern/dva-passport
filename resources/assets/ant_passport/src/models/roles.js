@@ -14,6 +14,7 @@ export default {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
+    modalGrantVisible: true,
   },
   reducers: {
     showLoading(state, action) {
@@ -24,6 +25,12 @@ export default {
     },
     hideModal(state, action) {
       return { ...state, modalVisible: false };
+    },
+    showModalGrant(state, action) {
+      return { ...state, ...action.payload, modalGrantVisible: true };
+    },
+    hideModalGrant(state, action) {
+      return { ...state, modalGrantVisible: false };
     },
     querySuccess(state, action) {
       return { ...state, ...action.payload, loading: false };
@@ -48,6 +55,9 @@ export default {
     },
     updateQueryKey(state, action) {
       return { ...state, ...action.payload };
+    },
+    grantSuccess(state, action) {
+      return { ...state, ...action.payload, loading: false };
     },
   },
   effects: {
@@ -100,6 +110,17 @@ export default {
           type: 'updateSuccess',
           payload: newRole,
         });
+      }
+    },
+    *grant({ payload }, { call, put }) {
+      yield put({ type: 'hideModal' });
+      yield put({ type: 'showLoading' });
+      const { data } = yield call(grant, payload);
+      if (data && data.err_msg === 'SUCCESS') {
+        yield put({
+          type: 'grantSuccess',
+          payload,
+        })
       }
     },
   },

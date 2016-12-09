@@ -7,6 +7,7 @@ import RoleList from '../components/role/RoleList';
 import RoleSearch from '../components/role/RoleSearch';
 import RolePanel from '../components/role/RolePanel';
 import RoleModal from '../components/role/RoleModal';
+import RoleModalGrant from '../components/role/RoleModalGrant';
 
 function Roles({ location, dispatch, roles }) {
   const {
@@ -18,6 +19,7 @@ function Roles({ location, dispatch, roles }) {
     currentItem,
     modalVisible,
     modalType,
+    modalGrantVisible,
   } = roles;
 
   const roleListProps = {
@@ -44,6 +46,14 @@ function Roles({ location, dispatch, roles }) {
         type: 'roles/showModal',
         payload: {
           modalType: 'update',
+          currentItem: item,
+        },
+      });
+    },
+    onGrant(item) {
+      dispatch({
+        type: 'roles/showModalGrant',
+        payload: {
           currentItem: item,
         },
       });
@@ -90,6 +100,23 @@ function Roles({ location, dispatch, roles }) {
 
   }
 
+  const roleModalGrantProps = {
+    visible: modalGrantVisible,
+    onOk(data) {
+      dispatch({
+        type: `roles/grant`,
+        payload: data,
+      });
+    },
+
+    onCancel() {
+      dispatch({
+        type: 'roles/hideModalGrant',
+      });
+    },
+
+  }
+
   const rolePanelProps = {
     onAdd() {
       dispatch({
@@ -104,6 +131,9 @@ function Roles({ location, dispatch, roles }) {
   const RoleModalGen = () =>
     <RoleModal {...roleModalProps} />;
 
+  const RoleModalGrantGen = () =>
+    <RoleModalGrant {...roleModalGrantProps} />;
+
   return (
     <MainLayout>
       <div>
@@ -111,6 +141,7 @@ function Roles({ location, dispatch, roles }) {
         <RoleSearch {...roleSearchProps} />
         <RoleList {...roleListProps} />
         <RoleModalGen />
+        <RoleModalGrantGen />
       </div>
     </MainLayout>
   );

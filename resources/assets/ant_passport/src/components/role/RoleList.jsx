@@ -10,6 +10,7 @@ const RoleList = ({
   onPageChange,
   onDeleteItem,
   onEditItem,
+  onGrant,
 }) => {
 
   const columns = [{
@@ -38,6 +39,8 @@ const RoleList = ({
     render: (text, record, index) => {
       return (
         <div>
+          <a onClick={() => onGrant(record)}>授权</a>
+          &nbsp;&nbsp;
           <a onClick={() => onEditItem(record)}>编辑</a>
           &nbsp;&nbsp;
           <Popconfirm title="确定要删除吗？" onConfirm={() => onDeleteItem(record.id)}>
