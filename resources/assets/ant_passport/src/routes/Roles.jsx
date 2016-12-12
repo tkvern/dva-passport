@@ -20,6 +20,8 @@ function Roles({ location, dispatch, roles }) {
     modalVisible,
     modalType,
     modalGrantVisible,
+    currentPermissions,
+    listPermissions,
   } = roles;
 
   const roleListProps = {
@@ -52,7 +54,7 @@ function Roles({ location, dispatch, roles }) {
     },
     onGrant(item) {
       dispatch({
-        type: 'roles/showModalGrant',
+        type: 'roles/rolePermissions',
         payload: {
           currentItem: item,
         },
@@ -102,6 +104,8 @@ function Roles({ location, dispatch, roles }) {
 
   const roleModalGrantProps = {
     visible: modalGrantVisible,
+    currentPermissions,
+    listPermissions,
     onOk(data) {
       dispatch({
         type: `roles/grant`,

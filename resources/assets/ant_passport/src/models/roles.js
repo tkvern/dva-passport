@@ -1,7 +1,8 @@
 import { hashHistory } from 'dva/router';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
-import { query, create, remove, update, deny } from '../services/roles';
+import { query, create, remove, update, grant, rolePermissions } from '../services/roles';
+import { query as queryPermissions } from '../services/permissions';
 
 export default {
   namespace: 'roles',
@@ -14,7 +15,9 @@ export default {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
-    modalGrantVisible: true,
+    modalGrantVisible: false,
+    currentPermissions: [],
+    listPermissions: [],
   },
   reducers: {
     showLoading(state, action) {
@@ -112,17 +115,34 @@ export default {
         });
       }
     },
-    *grant({ payload }, { call, put }) {
-      yield put({ type: 'hideModal' });
+    *grant({ payload }, { select, call, put }) {
+      yield put({ type: 'hideModalGrant' });
       yield put({ type: 'showLoading' });
-      const { data } = yield call(grant, payload);
+      const id = yield select(({ roles }) => roles.currentItem.id);
+      const newRole = { ...payload, id }
+      const { data } = yield call(grant, newRole);
       if (data && data.err_msg === 'SUCCESS') {
         yield put({
           type: 'grantSuccess',
-          payload,
+          payload: newRole,
         })
       }
     },
+    *rolePermissions({ payload }, { select, call, put }) {
+      const { id } = payload.currentItem;
+      const { data } = yield call(rolePermissions, { id });
+      const dataPermission = yield call(queryPermissions, { page_size: 10000 });
+      if (data && data.err_msg === 'SUCCESS') {
+        yield put({
+          type: 'showModalGrant',
+          payload: {
+            currentPermissions: data.data,
+            listPermissions: dataPermission.data.data.list,
+            ...payload,
+          }
+        })
+      }
+    }
   },
   subscriptions: {
     setup({ dispatch, history }) {

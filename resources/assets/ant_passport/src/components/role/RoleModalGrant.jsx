@@ -1,38 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import {
-  Form, Row, Col, Input, Tree,
+  Form, Row, Col, Checkbox, Card,
   Modal,
 } from 'antd';
 
 const FormItem = Form.Item;
-const TreeNode = Tree.TreeNode;
-const keys = ['0-0-0', '0-0-1'];
-const defaultExpandedKeys = keys;
-const defaultSelectedKeys = keys;
-const defaultCheckedKeys = keys;
-
-
-const treeData = [{
-  label: 'Node1',
-  value: '0-0',
-  key: '0-0',
-  children: [{
-    label: 'Child Node1',
-    value: '0-0-1',
-    key: '0-0-1',
-  }, {
-    label: 'Child Node2',
-    value: '0-0-2',
-    key: '0-0-2',
-  }],
-}, {
-  label: 'Node2',
-  value: '0-1',
-  key: '0-1',
-}];
+const CheckboxGroup = Checkbox.Group;
 
 const RoleModalGrant = ({
-  item = {},
+  currentPermissions,
+  listPermissions,
   onOk,
   visible,
   onCancel,
@@ -52,13 +29,61 @@ const RoleModalGrant = ({
     });
   }
 
-  function onSelect(info) {
-    console.log('selected', info);
+  const defaultCheckedList = [];
+  const plainOptions = [];
+  let map = {};
+  let dest = [];
+
+  currentPermissions.map((item) => {
+    defaultCheckedList.push(item.id);
+  });
+  listPermissions.map((item) => {
+    plainOptions.push({
+      label: item.name,
+      value: item.id,
+    })
+  })
+
+  for (let i = 0; i < listPermissions.length; i++){
+    let permission = listPermissions[i];
+    if (!map[permission.scope]){
+        dest.push({
+            scope: permission.scope,
+            children: [permission],
+            options: [{
+              label: permission.name,
+              value: permission.id,
+            }]
+        });
+        map[permission.scope] = permission;
+    }else{
+        for (let j = 0; j < dest.length; j++){
+            let dj = dest[j];
+            if (dj.scope == permission.scope){
+                dj.children.push(permission);
+                dj.options.push({
+                  label: permission.name,
+                  value: permission.id,
+                })
+                break;
+            }
+        }
+    }
   }
 
-  function onCheck(info) {
-    console.log('onCheck', info);
-  }
+  const loop = data => data.map((item) => {
+    if (item.children) {
+      return (
+        <Card title={item.scope} bordered={false} key={item.scope}>
+          <Col span={24} className="checkboxItem">
+            {getFieldDecorator('permission_ids', { initialValue: defaultCheckedList })(
+                <CheckboxGroup options={item.options} />
+            )}
+          </Col>
+        </Card>
+      );
+    }
+  });
 
   const modalOpts = {
     title: '授权',
@@ -80,18 +105,9 @@ const RoleModalGrant = ({
   return (
     <Modal {...modalOpts}>
       <Form>
-        <Row>
-          <Col span={24}>
-            <Tree className="myCls" showLine checkable
-              defaultExpandedKeys={defaultExpandedKeys}
-              defaultSelectedKeys={defaultSelectedKeys}
-              defaultCheckedKeys={defaultCheckedKeys}
-              onSelect={onSelect} onCheck={onCheck}
-              treeData={treeData}
-            >
-            </Tree>
-          </Col>
-        </Row>
+          <Row>
+            {loop(dest)}
+          </Row>
       </Form>
     </Modal>
   );
