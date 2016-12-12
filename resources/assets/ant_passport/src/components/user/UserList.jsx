@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Table, message, Popconfirm, Pagination, Menu, Dropdown, Icon, Progress, Badge } from 'antd';
+import { Table, Popconfirm, Pagination, Badge } from 'antd';
 import { getUserStatus, getIsAdminStatus } from '../../utils/helper';
 
 const UserList = ({
@@ -10,19 +10,6 @@ const UserList = ({
   onPageChange,
   onDeny,
 }) => {
-  const menu = (
-    <Menu>
-      <Menu.Item key="0">
-        <a>重试</a>
-      </Menu.Item>
-      <Menu.Item key="4">删除</Menu.Item>
-      <Menu.Divider />
-      <Menu.Item key="1">生成顶</Menu.Item>
-      <Menu.Item key="2">生成底</Menu.Item>
-      <Menu.Item key="3">生成顶和底</Menu.Item>
-    </Menu>
-  );
-
   const columns = [{
     title: '',
     dataIndex: 'avatar',
@@ -77,19 +64,21 @@ const UserList = ({
     key: 'operation',
     render: (text, record, index) => {
       const { id, status } = record;
-      let enable,
-          displayText;
+      let enable;
+      let displayText;
 
-      if ( status == 1) {
+      if (status === 1) {
         enable = true;
-        displayText = "禁用";
+        displayText = '禁用';
       } else {
         enable = false;
-        displayText = "启用";
+        displayText = '启用';
       }
 
       return (
-        <a onClick={() => onDeny(id, enable)}>{displayText}</a>
+        <Popconfirm title="你确定要执行该操作吗?" onConfirm={() => onDeny(id, enable)}>
+          <a>{displayText}</a>
+        </Popconfirm>
       );
     },
   }];
@@ -120,6 +109,7 @@ UserList.propTypes = {
   loading: PropTypes.bool,
   dataSource: PropTypes.array,
   onPageChange: PropTypes.func,
+  onDeny: PropTypes.func,
 }
 
 export default UserList;

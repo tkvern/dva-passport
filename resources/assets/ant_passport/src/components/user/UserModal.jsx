@@ -11,15 +11,6 @@ const RadioGroup = Radio.Group;
 const InputGroup = Input.Group;
 const CheckboxGroup = Checkbox.Group;
 
-const plainOptions = [
-  'PREVIEW',
-  '3D_FAST',
-  '2D_FAST',
-  '3D_BETTER',
-  '2D_BETTER',
-];
-const defaultCheckedList = ['PREVIEW'];
-
 const UserModal = ({
   item = {},
   onOk,
@@ -41,14 +32,6 @@ const UserModal = ({
     });
   }
 
-  const modalOpts = {
-    title: '任务',
-    visible,
-    onOk: handleOk,
-    onCancel,
-    width: 720,
-  }
-
   const formItemLayout = {
     labelCol: { span: 5 },
     wrapperCol: { span: 15 },
@@ -59,7 +42,7 @@ const UserModal = ({
   };
 
   return (
-    <Modal {...modalOpts}>
+    <Modal>
       <Form>
         <Row>
           <Col span={24}>
@@ -136,7 +119,7 @@ const UserModal = ({
           <Col span={24}>
             <FormItem {...formItemLayout} wrapperCol={{ span: 19 }} label="任务类型">
               {getFieldDecorator('user_types[]', { initialValue: ['PREVIEW'] })(
-                <CheckboxGroup options={plainOptions} />
+                <CheckboxGroup />
               )}
             </FormItem>
           </Col>
@@ -165,6 +148,13 @@ const UserModal = ({
       </Form>
     </Modal>
   );
+}
+
+UserModal.propTypes = {
+  item: PropTypes.object,
+  onOk: PropTypes.func,
+  visible: PropTypes.bool,
+  onCancel: PropTypes.func,
 }
 
 export default Form.create()(UserModal);

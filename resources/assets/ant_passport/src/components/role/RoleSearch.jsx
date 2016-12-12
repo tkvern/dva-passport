@@ -1,16 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import { Form, Row, Col, Input, Button, Icon } from 'antd';
+import { Form, Row, Col, Input, Button } from 'antd';
 
 const FormItem = Form.Item;
 
-const dateFormat = 'YYYY/MM/DD';
-const monthFormat = 'YYYY/MM';
-const plainOptions = ['等待中', '运行中', '完成', '失败', '未知'];
-
-const UserSearch = ({
+const RoleSearch = ({
   keyword,
-  expand,
-  onExpand,
   onSearch,
   onReset,
   form: {
@@ -54,7 +48,7 @@ const UserSearch = ({
     </Row>
   ];
 
-  const showCount = expand ? children.length : 1;
+  const showCount = true ? children.length : 1;
 
   return (
     <Form
@@ -70,9 +64,6 @@ const UserSearch = ({
             <Button style={{ marginLeft: 8 }} onClick={handleReset}>
               清空
             </Button>
-            {/*<a style={{ marginLeft: 8, fontSize: 12 }} onClick={onExpand}>
-              高级搜索 <Icon type={expand ? 'up' : 'down'} />
-            </a>*/}
           </Col>
         </Col>
       </Row>
@@ -80,12 +71,4 @@ const UserSearch = ({
   );
 }
 
-UserSearch.propTypes = {
-  keyword: PropTypes.string,
-  expand: PropTypes.bool,
-  onExpand: PropTypes.func,
-  onSearch: PropTypes.func,
-  onReset: PropTypes.func,
-}
-
-export default Form.create()(UserSearch);
+export default Form.create()(RoleSearch);

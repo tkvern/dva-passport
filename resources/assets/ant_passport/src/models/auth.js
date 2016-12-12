@@ -1,9 +1,8 @@
 import { hashHistory } from 'dva/router';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
-import { query, create, remvoe, update } from '../services/auth';
-import { getCookie, getLocalStorage, setLocalStorage } from '../utils/helper';
-import { redirectLogin } from '../utils/auth';
+import { query } from '../services/auth';
+import { getLocalStorage, setLocalStorage } from '../utils/helper';
 
 export default {
   namespace: 'auth',
@@ -36,7 +35,7 @@ export default {
     *query({ payload }, { select, call, put }) {
       const { data } = yield call(query, parse(payload));
 
-      if (data && data.err_msg == 'SUCCESS') {
+      if (data && data.err_msg === 'SUCCESS') {
         setLocalStorage('user', data);
         yield put({
           type: 'querySuccess',
@@ -48,10 +47,10 @@ export default {
             email: data.data.email,
             status: data.data.status,
             isadmin: data.data.isadmin,
-          }
+          },
         });
       }
-    }
+    },
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -75,6 +74,6 @@ export default {
           },
         });
       }
-    }
+    },
   },
 }
