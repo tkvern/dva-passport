@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Router, Route, IndexRoute, Link } from 'dva/router';
+import { Router, Route } from 'dva/router';
 import { authenticated } from './utils/auth';
 import Dashboard from './routes/Dashboard';
 import Users from './routes/Users';

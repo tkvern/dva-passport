@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Table, message, Popconfirm, Pagination, Menu, Dropdown, Icon, Progress, Badge, Link } from 'antd';
+import { Table, Popconfirm, Pagination } from 'antd';
 import { getRoleStatus, getIsAdminStatus } from '../../utils/helper';
 
 const RoleList = ({

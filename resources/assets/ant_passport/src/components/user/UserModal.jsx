@@ -11,15 +11,6 @@ const RadioGroup = Radio.Group;
 const InputGroup = Input.Group;
 const CheckboxGroup = Checkbox.Group;
 
-const plainOptions = [
-  'PREVIEW',
-  '3D_FAST',
-  '2D_FAST',
-  '3D_BETTER',
-  '2D_BETTER',
-];
-const defaultCheckedList = ['PREVIEW'];
-
 const UserModal = ({
   item = {},
   onOk,
@@ -39,14 +30,6 @@ const UserModal = ({
       const data = { ...getFieldsValue() };
       onOk(data);
     });
-  }
-
-  const modalOpts = {
-    title: '任务',
-    visible,
-    onOk: handleOk,
-    onCancel,
-    width: 720,
   }
 
   const formItemLayout = {

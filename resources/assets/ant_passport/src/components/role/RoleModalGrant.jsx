@@ -11,8 +11,8 @@ const CheckboxGroup = Checkbox.Group;
 
 const RoleModalGrant = ({
   item,
-  onOk,
   visible,
+  onOk,
   onCancel,
   form: {
     getFieldDecorator,

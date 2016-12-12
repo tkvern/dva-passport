@@ -8,8 +8,8 @@ const FormItem = Form.Item;
 
 const PermissionModal = ({
   item = {},
-  onOk,
   visible,
+  onOk,
   onCancel,
   form: {
     getFieldDecorator,

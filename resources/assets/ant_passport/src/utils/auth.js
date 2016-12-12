@@ -1,6 +1,6 @@
 import { query } from '../services/auth';
 import config from '../config';
-import { getCookie, delCookie, getLocalStorage } from './helper';
+import { getCookie, delCookie } from './helper';
 
 // Auth
 export function getAuthHeader(sso_token) {
