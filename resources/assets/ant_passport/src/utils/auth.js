@@ -1,6 +1,6 @@
 import { query } from '../services/auth';
 import config from '../config';
-import { getCookie, delCookie, getLocalStorage } from './helper';
+import { getCookie, delCookie } from './helper';
 
 // Auth
 export function getAuthHeader(sso_token) {
@@ -14,7 +14,7 @@ export function getAuthHeader(sso_token) {
 }
 
 export function redirectLogin() {
-  return window.location.href = config.redirectUrl + window.location.origin;
+  window.location.href = config.redirectUrl + window.location.origin;
 }
 
 export function errorHandle(error) {

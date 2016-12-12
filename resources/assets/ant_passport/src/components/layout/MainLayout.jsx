@@ -21,18 +21,18 @@ function MainLayout({ children, dispatch, location, auth }) {
   } = auth;
 
   function handleClick(e) {
-    if (e.key == 3) {
+    if (e.key === 3) {
       logOut();
     }
   }
 
   function onclickMenu(e) {
     dispatch({
-        type: 'auth/activeMenu',
-        payload: {
-          currentMenu: [e.key],
-        },
-      });
+      type: 'auth/activeMenu',
+      payload: {
+        currentMenu: [e.key],
+      },
+    });
   }
 
   const menu = (
@@ -66,16 +66,14 @@ function MainLayout({ children, dispatch, location, auth }) {
         </nav>
       </header>
       <aside className="ant-layout-sider">
-        <Menu mode="inline" theme="dark" 
-              defaultSelectedKeys={currentMenu} 
-              defaultOpenKeys={['sub2']}
-              onClick={onclickMenu}>
+        <Menu mode="inline" theme="dark" defaultSelectedKeys={currentMenu} defaultOpenKeys={['sub2']} onClick={onclickMenu}>
           <Menu.Item key="1">
             <Link to="/"><Icon type="appstore" />应用中心</Link>
           </Menu.Item>
-          <SubMenu key="sub2" title={<span><Icon type="user" />用户中心</span>}>
+          <SubMenu key="sub2" title={<span><Icon type="user" />用户模块</span>}>
             <Menu.Item key="5"><Link to="/users">用户管理</Link></Menu.Item>
-            <Menu.Item key="6">个人信息</Menu.Item>
+            <Menu.Item key="6"><Link to="/roles">角色管理</Link></Menu.Item>
+            <Menu.Item key="7"><Link to="/permissions">权限管理</Link></Menu.Item>
           </SubMenu>
         </Menu>
       </aside>

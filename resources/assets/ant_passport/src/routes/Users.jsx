@@ -6,7 +6,6 @@ import MainLayout from '../components/layout/MainLayout';
 import UserList from '../components/user/UserList';
 import UserSearch from '../components/user/UserSearch';
 import UserPanel from '../components/user/UserPanel';
-import UserModal from '../components/user/UserModal';
 
 function Users({ location, dispatch, users }) {
   const {
@@ -40,7 +39,7 @@ function Users({ location, dispatch, users }) {
         payload: {
           id: id,
           enable: enable,
-        }
+        },
       })
     },
   }
@@ -65,26 +64,17 @@ function Users({ location, dispatch, users }) {
         }),
       );
     },
-  }
 
-  const userModalProps = {
-    item: modalType === 'create' ? {} : currentItem,
-    type: modalType,
-    visible: modalVisible,
-    onOk(data) {
+    onReset() {
       dispatch({
-        type: `users/${modalType}`,
-        payload: data,
+        type: 'users/updateQueryKey',
+        payload: {
+          keyword: '',
+        },
       });
     },
-
-    onCancel() {
-      dispatch({
-        type: 'users/hideModal',
-      });
-    },
-
   }
+
 
   const userPanelProps = {
     onAdd() {
@@ -96,16 +86,12 @@ function Users({ location, dispatch, users }) {
       });
     },
   }
-
-  const UserModalGen = () =>
-    <UserModal {...userModalProps} />;
-
+  
   return (
     <MainLayout>
       <div>
         <UserSearch {...userSearchProps} />
         <UserList {...userListProps} />
-        <UserModalGen />
       </div>
     </MainLayout>
   );
