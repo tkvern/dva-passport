@@ -10,7 +10,12 @@ class RolesController extends Controller
 {
     public function index(Request $request)
     {
-        $roles = Role::paginate($request->input('page_size', 10));
+        $with = explode(',', $request->input('with', ''));
+        $resource = Role::query();
+        if(in_array('permissions', $with)) {
+            $resource = $resource->with('permissions');
+        }
+        $roles = $resource->paginate($request->input('page_size', 10));
         return $this->paginateJsonResponse($roles);
     }
 

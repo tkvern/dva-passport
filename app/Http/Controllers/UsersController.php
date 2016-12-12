@@ -14,8 +14,27 @@ class UsersController extends Controller
      */
     public function current(Request $request)
     {
+        $with = explode(',', $request->input('with', ''));
         $user = $request->user();
-        return $this->successJsonResponse($user);
+        $arr = $user->toArray();
+        if(in_array('roles', $with)) {
+            $arr['roles'] = $user->roles;
+        }
+        if(in_array('permissions', $with)) {
+            $scopes = explode(',', $request->input('scope', ''));
+            $arr['permissions'] = $user->permissions($scopes);
+        }
+        return $this->successJsonResponse($arr);
+    }
+
+    public function batchUsers(Request $request)
+    {
+        $this->validate($request, [
+           'user_ids' => 'required|array'
+        ]);
+        $userIds = $request->input('user_ids');
+        $users = User::whereIn('id', $userIds)->get();
+        return $this->successJsonResponse($users);
     }
 
     /*
@@ -25,11 +44,15 @@ class UsersController extends Controller
     {
         $pageSize = $request->input('page_size', 10);
         $keyword = $request->input('keyword');
+        $with = explode(',', $request->input('with', ''));
         if(!empty($keyword)) {
             $likeVar = $keyword.'%';
             $resource = User::where('name', 'like', $likeVar)->orWhere('email', 'like', $likeVar)->orWhere('mobile', 'like', $likeVar);
         } else {
             $resource = User::query();
+        }
+        if(in_array('roles', $with)) {
+            $resource = $resource->with('roles');
         }
         $users = $resource->paginate($pageSize);
         return $this->paginateJsonResponse($users);

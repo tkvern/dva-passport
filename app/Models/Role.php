@@ -8,6 +8,8 @@ class Role extends Model
 {
     protected $fillable = ['key', 'name'];
 
+    protected $hidden = ['pivot'];
+
     public function users()
     {
         return $this->belongsToMany('App\Models\User', 'user_role');

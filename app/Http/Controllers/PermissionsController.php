@@ -28,6 +28,7 @@ class PermissionsController extends Controller
            'name' => 'required|max:30'
         ]);
         $permission->name = $request->input('name');
+        $permission->save();
         return $this->successJsonResponse($permission);
     }
 

@@ -20,8 +20,10 @@ Route::group(['middleware'=> ['auth:api']], function() {
     Route::get('/user', 'UsersController@current');
     Route::patch('/user', 'UsersController@updateProfile');
     Route::get('/users', 'UsersController@index');
+    Route::get('/users/{user}', 'UsersController@show');
     Route::patch('/users/{user_id}', 'UsersController@update');
     Route::post('/users/{user}/action/deny', 'UsersController@deny');
+    Route::post('/users/action/batch', 'UsersController@batchUsers');
 
     //user roles
     Route::get('/users/{user}/roles', 'UserRoleController@index');

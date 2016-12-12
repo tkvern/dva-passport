@@ -37,6 +37,21 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany('App\Models\Role', 'user_role');
     }
 
+    public function permissions($scopes = [])
+    {
+        $permissions = [];
+        $roles = $this->roles()->with(['permissions' => function($query) use ($scopes) {
+            $query->whereIn('scope', $scopes);
+        }])->get();
+        foreach($roles as $role) {
+            $innerPermissions = $role->permissions;
+            foreach ($innerPermissions as $permission) {
+                $permissions[] = $permission;
+            }
+        }
+        return $permissions;
+    }
+
     /**
      * @return array
      */

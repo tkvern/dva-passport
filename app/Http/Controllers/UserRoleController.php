@@ -13,11 +13,11 @@ class UserRoleController extends Controller
     public function onRoles(Request $request, User $user)
     {
         $this->validate($request, [
-            'role_ids' => 'required|array',
+            'role_ids' => 'present|array',
         ]);
         $roleIds = $request->input('role_ids');
         $user->roles()->sync($roleIds);
-        return $this->successJsonResponse($user->roles()->get()->makeHidden('pivot'));
+        return $this->successJsonResponse($user->roles()->get());
     }
 
     /*
@@ -25,7 +25,7 @@ class UserRoleController extends Controller
      */
     public function index(Request $request, User $user)
     {
-        $roles = $user->roles()->get()->makeHidden('pivot');
+        $roles = $user->roles()->get();
         return $this->successJsonResponse($roles);
     }
 }
