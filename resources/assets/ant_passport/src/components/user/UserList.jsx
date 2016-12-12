@@ -10,7 +10,6 @@ const UserList = ({
   onPageChange,
   onDeny,
 }) => {
-
   const columns = [{
     title: '',
     dataIndex: 'avatar',

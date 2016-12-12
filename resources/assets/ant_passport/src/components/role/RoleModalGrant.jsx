@@ -37,32 +37,32 @@ const RoleModalGrant = ({
   let map = {};
   let dest = [];
   permissions.map((permission) => {
-    defaultCheckedList.push(permission.id);
+    return defaultCheckedList.push(permission.id);
   });
 
   listPermissions.map((permission) => {
-    plainOptions.push({
+    return plainOptions.push({
       label: permission.name,
       value: permission.id,
     })
   })
 
-  for (let i = 0; i < listPermissions.length; i++){
-    let permission = listPermissions[i];
-    if (!map[permission.scope]){
+  for (let i = 0; i < listPermissions.length; i++) {
+    const permission = listPermissions[i];
+    if (!map[permission.scope]) {
       dest.push({
         scope: permission.scope,
         children: [permission],
         options: [{
           label: permission.name,
           value: permission.id,
-        }]
+        }],
       });
       map[permission.scope] = permission;
     } else {
-      for (let j = 0; j < dest.length; j++){
-        let dj = dest[j];
-        if (dj.scope == permission.scope){
+      for (let j = 0; j < dest.length; j++) {
+        const dj = dest[j];
+        if (dj.scope == permission.scope) {
           dj.children.push(permission);
           dj.options.push({
             label: permission.name,
@@ -80,12 +80,13 @@ const RoleModalGrant = ({
         <Card title={permission.scope} bordered={false} key={permission.scope}>
           <Col span={24} className="checkboxItem">
             {getFieldDecorator('permission_ids', { initialValue: defaultCheckedList })(
-                <CheckboxGroup options={permission.options} />
+              <CheckboxGroup options={permission.options} />
             )}
           </Col>
         </Card>
       );
     }
+    return null;
   });
 
   const modalOpts = {
@@ -108,9 +109,9 @@ const RoleModalGrant = ({
   return (
     <Modal {...modalOpts}>
       <Form>
-          <Row>
-            {loop(dest)}
-          </Row>
+        <Row>
+          {loop(dest)}
+        </Row>
       </Form>
     </Modal>
   );

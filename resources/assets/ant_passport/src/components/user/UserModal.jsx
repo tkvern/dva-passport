@@ -42,7 +42,7 @@ const UserModal = ({
   };
 
   return (
-    <Modal {...modalOpts}>
+    <Modal>
       <Form>
         <Row>
           <Col span={24}>
@@ -119,7 +119,7 @@ const UserModal = ({
           <Col span={24}>
             <FormItem {...formItemLayout} wrapperCol={{ span: 19 }} label="任务类型">
               {getFieldDecorator('user_types[]', { initialValue: ['PREVIEW'] })(
-                <CheckboxGroup options={plainOptions} />
+                <CheckboxGroup />
               )}
             </FormItem>
           </Col>

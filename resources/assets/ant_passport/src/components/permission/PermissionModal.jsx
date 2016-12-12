@@ -54,7 +54,7 @@ const PermissionModal = ({
                 ...config,
                 initialValue: item.scope,
               })(
-                <Input placeholder="请输入权限 scope" disabled={!!item.scope ? true : false} />
+                <Input placeholder="请输入权限 scope" disabled={!!item.scope} />
               )}
             </FormItem>
           </Col>
@@ -64,7 +64,7 @@ const PermissionModal = ({
                 ...config,
                 initialValue: item.key,
               })(
-                <Input placeholder="请输入权限 key" disabled={!!item.key ? true : false} />
+                <Input placeholder="请输入权限 key" disabled={!!item.key} />
               )}
             </FormItem>
           </Col>

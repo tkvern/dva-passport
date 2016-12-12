@@ -12,7 +12,6 @@ const RoleList = ({
   onEditItem,
   onGrant,
 }) => {
-
   const columns = [{
     title: 'id',
     dataIndex: 'id',

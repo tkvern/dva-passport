@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Table, Popconfirm, Pagination, } from 'antd';
+import { Table, Popconfirm, Pagination } from 'antd';
 import { getPermissionStatus, getIsAdminStatus } from '../../utils/helper';
 
 const PermissionList = ({
@@ -11,7 +11,6 @@ const PermissionList = ({
   onDeleteItem,
   onEditItem,
 }) => {
-
   const columns = [{
     title: 'id',
     dataIndex: 'id',

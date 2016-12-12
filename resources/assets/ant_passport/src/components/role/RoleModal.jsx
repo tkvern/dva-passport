@@ -54,7 +54,7 @@ const RoleModal = ({
                 ...config,
                 initialValue: item.key,
               })(
-                <Input placeholder="请输入角色 key" disabled={!!item.key ? true : false} />
+                <Input placeholder="请输入角色 key" disabled={!!item.key} />
               )}
             </FormItem>
           </Col>
