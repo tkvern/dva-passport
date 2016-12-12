@@ -2,7 +2,7 @@ import { hashHistory } from 'dva/router';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
 import { query, create, remove, update, grant, rolePermissions } from '../services/roles';
-import { query as queryPermissions } from '../services/permissions';
+import { getLocalStorage, setLocalStorage } from '../utils/helper';
 
 export default {
   namespace: 'roles',
@@ -60,6 +60,14 @@ export default {
       return { ...state, ...action.payload };
     },
     grantSuccess(state, action) {
+      const grantRole = action.payload;
+      const newList = state.list.map((role) => {
+        if (role.id === grantRole.id) {
+          role.permissions = grantRole.permissions;
+          return { ...role };
+        }
+        return role;
+      })
       return { ...state, ...action.payload, loading: false };
     },
   },
@@ -70,7 +78,7 @@ export default {
         type: 'updateQueryKey',
         payload: { page: 1, keyword: '', ...payload },
       });
-      const { data } = yield call(query, parse(payload));
+      const { data } = yield call(query, parse({ ...payload, with: 'permissions'}));
       if (data && data.err_msg === 'SUCCESS') {
         yield put({
           type: 'querySuccess',
@@ -124,31 +132,25 @@ export default {
       if (data && data.err_msg === 'SUCCESS') {
         yield put({
           type: 'grantSuccess',
-          payload: newRole,
+          payload: {
+            id,
+            permissions: data.data,
+          },
         })
       }
     },
-    *rolePermissions({ payload }, { select, call, put }) {
-      const { id } = payload.currentItem;
-      const { data } = yield call(rolePermissions, { id });
-      const dataPermission = yield call(queryPermissions, { page_size: 10000 });
-      if (data && data.err_msg === 'SUCCESS') {
-        yield put({
-          type: 'showModalGrant',
-          payload: {
-            currentPermissions: data.data,
-            listPermissions: dataPermission.data.data.list,
-            ...payload,
-          }
-        })
-      }
-    }
   },
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
         const match = pathToRegexp('/roles').exec(location.pathname);
         if (match) {
+          const data = getLocalStorage('permissions');
+          if (!data) {
+            dispatch({
+              type: 'permissions/updateCache',
+            });
+          }
           dispatch({
             type: 'query',
             payload: location.query,

@@ -4,12 +4,13 @@ import {
   Modal,
 } from 'antd';
 
+import { getLocalStorage } from '../../utils/helper';
+
 const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
 
 const RoleModalGrant = ({
-  currentPermissions,
-  listPermissions,
+  item,
   onOk,
   visible,
   onCancel,
@@ -19,28 +20,20 @@ const RoleModalGrant = ({
     getFieldsValue,
   },
 }) => {
-  function handleOk() {
-    validateFields((errors) => {
-      if (!!errors) {
-        return;
-      }
-      const data = { ...getFieldsValue() };
-      onOk(data);
-    });
-  }
-
+  const permissions = item.permissions || [];
+  const listPermissions = getLocalStorage('permissions') || [];
   const defaultCheckedList = [];
   const plainOptions = [];
   let map = {};
   let dest = [];
-
-  currentPermissions.map((item) => {
-    defaultCheckedList.push(item.id);
+  permissions.map((permission) => {
+    defaultCheckedList.push(permission.id);
   });
-  listPermissions.map((item) => {
+
+  listPermissions.map((permission) => {
     plainOptions.push({
-      label: item.name,
-      value: item.id,
+      label: permission.name,
+      value: permission.id,
     })
   })
 
@@ -71,13 +64,13 @@ const RoleModalGrant = ({
     }
   }
 
-  const loop = data => data.map((item) => {
-    if (item.children) {
+  const loop = data => data.map((permission) => {
+    if (permission.children) {
       return (
-        <Card title={item.scope} bordered={false} key={item.scope}>
+        <Card title={permission.scope} bordered={false} key={permission.scope}>
           <Col span={24} className="checkboxItem">
             {getFieldDecorator('permission_ids', { initialValue: defaultCheckedList })(
-                <CheckboxGroup options={item.options} />
+                <CheckboxGroup options={permission.options} />
             )}
           </Col>
         </Card>
@@ -101,6 +94,16 @@ const RoleModalGrant = ({
   const config = {
     rules: [{ type: 'string', required: true, message: '不能为空' }],
   };
+
+  function handleOk() {
+    validateFields((errors) => {
+      if (!!errors) {
+        return;
+      }
+      const data = { ...getFieldsValue() };
+      onOk(data);
+    });
+  }
 
   return (
     <Modal {...modalOpts}>

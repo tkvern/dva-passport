@@ -2,6 +2,7 @@ import { hashHistory } from 'dva/router';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
 import { query, create, remove, update } from '../services/permissions';
+import { getLocalStorage, setLocalStorage } from '../utils/helper';
 
 export default {
   namespace: 'permissions',
@@ -77,6 +78,7 @@ export default {
         yield put({
           type: 'query',
         });
+        localStorage.removeItem('permissions');
       }
     },
     *'delete'({ payload }, { call, put }) {
@@ -87,6 +89,7 @@ export default {
           type: 'deleteSuccess',
           payload,
         });
+        localStorage.removeItem('permissions');
       }
     },
     *update({ payload }, { select, call, put }) {
@@ -100,8 +103,15 @@ export default {
           type: 'updateSuccess',
           payload: newRole,
         });
+        localStorage.removeItem('permissions');
       }
     },
+    *updateCache({ payload }, {call, put }) {
+      const { data } = yield call(query, parse({ ...payload, page_size: 10000 }));
+      if (data && data.err_msg === 'SUCCESS') {
+        setLocalStorage('permissions', data.data.list);
+      }
+    }
   },
   subscriptions: {
     setup({ dispatch, history }) {

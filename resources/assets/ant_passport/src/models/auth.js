@@ -2,8 +2,7 @@ import { hashHistory } from 'dva/router';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
 import { query, create, remvoe, update } from '../services/auth';
-import { getCookie, getLocalStorage, setLocalStorage } from '../utils/helper';
-import { redirectLogin } from '../utils/auth';
+import { getLocalStorage, setLocalStorage } from '../utils/helper';
 
 export default {
   namespace: 'auth',
