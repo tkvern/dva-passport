@@ -21,11 +21,6 @@ const PermissionSearch = ({
     resetFields,
   },
 }) => {
-  const formItemLayout = {
-    labelCol: { span: 5 },
-    wrapperCol: { span: 19 },
-  };
-
   function handleSubmit(e) {
     e.preventDefault();
     validateFields((errors) => {
@@ -40,6 +35,11 @@ const PermissionSearch = ({
     resetFields();
     onReset();
   }
+
+  const formItemLayout = {
+    labelCol: { span: 5 },
+    wrapperCol: { span: 19 },
+  };
 
   const children = [
     <Row key={1}>

@@ -20,6 +20,16 @@ const RoleModalGrant = ({
     getFieldsValue,
   },
 }) => {
+  function handleOk() {
+    validateFields((errors) => {
+      if (!!errors) {
+        return;
+      }
+      const data = { ...getFieldsValue() };
+      onOk(data);
+    });
+  }
+
   const permissions = item.permissions || [];
   const listPermissions = getLocalStorage('permissions') || [];
   const defaultCheckedList = [];
@@ -40,27 +50,27 @@ const RoleModalGrant = ({
   for (let i = 0; i < listPermissions.length; i++){
     let permission = listPermissions[i];
     if (!map[permission.scope]){
-        dest.push({
-            scope: permission.scope,
-            children: [permission],
-            options: [{
-              label: permission.name,
-              value: permission.id,
-            }]
-        });
-        map[permission.scope] = permission;
-    }else{
-        for (let j = 0; j < dest.length; j++){
-            let dj = dest[j];
-            if (dj.scope == permission.scope){
-                dj.children.push(permission);
-                dj.options.push({
-                  label: permission.name,
-                  value: permission.id,
-                })
-                break;
-            }
+      dest.push({
+        scope: permission.scope,
+        children: [permission],
+        options: [{
+          label: permission.name,
+          value: permission.id,
+        }]
+      });
+      map[permission.scope] = permission;
+    } else {
+      for (let j = 0; j < dest.length; j++){
+        let dj = dest[j];
+        if (dj.scope == permission.scope){
+          dj.children.push(permission);
+          dj.options.push({
+            label: permission.name,
+            value: permission.id,
+          })
+          break;
         }
+      }
     }
   }
 
@@ -94,16 +104,6 @@ const RoleModalGrant = ({
   const config = {
     rules: [{ type: 'string', required: true, message: '不能为空' }],
   };
-
-  function handleOk() {
-    validateFields((errors) => {
-      if (!!errors) {
-        return;
-      }
-      const data = { ...getFieldsValue() };
-      onOk(data);
-    });
-  }
 
   return (
     <Modal {...modalOpts}>

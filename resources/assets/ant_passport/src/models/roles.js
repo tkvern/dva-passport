@@ -16,8 +16,6 @@ export default {
     modalVisible: false,
     modalType: 'create',
     modalGrantVisible: false,
-    currentPermissions: [],
-    listPermissions: [],
   },
   reducers: {
     showLoading(state, action) {
