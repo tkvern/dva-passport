@@ -21,7 +21,7 @@ function MainLayout({ children, dispatch, location, auth }) {
   } = auth;
 
   function handleClick(e) {
-    if (e.key === 3) {
+    if (e.key === '3') {
       logOut();
     }
   }

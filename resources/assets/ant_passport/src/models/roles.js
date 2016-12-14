@@ -65,7 +65,7 @@ export default {
           return { ...role };
         }
         return role;
-      })
+      });
       return { ...state, ...action.payload, loading: false };
     },
   },
@@ -76,7 +76,7 @@ export default {
         type: 'updateQueryKey',
         payload: { page: 1, keyword: '', ...payload },
       });
-      const { data } = yield call(query, parse({ ...payload, with: 'permissions'}));
+      const { data } = yield call(query, parse({ ...payload, with: 'permissions' }));
       if (data && data.err_msg === 'SUCCESS') {
         yield put({
           type: 'querySuccess',
@@ -96,6 +96,7 @@ export default {
         yield put({
           type: 'query',
         });
+        localStorage.removeItem('roles');
       }
     },
     *'delete'({ payload }, { call, put }) {
@@ -106,6 +107,7 @@ export default {
           type: 'deleteSuccess',
           payload,
         });
+        localStorage.removeItem('roles');
       }
     },
     *update({ payload }, { select, call, put }) {
@@ -119,6 +121,7 @@ export default {
           type: 'updateSuccess',
           payload: newRole,
         });
+        localStorage.removeItem('roles');
       }
     },
     *grant({ payload }, { select, call, put }) {
@@ -135,6 +138,12 @@ export default {
             permissions: data.data,
           },
         })
+      }
+    },
+    *updateCache({ payload }, {call, put }) {
+      const { data } = yield call(query, parse({ ...payload, page_size: 10000 }));
+      if (data && data.err_msg === 'SUCCESS') {
+        setLocalStorage('roles', data.data.list);
       }
     },
   },
