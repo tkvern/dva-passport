@@ -19,6 +19,10 @@ Route::get('/auth/callback/dingtalk', 'Auth\OmniController@dingtalk')->name('omn
 
 Route::post('/login', 'Auth\LoginController@login');
 
+Route::group(['middleware'=> 'sso', 'prefix'=> 'ajax'], function() {
+    require base_path('routes/common.php');
+});
+
 Route::get('{any}', function () {
     return view('index');
 })->where('any', '.*');
