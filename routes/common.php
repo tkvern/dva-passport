@@ -1,6 +1,7 @@
 <?php
 Route::get('/user', 'UsersController@current');
 Route::patch('/user', 'UsersController@updateProfile');
+Route::patch('/user/password', 'UsersController@updatePassword');
 Route::get('/users', 'UsersController@index');
 Route::get('/users/{user}', 'UsersController@show');
 Route::patch('/users/{user_id}', 'UsersController@update');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserProfileRequest;
 use App\Http\Requests\ChangeUserRequest;
+use App\Http\Requests\UpdatePasswordRequest;
 use App\Models\User;
 
 class UsersController extends Controller
@@ -90,11 +91,18 @@ class UsersController extends Controller
         $profile = array_filter($profile, function($k) use ($request){
             return !is_null($request->input($k, null));
         }, ARRAY_FILTER_USE_KEY);
-        if (!empty($request->input('new_password'))) {
-            $user->password = bcrypt($request->input('new_password'));
-        }
         $user->update($profile);
         return $this->successJsonResponse($user);
+    }
+
+    /*
+     *  用户密码修改
+     */
+    public function updatePassword(UpdatePasswordRequest $request)
+    {
+        $user->password = bcrypt($request->input('new_password'));
+        $user->save();
+        $this->successJsonResponse();
     }
 
     /*
