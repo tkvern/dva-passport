@@ -25,6 +25,7 @@ class OmniController extends Controller
         try {
             $userInfo = DingOpenAPI::getUserInfo($code);
         } catch(ConnectException $e) {
+            info($e->getMessage());
             return redirect()->route('sso_login')->withErrors(['ding' => '当前服务不可用']);
         }
         $dingId = $userInfo['user_info']['dingId'];
