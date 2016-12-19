@@ -111,7 +111,7 @@ export default {
       if (data && data.err_msg === 'SUCCESS') {
         setLocalStorage('permissions', data.data.list);
       }
-    }
+    },
   },
   subscriptions: {
     setup({ dispatch, history }) {

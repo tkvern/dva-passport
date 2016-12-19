@@ -6,6 +6,7 @@ import MainLayout from '../components/layout/MainLayout';
 import UserList from '../components/user/UserList';
 import UserSearch from '../components/user/UserSearch';
 import UserPanel from '../components/user/UserPanel';
+import UserModalGrant from '../components/user/UserModalGrant';
 
 function Users({ location, dispatch, users }) {
   const {
@@ -18,6 +19,7 @@ function Users({ location, dispatch, users }) {
     currentItem,
     modalVisible,
     modalType,
+    modalGrantVisible,
   } = users;
 
   const userListProps = {
@@ -41,6 +43,14 @@ function Users({ location, dispatch, users }) {
           enable: enable,
         },
       })
+    },
+    onGrant(item) {
+      dispatch({
+        type: 'users/showModalGrant',
+        payload: {
+          currentItem: item,
+        },
+      });
     },
   }
 
@@ -75,6 +85,24 @@ function Users({ location, dispatch, users }) {
     },
   }
 
+  const userModalGrantProps = {
+    item: currentItem,
+    visible: modalGrantVisible,
+    onOk(data) {
+      dispatch({
+        type: `users/grant`,
+        payload: data,
+      });
+    },
+
+    onCancel() {
+      dispatch({
+        type: 'users/hideModalGrant',
+      });
+    },
+
+  }
+
 
   const userPanelProps = {
     onAdd() {
@@ -86,12 +114,16 @@ function Users({ location, dispatch, users }) {
       });
     },
   }
+
+  const UserModalGrantGen = () =>
+    <UserModalGrant {...userModalGrantProps} />;
   
   return (
     <MainLayout>
       <div>
         <UserSearch {...userSearchProps} />
         <UserList {...userListProps} />
+        <UserModalGrantGen />
       </div>
     </MainLayout>
   );

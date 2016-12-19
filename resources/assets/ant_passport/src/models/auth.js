@@ -1,19 +1,15 @@
 import { hashHistory } from 'dva/router';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
-import { query } from '../services/auth';
+import { query, update, password } from '../services/auth';
 import { getLocalStorage, setLocalStorage } from '../utils/helper';
+
+import { message } from 'antd';
 
 export default {
   namespace: 'auth',
   state: {
-    name: '',
-    mobile: '',
-    dingid: '',
-    id: null,
-    email: null,
-    status: null,
-    isadmin: null,
+    user: {},
     isLogined: false,
     currentMenu: [],
   },
@@ -40,15 +36,38 @@ export default {
         yield put({
           type: 'querySuccess',
           payload: {
-            name: data.data.name,
-            mobile: data.data.mobile,
-            dingid: data.data.dingid,
-            id: data.data.id,
-            email: data.data.email,
-            status: data.data.status,
-            isadmin: data.data.isadmin,
+            user: data.data,
           },
         });
+      }
+    },
+    *update({ payload }, { call, put }) {
+      // yield put({ type: 'showLoading' });
+      const { data } = yield call(update, payload);
+      if (data && data.err_msg === 'SUCCESS') {
+        // debugger
+        // yield put({
+        //   type: 'grantSuccess',
+        //   payload: {
+        //     id,
+        //     permissions: data.data,
+        //   },
+        // })
+      }
+    },
+    *password({ payload }, { call, put }) {
+      // yield put({ type: 'showLoading' });
+      const { data } = yield call(password, payload);
+      if (data && data.err_msg === 'SUCCESS') {
+        message.info('This is a normal message');
+        // debugger
+        // yield put({
+        //   type: 'grantSuccess',
+        //   payload: {
+        //     id,
+        //     permissions: data.data,
+        //   },
+        // })
       }
     },
   },
@@ -64,13 +83,7 @@ export default {
         dispatch({
           type: 'querySuccess',
           payload: {
-            name: data.data.name,
-            mobile: data.data.mobile,
-            dingid: data.data.dingid,
-            id: data.data.id,
-            email: data.data.email,
-            status: data.data.status,
-            isadmin: data.data.isadmin,
+            user: data.data,
           },
         });
       }
