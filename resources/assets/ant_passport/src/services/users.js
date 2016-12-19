@@ -6,13 +6,6 @@ export async function query(params) {
   return request(`${config.domain}/api/users?${qs.stringify(params)}`);
 }
 
-export async function updateSelf(params) {
-  return request(`${config.domain}/api/user`, {
-    method: 'PATCH',
-    body: JSON.stringify(params),
-  });
-}
-
 export async function update(params) {
   return request(`${config.domain}/api/users/${params.id}`, {
     method: 'PATCH',
