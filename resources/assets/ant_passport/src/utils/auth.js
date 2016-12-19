@@ -14,6 +14,7 @@ export function getAuthHeader(sso_token) {
 }
 
 export function redirectLogin() {
+  localStorage.clear();
   window.location.href = config.redirectUrl + window.location.origin;
 }
 
@@ -27,7 +28,6 @@ export function errorHandle(error) {
 export function authenticated() {
   const sso_token = getCookie('sso_token');
   if (!sso_token) {
-    localStorage.clear();
     redirectLogin();
   }
 }
