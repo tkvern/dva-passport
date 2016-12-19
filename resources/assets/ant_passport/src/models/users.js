@@ -3,6 +3,7 @@ import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
 import { query, updateSelf, update, deny, grant, userRoles } from '../services/users';
 import { getLocalStorage, setLocalStorage } from '../utils/helper';
+import { message } from 'antd';
 
 export default {
 
@@ -113,13 +114,16 @@ export default {
     *'delete'() {},
     *update() {},
     *deny({ payload }, { call, put }) {
-      yield put({ type: 'showLoading' });
       const { data } = yield call(deny, parse(payload));
       if (data && data.err_msg === 'SUCCESS') {
+        yield put({ type: 'showLoading' });
         yield put({
           type: 'denySuccess',
           payload,
         });
+        message.success(`操作成功!`);
+      } else {
+        message.error(`操作失败! ${data.err_msg}`);
       }
     },
     *grant({ payload }, { select, call, put }) {
@@ -135,7 +139,8 @@ export default {
             id,
             roles: data.data,
           },
-        })
+        });
+        message.success(`授权成功!`);
       }
     },
   },
