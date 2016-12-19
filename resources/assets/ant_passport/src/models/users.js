@@ -1,7 +1,9 @@
 import { hashHistory } from 'dva/router';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
-import { query, create, remove, update, deny } from '../services/users';
+import { query, updateSelf, update, deny, grant, userRoles } from '../services/users';
+import { getLocalStorage, setLocalStorage } from '../utils/helper';
+import { message } from 'antd';
 
 export default {
 
@@ -17,6 +19,7 @@ export default {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
+    modalGrantVisible: false,
   },
 
   reducers: {
@@ -28,6 +31,12 @@ export default {
     },
     hideModal(state, action) {
       return { ...state, modalVisible: false };
+    },
+    showModalGrant(state, action) {
+      return { ...state, ...action.payload, modalGrantVisible: true };
+    },
+    hideModalGrant(state, action) {
+      return { ...state, modalGrantVisible: false };
     },
     collapseExpand(state, action) {
       return { ...state, ...action.payload };
@@ -54,6 +63,17 @@ export default {
       });
       return { ...state, list: newList, loading: false };
     },
+    grantSuccess(state, action) {
+      const grantUser = action.payload;
+      const newList = state.list.map((user) => {
+        if (user.id === grantUser.id) {
+          user.roles = grantUser.roles;
+          return { ...user };
+        }
+        return user;
+      });
+      return { ...state, ...action.payload, loading: false };
+    },
   },
 
   effects: {
@@ -63,7 +83,7 @@ export default {
         type: 'updateQueryKey',
         payload: { page: 1, keyword: '', ...payload },
       });
-      const { data } = yield call(query, parse(payload));
+      const { data } = yield call(query, parse({ ...payload, with: 'roles' }));
       if (data && data.err_msg === 'SUCCESS') {
         yield put({
           type: 'querySuccess',
@@ -94,13 +114,33 @@ export default {
     *'delete'() {},
     *update() {},
     *deny({ payload }, { call, put }) {
-      yield put({ type: 'showLoading' });
       const { data } = yield call(deny, parse(payload));
       if (data && data.err_msg === 'SUCCESS') {
+        yield put({ type: 'showLoading' });
         yield put({
           type: 'denySuccess',
           payload,
         });
+        message.success(`操作成功!`);
+      } else {
+        message.error(`操作失败! ${data.err_msg}`);
+      }
+    },
+    *grant({ payload }, { select, call, put }) {
+      yield put({ type: 'hideModalGrant' });
+      yield put({ type: 'showLoading' });
+      const id = yield select(({ users }) => users.currentItem.id);
+      const newUser = { ...payload, id }
+      const { data } = yield call(grant, newUser);
+      if (data && data.err_msg === 'SUCCESS') {
+        yield put({
+          type: 'grantSuccess',
+          payload: {
+            id,
+            roles: data.data,
+          },
+        });
+        message.success(`授权成功!`);
       }
     },
   },
@@ -110,6 +150,12 @@ export default {
       history.listen((location) => {
         const match = pathToRegexp('/users').exec(location.pathname);
         if (match) {
+          const data = getLocalStorage('roles');
+          if (!data) {
+            dispatch({
+              type: 'roles/updateCache',
+            });
+          }
           dispatch({
             type: 'query',
             payload: location.query,

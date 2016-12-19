@@ -10,18 +10,12 @@ const SubMenu = Menu.SubMenu;
 
 function MainLayout({ children, dispatch, location, auth }) {
   const {
-    name,
-    mobile,
-    dingid,
-    id,
-    email,
-    status,
-    isadmin,
+    user,
     currentMenu,
   } = auth;
 
   function handleClick(e) {
-    if (e.key === 3) {
+    if (e.key === '3') {
       logOut();
     }
   }
@@ -38,7 +32,7 @@ function MainLayout({ children, dispatch, location, auth }) {
   const menu = (
     <Menu onClick={handleClick}>
       <Menu.Item key="0">
-        <a href="http://www.alipay.com/"><Icon type="edit" /> 个人信息</a>
+        <Link to="/user"><Icon type="edit" /> 修改资料</Link>
       </Menu.Item>
       <Menu.Item key="3"><Icon type="logout" /> 安全退出</Menu.Item>
     </Menu>
@@ -57,7 +51,7 @@ function MainLayout({ children, dispatch, location, auth }) {
               <li className="dropdown">
                 <Dropdown overlay={menu} trigger={['click']}>
                   <a className="ant-dropdown-link">
-                    <Icon type="user" /> { name } <Icon type="down" />
+                    <Icon type="user" /> { user.name } <Icon type="down" />
                   </a>
                 </Dropdown>
               </li>
@@ -66,14 +60,18 @@ function MainLayout({ children, dispatch, location, auth }) {
         </nav>
       </header>
       <aside className="ant-layout-sider">
-        <Menu mode="inline" theme="dark" defaultSelectedKeys={currentMenu} defaultOpenKeys={['sub2']} onClick={onclickMenu}>
+        <Menu mode="inline" theme="dark" defaultSelectedKeys={currentMenu} defaultOpenKeys={['sub2', 'sub3']} onClick={onclickMenu}>
           <Menu.Item key="1">
             <Link to="/"><Icon type="appstore" />应用中心</Link>
           </Menu.Item>
-          <SubMenu key="sub2" title={<span><Icon type="user" />用户模块</span>}>
+          <SubMenu key="sub2" title={<span><Icon type="solution" />用户模块</span>}>
             <Menu.Item key="5"><Link to="/users">用户管理</Link></Menu.Item>
             <Menu.Item key="6"><Link to="/roles">角色管理</Link></Menu.Item>
             <Menu.Item key="7"><Link to="/permissions">权限管理</Link></Menu.Item>
+          </SubMenu>
+          <SubMenu key="sub3" title={<span><Icon type="user" />个人中心</span>}>
+            <Menu.Item key="8"><Link to="/user">修改资料</Link></Menu.Item>
+            <Menu.Item key="9"><Link to="/password">修改密码</Link></Menu.Item>
           </SubMenu>
         </Menu>
       </aside>

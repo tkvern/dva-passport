@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Table, Popconfirm, Pagination, Badge } from 'antd';
+import { Table, Popconfirm, Pagination, Badge, Tag } from 'antd';
 import { getUserStatus, getIsAdminStatus } from '../../utils/helper';
 
 const UserList = ({
@@ -9,6 +9,7 @@ const UserList = ({
   dataSource,
   onPageChange,
   onDeny,
+  onGrant,
 }) => {
   const columns = [{
     title: '',
@@ -31,14 +32,49 @@ const UserList = ({
     title: '姓名',
     dataIndex: 'name',
     key: 'name',
+    render: (text, record, index) => {
+      const cname = record.name.split("")[0] + "***";
+      return (
+        cname
+      );
+    }
   }, {
     title: '手机',
     dataIndex: 'mobile',
     key: 'mobile',
+    render: (text, record, index) => {
+      const cname = record.mobile.substring(0,3) + "********";
+      return (
+        cname
+      );
+    }
   }, {
     title: '邮箱',
     dataIndex: 'email',
     key: 'email',
+    render: (text, record, index) => {
+      const cname = "****@****k.com";
+      return (
+        cname
+      );
+    }
+  }, {
+    title: '角色',
+    dataIndex: 'roles',
+    key: 'roles',
+    width: '20%',
+    render: (text, record, index) => {
+      const userRoles = record.roles.map((role) => {
+        if (role) {
+          return (
+            <Tag key={role.id}>{role.name}</Tag>
+          );
+        }
+      })
+      return (
+        userRoles
+      );
+    },
   }, {
     title: '状态',
     dataIndex: 'status',
@@ -76,9 +112,13 @@ const UserList = ({
       }
 
       return (
-        <Popconfirm title="你确定要执行该操作吗?" onConfirm={() => onDeny(id, enable)}>
-          <a>{displayText}</a>
-        </Popconfirm>
+        <div>
+          <a onClick={() => onGrant(record)}>授权</a>
+          &nbsp;&nbsp;
+          <Popconfirm title="你确定要执行该操作吗?" onConfirm={() => onDeny(id, enable)}>
+            <a>{displayText}</a>
+          </Popconfirm>
+        </div>
       );
     },
   }];

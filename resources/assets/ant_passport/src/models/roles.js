@@ -3,6 +3,7 @@ import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
 import { query, create, remove, update, grant, rolePermissions } from '../services/roles';
 import { getLocalStorage, setLocalStorage } from '../utils/helper';
+import { message } from 'antd';
 
 export default {
   namespace: 'roles',
@@ -65,7 +66,10 @@ export default {
           return { ...role };
         }
         return role;
-      })
+      });
+      return { ...state, ...action.payload, loading: false };
+    },
+    operationFailed(state, action) {
       return { ...state, ...action.payload, loading: false };
     },
   },
@@ -76,7 +80,7 @@ export default {
         type: 'updateQueryKey',
         payload: { page: 1, keyword: '', ...payload },
       });
-      const { data } = yield call(query, parse({ ...payload, with: 'permissions'}));
+      const { data } = yield call(query, parse({ ...payload, with: 'permissions' }));
       if (data && data.err_msg === 'SUCCESS') {
         yield put({
           type: 'querySuccess',
@@ -89,23 +93,31 @@ export default {
       }
     },
     *create({ payload }, { call, put }) {
-      yield put({ type: 'hideModal' });
-      yield put({ type: 'showLoading' });
       const { data } = yield call(create, payload);
       if (data && data.err_msg === 'SUCCESS') {
+        yield put({ type: 'hideModal' });
+        yield put({ type: 'showLoading' });
         yield put({
           type: 'query',
         });
+        localStorage.removeItem('roles');
+        message.success(`创建成功!`);
+      } else {
+        message.error(`创建失败! ${data.err_msg}`);
       }
     },
     *'delete'({ payload }, { call, put }) {
-      yield put({ type: 'showLoading' });
       const { data } = yield call(remove, { id: payload });
       if (data && data.err_msg === 'SUCCESS') {
+        yield put({ type: 'showLoading' });
         yield put({
           type: 'deleteSuccess',
           payload,
         });
+        localStorage.removeItem('roles');
+        message.success(`删除成功!`);
+      } else {
+        message.error(`删除失败! ${data.err_msg}`);
       }
     },
     *update({ payload }, { select, call, put }) {
@@ -119,6 +131,8 @@ export default {
           type: 'updateSuccess',
           payload: newRole,
         });
+        localStorage.removeItem('roles');
+        message.success(`更新成功!`);
       }
     },
     *grant({ payload }, { select, call, put }) {
@@ -135,6 +149,13 @@ export default {
             permissions: data.data,
           },
         })
+        message.success(`授权成功!`);
+      }
+    },
+    *updateCache({ payload }, {call, put }) {
+      const { data } = yield call(query, parse({ ...payload, page_size: 10000 }));
+      if (data && data.err_msg === 'SUCCESS') {
+        setLocalStorage('roles', data.data.list);
       }
     },
   },

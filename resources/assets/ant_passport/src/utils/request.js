@@ -2,16 +2,20 @@ import fetch from 'dva/fetch';
 import { getCookie } from '../utils/helper';
 import { getAuthHeader } from '../utils/auth';
 import config from '../config';
+import { redirectLogin } from './auth';
 
 function parseJSON(response) {
   return response.json();
 }
 
 function checkStatus(response) {
-  if (response.status >= 200 && response.status < 300) {
+  if (response && response.status === 401) {
+    redirectLogin();
+    // throw new Error(response.statusText);
+  }
+  if (response.status >= 200 && response.status < 500) {
     return response;
   }
-
   const error = new Error(response.statusText);
   error.response = response;
   throw error;
@@ -30,6 +34,6 @@ export default function request(url, options) {
   return fetch(url, { ...options, ...authHeader })
     .then(checkStatus)
     .then(parseJSON)
-    .then((data) => ({ data }))
-    .catch((err) => ({ err }));
+    .then((data) => ({ data }));
+    // .catch((err) => ({ err }));
 }
