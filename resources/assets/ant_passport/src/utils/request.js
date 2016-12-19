@@ -11,7 +11,6 @@ function parseJSON(response) {
 function checkStatus(response) {
   if (response && response.status === 401) {
     redirectLogin();
-    // throw new Error(response.statusText);
   }
   if (response.status >= 200 && response.status < 500) {
     return response;

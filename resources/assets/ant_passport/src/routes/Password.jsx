@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
 
 import MainLayout from '../components/layout/MainLayout';
@@ -19,7 +18,7 @@ function Password({ location, dispatch, auth}) {
         payload: data,
       })
     }
-  }
+  };
 
   return (
     <MainLayout>
