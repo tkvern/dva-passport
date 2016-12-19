@@ -20,7 +20,7 @@ function MainLayout({ children, dispatch, location, auth }) {
     }
   }
 
-  function onclickMenu(e) {
+  function onClickMenu(e) {
     dispatch({
       type: 'auth/activeMenu',
       payload: {
@@ -32,7 +32,18 @@ function MainLayout({ children, dispatch, location, auth }) {
   const menu = (
     <Menu onClick={handleClick}>
       <Menu.Item key="0">
-        <Link to="/user"><Icon type="edit" /> 修改资料</Link>
+        <Link to="/user" 
+          onClick={()=>{
+            dispatch({
+              type: 'auth/activeMenu',
+              payload: {
+                currentMenu: ['8'],
+              },
+            });
+          }}
+        >
+          <Icon type="edit" /> 修改资料
+        </Link>
       </Menu.Item>
       <Menu.Item key="3"><Icon type="logout" /> 安全退出</Menu.Item>
     </Menu>
@@ -60,7 +71,7 @@ function MainLayout({ children, dispatch, location, auth }) {
         </nav>
       </header>
       <aside className="ant-layout-sider">
-        <Menu mode="inline" theme="dark" defaultSelectedKeys={currentMenu} defaultOpenKeys={['sub2', 'sub3']} onClick={onclickMenu}>
+        <Menu mode="inline" theme="dark" defaultSelectedKeys={currentMenu} defaultOpenKeys={['sub2', 'sub3']} onClick={onClickMenu}>
           <Menu.Item key="1">
             <Link to="/"><Icon type="appstore" />应用中心</Link>
           </Menu.Item>
