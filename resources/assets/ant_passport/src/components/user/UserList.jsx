@@ -33,7 +33,7 @@ const UserList = ({
     dataIndex: 'name',
     key: 'name',
     render: (text, record, index) => {
-      const cname = record.name.split("")[0] + "***";
+      const cname = record.name;
       return (
         cname
       );
@@ -43,9 +43,9 @@ const UserList = ({
     dataIndex: 'mobile',
     key: 'mobile',
     render: (text, record, index) => {
-      const cname = record.mobile.substring(0,3) + "********";
+      const mobile = record.mobile || '未填写';
       return (
-        cname
+        mobile
       );
     }
   }, {
@@ -53,28 +53,11 @@ const UserList = ({
     dataIndex: 'email',
     key: 'email',
     render: (text, record, index) => {
-      const cname = "****@****k.com";
+      const email = record.email || '未填写';
       return (
-        cname
+        email
       );
     }
-  }, {
-    title: '角色',
-    dataIndex: 'roles',
-    key: 'roles',
-    width: '20%',
-    render: (text, record, index) => {
-      const userRoles = record.roles.map((role) => {
-        if (role) {
-          return (
-            <Tag key={role.id}>{role.name}</Tag>
-          );
-        }
-      })
-      return (
-        userRoles
-      );
-    },
   }, {
     title: '状态',
     dataIndex: 'status',
