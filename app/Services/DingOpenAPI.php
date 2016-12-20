@@ -23,7 +23,7 @@ class DingOpenAPI
         $this->appSecret = $appSecret;
         $this->client = new Client([
             'base_uri' => 'https://oapi.dingtalk.com',
-            'timeout' => 5.0,
+            'timeout' => 10.0,
         ]);
     }
 

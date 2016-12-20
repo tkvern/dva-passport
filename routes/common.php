@@ -4,7 +4,7 @@ Route::patch('/user', 'UsersController@updateProfile');
 Route::patch('/user/password', 'UsersController@updatePassword');
 Route::get('/users', 'UsersController@index');
 Route::get('/users/{user}', 'UsersController@show');
-Route::patch('/users/{user_id}', 'UsersController@update');
+Route::patch('/users/{user}', 'UsersController@update');
 Route::post('/users/{user}/action/deny', 'UsersController@deny');
 Route::post('/users/action/batch', 'UsersController@batchUsers');
 

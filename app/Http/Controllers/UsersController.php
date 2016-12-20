@@ -67,9 +67,8 @@ class UsersController extends Controller
     /*
      * 修改用户资料
      */
-    public function update(ChangeUserRequest $request, $user_id)
+    public function update(ChangeUserRequest $request, User $user)
     {
-        $user = User::find($user_id);
         $changeSet = $request->only(array_except(array_keys($request->rules()), ['password'])) ;
         $changeSet = array_filter($changeSet, function($k) use ($request) {
             return !is_null($request->input($k));

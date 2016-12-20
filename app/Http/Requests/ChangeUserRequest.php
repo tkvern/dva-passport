@@ -29,15 +29,14 @@ class ChangeUserRequest extends MyFormRequest
             'avatar' => 'url',
             'tel' => 'max:10',
             'password' => 'min:6',
-            'email' => 'bail|email|unique:users',
+            'email' => 'email',
             'remark' => 'max:256'
         ];
     }
 
     protected  function withValidator($validator)
     {
-        $user = User::find($this->input('user_id'));
-
+        $user = $this->user;
         $validator->sometimes('mobile', 'unique:users', function() use ($user){
            return !$this->noChange($user, 'mobile');
         });
@@ -45,7 +44,7 @@ class ChangeUserRequest extends MyFormRequest
             return !$this->noChange($user, 'email');
         });
         $validator->sometimes('nickname', 'unique:users', function() use ($user){
-            return $this->noChange($user, 'nickname');
+            return !$this->noChange($user, 'nickname');
         });
     }
 }

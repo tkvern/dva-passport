@@ -28,7 +28,7 @@ class UserProfileRequest extends MyFormRequest
             'mobile' => ['bail', 'regex:/^1(3[0-9]|4[57]|5[0-35-9]|7[0135678]|8[0-9])\\d{8}$/'],
             'avatar' => 'url',
             'tel' => 'max:10',
-            'email' => 'bail|email|unique:users',
+            'email' => 'bail|email',
             'remark' => 'max:256'
         ];
     }
@@ -43,6 +43,9 @@ class UserProfileRequest extends MyFormRequest
         });
         $validator->sometimes('nickname', 'unique:users', function() {
             return $this->user()->nickname != $this->input('nickname');
+        });
+        $validator->sometimes('email', 'unique:users', function() {
+            return $this->user()->email != $this->input('email');
         });
     }
 
