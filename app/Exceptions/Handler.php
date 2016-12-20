@@ -98,10 +98,13 @@ class Handler extends ExceptionHandler
     protected function badInput(ValidationException $e, $request)
     {
         $errors = $e->validator->errors()->getMessages();
-
         if ($request->expectsJson()) {
             //return response()->json($errors, 422);
-            return $this->errorJsonResponse(ErrCode::E_BAD_INPUT, 422, $errors);
+            $errPackets = [];
+            foreach($errors as $error) {
+                $errPackets[] = $error[0];
+            }
+            return $this->errorJsonResponse(ErrCode::E_BAD_INPUT, 422, implode(';', $errPackets));
         }
 
         return redirect()->back()->withInput($request->input())->withErrors($errors);

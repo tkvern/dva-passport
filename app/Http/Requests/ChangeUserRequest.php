@@ -26,18 +26,16 @@ class ChangeUserRequest extends MyFormRequest
         return [
             'nickname' => 'bail|min:3',
             'mobile' => ['bail', 'regex:/^1(3[0-9]|4[57]|5[0-35-9]|7[0135678]|8[0-9])\\d{8}$/'],
-            'avatar' => 'url',
             'tel' => 'max:10',
             'password' => 'min:6',
-            'email' => 'bail|email|unique:users',
+            'email' => 'email',
             'remark' => 'max:256'
         ];
     }
 
     protected  function withValidator($validator)
     {
-        $user = User::find($this->input('user_id'));
-
+        $user = $this->user;
         $validator->sometimes('mobile', 'unique:users', function() use ($user){
            return !$this->noChange($user, 'mobile');
         });
@@ -45,7 +43,7 @@ class ChangeUserRequest extends MyFormRequest
             return !$this->noChange($user, 'email');
         });
         $validator->sometimes('nickname', 'unique:users', function() use ($user){
-            return $this->noChange($user, 'nickname');
+            return !$this->noChange($user, 'nickname');
         });
     }
 }

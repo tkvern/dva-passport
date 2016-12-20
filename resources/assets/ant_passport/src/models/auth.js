@@ -1,5 +1,6 @@
 import { hashHistory } from 'dva/router';
 import { parse } from 'qs';
+import { routerRedux } from 'dva/router';
 import pathToRegexp from 'path-to-regexp';
 import { query, update, password } from '../services/auth';
 import { getLocalStorage, setLocalStorage } from '../utils/helper';
@@ -45,29 +46,19 @@ export default {
       // yield put({ type: 'showLoading' });
       const { data } = yield call(update, payload);
       if (data && data.err_msg === 'SUCCESS') {
-        // debugger
-        // yield put({
-        //   type: 'grantSuccess',
-        //   payload: {
-        //     id,
-        //     permissions: data.data,
-        //   },
-        // })
+        message.success('用户信息修改成功!');
+        setLocalStorage('user', data.data);
+      } else {
+        message.error(data.err_msg);
       }
     },
     *password({ payload }, { call, put }) {
       // yield put({ type: 'showLoading' });
       const { data } = yield call(password, payload);
       if (data && data.err_msg === 'SUCCESS') {
-        message.info('This is a normal message');
-        // debugger
-        // yield put({
-        //   type: 'grantSuccess',
-        //   payload: {
-        //     id,
-        //     permissions: data.data,
-        //   },
-        // })
+        message.success('密码修改成功!');
+      } else {
+        message.error(data.err_msg);
       }
     },
   },

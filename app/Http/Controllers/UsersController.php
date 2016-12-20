@@ -67,10 +67,9 @@ class UsersController extends Controller
     /*
      * 修改用户资料
      */
-    public function update(ChangeUserRequest $request, $user_id)
+    public function update(ChangeUserRequest $request, User $user)
     {
-        $user = User::find($user_id);
-        $changeSet = $request->only(array_except(array_keys($request->rules()), ['password'])) ;
+        $changeSet = array_except($request->only(array_keys($request->rules())), ['password']);
         $changeSet = array_filter($changeSet, function($k) use ($request) {
             return !is_null($request->input($k));
         }, ARRAY_FILTER_USE_KEY);
@@ -100,9 +99,10 @@ class UsersController extends Controller
      */
     public function updatePassword(UpdatePasswordRequest $request)
     {
+        $user = $request->user();
         $user->password = bcrypt($request->input('new_password'));
         $user->save();
-        $this->successJsonResponse();
+        return $this->successJsonResponse();
     }
 
     /*

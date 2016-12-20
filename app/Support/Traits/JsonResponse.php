@@ -25,8 +25,7 @@ Trait JsonResponse {
     {
         return response()->json([
             'err_code' => $errCode,
-            'err_msg' => ErrCode::errorMessage($errCode),
-            'detail' => $errors
+            'err_msg' => $errors ?: ErrCode::errorMessage($errCode),
         ], $statusCode);
     }
 
