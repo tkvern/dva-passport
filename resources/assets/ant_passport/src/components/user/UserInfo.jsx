@@ -18,6 +18,7 @@ const UserInfo = ({
     getFieldDecorator,
     validateFields,
     getFieldsValue,
+    resetFields,
   },
 }) => {
   function handleSubmit(e) {
@@ -37,7 +38,7 @@ const UserInfo = ({
   };
 
   const config = {
-    
+
   };
 
   return (
@@ -97,10 +98,10 @@ const UserInfo = ({
               ...config,
               initialValue: user.remark,
             })(
-              <Input 
-                type="textarea" 
-                placeholder="请输入备注" 
-                autosize={{ minRows: 2, maxRows: 6 }} 
+              <Input
+                type="textarea"
+                placeholder="请输入备注"
+                autosize={{ minRows: 2, maxRows: 6 }}
               />
             )}
           </FormItem>
@@ -110,7 +111,7 @@ const UserInfo = ({
             <Button type="primary" htmlType="submit">
               更新
             </Button>
-            <Button style={{ marginLeft: 8 }}>
+            <Button style={{ marginLeft: 8 }} onClick={()=>{resetFields()}}>
               取消
             </Button>
           </FormItem>

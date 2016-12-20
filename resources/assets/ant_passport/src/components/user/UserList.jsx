@@ -8,6 +8,7 @@ const UserList = ({
   loading,
   dataSource,
   onPageChange,
+  onEdit,
   onDeny,
   onGrant,
 }) => {
@@ -113,6 +114,8 @@ const UserList = ({
 
       return (
         <div>
+          <a onClick={() => onEdit(record)}>编辑</a>
+          &nbsp;&nbsp;
           <a onClick={() => onGrant(record)}>授权</a>
           &nbsp;&nbsp;
           <Popconfirm title="你确定要执行该操作吗?" onConfirm={() => onDeny(id, enable)}>

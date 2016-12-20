@@ -23,8 +23,11 @@ export default {
   },
 
   reducers: {
-    showLoading(state, action) {
+    showLoading(state) {
       return { ...state, loading: true };
+    },
+    hideLoading(state) {
+      return { ...state, loading: false };
     },
     showModal(state, action) {
       return { ...state, ...action.payload, modalVisible: true };
@@ -48,7 +51,15 @@ export default {
       return { ...state, ...action.payload, loading: false };
     },
     deleteSuccess() {},
-    updateSuccess() {},
+    updateSuccess(state, action) {
+      let list = state.list.map(function(item) {
+        if (item.id == action.payload.id) {
+          return {...item, ...action.payload};
+        }
+        return item;
+      });
+      return {...state, list, loading: false};
+    },
     updateQueryKey(state, action) {
       return { ...state, ...action.payload };
     },
@@ -111,8 +122,23 @@ export default {
         });
       }
     },
-    *'delete'() {},
-    *update() {},
+    *update({payload}, {call, put, select}) {
+      yield put({type: 'hideModal'});
+      yield put({type: 'showLoading'});
+      const id = yield select(({ users }) => users.currentItem.id);
+      const { data } = yield call(update, { ...payload, id });
+      if (data && data.err_code == '0') {
+        yield put({
+          type: 'updateSuccess',
+          payload: data.data
+        });
+
+        message.success('用户信息修改成功');
+      } else {
+        message.error(data.err_msg);
+        yield put({type: 'hideLoading'});
+      }
+    },
     *deny({ payload }, { call, put }) {
       const { data } = yield call(deny, parse(payload));
       if (data && data.err_msg === 'SUCCESS') {

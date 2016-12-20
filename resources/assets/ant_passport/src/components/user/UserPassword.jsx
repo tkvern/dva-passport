@@ -11,6 +11,8 @@ const RadioGroup = Radio.Group;
 const InputGroup = Input.Group;
 const CheckboxGroup = Checkbox.Group;
 
+let passwordDirty = false;
+
 const UserPassword = ({
   user,
   onUpdate,
@@ -32,17 +34,23 @@ const UserPassword = ({
     });
   }
 
+  function handlePasswordBlur(e) {
+    const value = e.target.value;
+    passwordDirty = passwordDirty || !!value;
+  }
+
   function checkConfirm(rule, value, callback) {
-    if (value) {
-      validateFields(['confirm'], { force: true });
+    console.log('Dirty: ' + passwordDirty);
+    if (value && passwordDirty) {
+      validateFields(['confirm_password'], { force: true });
     }
     callback();
   }
 
-  function checkNew(rule, value, callback) {
+  function checkPassword(rule, value, callback) {
     // debugger
     if (value && value !== getFieldValue('new_password')) {
-      callback('Two passwords that you enter is inconsistent!');
+      callback('两次密码输入不一致');
     } else {
       callback();
     }
@@ -59,11 +67,9 @@ const UserPassword = ({
         <Col>
           <FormItem {...formItemLayout} hasFeedback label="原始密码">
             {getFieldDecorator('old_password', {
-              rules: [{
-                required: true,
-              }],
+              rules: []
             })(
-              <Input placeholder="如果没有设置过初始秘密留空" />
+              <Input type="password" placeholder="如果没有设置过初始秘密留空" />
             )}
           </FormItem>
         </Col>
@@ -71,12 +77,14 @@ const UserPassword = ({
           <FormItem {...formItemLayout} hasFeedback label="新密码">
             {getFieldDecorator('new_password', {
               rules: [{
+                type: "string",
                 required: true,
+                range: {min: 6}
               }, {
                 validator: checkConfirm,
               }],
             })(
-              <Input placeholder="请输入新密码" />
+              <Input placeholder="新密码" type="password" onBlur={handlePasswordBlur}/>
             )}
           </FormItem>
         </Col>
@@ -86,10 +94,10 @@ const UserPassword = ({
               rules: [{
                 required: true,
               }, {
-                validator: checkNew,
+                validator: checkPassword,
               }],
             })(
-              <Input placeholder="请输入确认新密码" />
+              <Input placeholder="确认新密码" type="password" />
             )}
           </FormItem>
         </Col>
