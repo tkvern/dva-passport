@@ -1,9 +1,8 @@
-import { hashHistory } from 'dva/router';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
 import { message } from 'antd';
-import { query, updateSelf, update, deny, grant, userRoles } from '../services/users';
-import { getLocalStorage, setLocalStorage } from '../utils/helper';
+import { query, update, deny, grant } from '../services/users';
+import { getLocalStorage } from '../utils/helper';
 
 export default {
 
@@ -32,13 +31,13 @@ export default {
     showModal(state, action) {
       return { ...state, ...action.payload, modalVisible: true };
     },
-    hideModal(state, action) {
+    hideModal(state) {
       return { ...state, modalVisible: false };
     },
     showModalGrant(state, action) {
       return { ...state, ...action.payload, modalGrantVisible: true };
     },
-    hideModalGrant(state, action) {
+    hideModalGrant(state) {
       return { ...state, modalGrantVisible: false };
     },
     collapseExpand(state, action) {
@@ -52,13 +51,14 @@ export default {
     },
     deleteSuccess() {},
     updateSuccess(state, action) {
-      const newList = state.list.map((item) => {
-        if (item.id === action.payload.id) {
-          return { ...item, ...action.payload };
+      const newUser = action.payload;
+      const newList = state.list.map((user) => {
+        if (user.id === newUser.id) {
+          return { ...user, ...newUser };
         }
-        return item;
+        return user;
       });
-      return { ...state, newList, loading: false };
+      return { ...state, list: newList, loading: false };
     },
     updateQueryKey(state, action) {
       return { ...state, ...action.payload };
@@ -83,7 +83,7 @@ export default {
         }
         return user;
       });
-      return { ...state, ...action.payload, loading: false };
+      return { ...state, ...newList, loading: false };
     },
   },
 
@@ -106,22 +106,6 @@ export default {
         });
       }
     },
-    // *create({ payload }, { call, put }) {
-    //   yield put({ type: 'hideModal' });
-    //   yield put({ type: 'showLoading' });
-    //   const { data } = yield call(create, payload);
-    //   if (data && data.success) {
-    //     yield put({
-    //       type: 'createSuccess',
-    //       payload: {
-    //         list: data.data.list,
-    //         total: data.data.total,
-    //         current: data.data.current,
-    //         keyword: '',
-    //       },
-    //     });
-    //   }
-    // },
     *update({ payload }, { call, put, select }) {
       const id = yield select(({ users }) => users.currentItem.id);
       const { data } = yield call(update, { ...payload, id });

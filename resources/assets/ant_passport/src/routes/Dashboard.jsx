@@ -1,11 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import { routerRedux } from 'dva/router';
-import { connect } from 'dva';
 
 import MainLayout from '../components/layout/MainLayout';
 
 
-function Dashboard({ location, dispatch }) {
+function Dashboard() {
   return (
     <MainLayout>
       <div>

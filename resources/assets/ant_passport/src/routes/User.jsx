@@ -1,12 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
 
 import MainLayout from '../components/layout/MainLayout';
 import UserInfo from '../components/user/UserInfo';
 
 
-function User({ location, dispatch, auth }) {
+function User({ dispatch, auth }) {
   const {
     user,
   } = auth;

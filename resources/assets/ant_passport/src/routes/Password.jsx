@@ -1,11 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'dva';
 
 import MainLayout from '../components/layout/MainLayout';
 import UserPassword from '../components/user/UserPassword';
 
 
-function Password({ location, dispatch, auth }) {
+function Password({ dispatch, auth }) {
   const {
     user,
   } = auth;

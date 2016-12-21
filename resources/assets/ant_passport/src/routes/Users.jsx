@@ -5,11 +5,10 @@ import { connect } from 'dva';
 import MainLayout from '../components/layout/MainLayout';
 import UserList from '../components/user/UserList';
 import UserSearch from '../components/user/UserSearch';
-import UserPanel from '../components/user/UserPanel';
 import UserModalGrant from '../components/user/UserModalGrant';
 import UserModal from '../components/user/UserModal';
 
-function Users({ location, dispatch, users }) {
+function Users({ dispatch, users }) {
   const {
     list,
     keyword,
@@ -128,18 +127,6 @@ function Users({ location, dispatch, users }) {
       });
     },
 
-  }
-
-
-  const userPanelProps = {
-    onAdd() {
-      dispatch({
-        type: 'users/showModal',
-        payload: {
-          modalType: 'create',
-        },
-      });
-    },
   }
 
   const UserModalGen = () =>

@@ -1,15 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import {
   Form, Row, Col, Input,
-  Modal, Button, Icon,
-  Radio, Checkbox, DatePicker,
-  Tooltip, InputNumber, Switch } from 'antd';
+  Modal
+} from 'antd';
 
 const FormItem = Form.Item;
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
-const InputGroup = Input.Group;
-const CheckboxGroup = Checkbox.Group;
 
 const UserModal = ({
   item,

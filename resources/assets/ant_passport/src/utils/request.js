@@ -1,7 +1,6 @@
 import fetch from 'dva/fetch';
 import { getCookie } from '../utils/helper';
 import { getAuthHeader } from '../utils/auth';
-import config from '../config';
 import { redirectLogin } from './auth';
 
 function parseJSON(response) {

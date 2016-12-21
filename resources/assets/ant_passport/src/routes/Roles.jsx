@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
 
@@ -9,7 +9,7 @@ import RolePanel from '../components/role/RolePanel';
 import RoleModal from '../components/role/RoleModal';
 import RoleModalGrant from '../components/role/RoleModalGrant';
 
-function Roles({ location, dispatch, roles }) {
+function Roles({ dispatch, roles }) {
   const {
     list,
     keyword,

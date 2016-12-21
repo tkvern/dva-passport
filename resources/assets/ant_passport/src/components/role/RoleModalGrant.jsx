@@ -6,7 +6,6 @@ import {
 
 import { getLocalStorage } from '../../utils/helper';
 
-const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
 
 const RoleModalGrant = ({
@@ -96,15 +95,6 @@ const RoleModalGrant = ({
     onCancel,
     width: 720,
   }
-
-  const formItemLayout = {
-    // labelCol: { span: 5 },
-    wrapperCol: { span: 24 },
-  };
-
-  const config = {
-    rules: [{ type: 'string', required: true, message: '不能为空' }],
-  };
 
   return (
     <Modal {...modalOpts}>

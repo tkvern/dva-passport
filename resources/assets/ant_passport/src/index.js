@@ -2,14 +2,9 @@ import dva from 'dva';
 import 'antd/dist/antd.less';
 import './index.html';
 import './index.less';
-import { errorHandle } from './utils/auth';
 
 // 1. Initialize
-const app = dva({
-  // onError(error) {
-  //   errorHandle(error);
-  // },
-});
+const app = dva();
 
 // 2. Plugins
 //app.use({});

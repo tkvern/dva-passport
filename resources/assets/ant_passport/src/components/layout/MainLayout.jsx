@@ -1,14 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
-import { Menu, Breadcrumb, Dropdown, Icon } from 'antd';
-import styles from './MainLayout.less';
+import { Menu, Dropdown, Icon } from 'antd';
+import './MainLayout.less';
 import { logOut } from '../../utils/auth';
 
 const SubMenu = Menu.SubMenu;
 
 
-function MainLayout({ children, dispatch, location, auth }) {
+function MainLayout({ children, dispatch, auth }) {
   const {
     user,
     currentMenu,
@@ -88,13 +88,6 @@ function MainLayout({ children, dispatch, location, auth }) {
         </Menu>
       </aside>
       <div className="ant-layout-main">
-        {/*<div className="ant-layout-breadcrumb">
-                  <Breadcrumb>
-                    <Breadcrumb.Item>首页</Breadcrumb.Item>
-                    <Breadcrumb.Item>应用列表</Breadcrumb.Item>
-                    <Breadcrumb.Item>某应用</Breadcrumb.Item>
-                  </Breadcrumb>
-                </div>*/}
         <div className="ant-layout-container">
           <div className="ant-layout-content">
             <div style={{ minHeight: 590 }}>

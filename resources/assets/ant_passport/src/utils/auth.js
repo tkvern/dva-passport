@@ -1,4 +1,3 @@
-import { query } from '../services/auth';
 import config from '../config';
 import { getCookie, delCookie } from './helper';
 
@@ -16,13 +15,6 @@ export function getAuthHeader(sso_token) {
 export function redirectLogin() {
   localStorage.clear();
   window.location.href = config.redirectUrl + window.location.origin;
-}
-
-export function errorHandle(error) {
-  const response = error.response;
-  if (response && response.status === 401) {
-    redirectLogin();
-  }
 }
 
 export function authenticated() {

@@ -1,20 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import {
   Form, Row, Col, Input,
-  Modal, Button, Icon,
-  Radio, Checkbox, DatePicker,
-  Tooltip, InputNumber, Switch } from 'antd';
+  Button } from 'antd';
 
 const FormItem = Form.Item;
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
-const InputGroup = Input.Group;
-const CheckboxGroup = Checkbox.Group;
 
 let passwordDirty = false;
 
 const UserPassword = ({
-  user,
   onUpdate,
   form: {
     getFieldDecorator,
@@ -41,15 +34,14 @@ const UserPassword = ({
     passwordDirty = passwordDirty || !!value;
   }
 
-  function checkConfirm(rule, value, callback) {
+  function checkConfirm(value, callback) {
     if (value && passwordDirty) {
       validateFields(['confirm_password'], { force: true });
     }
     callback();
   }
 
-  function checkPassword(rule, value, callback) {
-    // debugger
+  function checkPassword(value, callback) {
     if (value && value !== getFieldValue('new_password')) {
       callback('两次密码输入不一致');
     } else {

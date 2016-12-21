@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Table, Popconfirm, Pagination } from 'antd';
-import { getPermissionStatus, getIsAdminStatus } from '../../utils/helper';
+import { getPermissionStatus } from '../../utils/helper';
 
 const PermissionList = ({
   total,
@@ -38,7 +38,7 @@ const PermissionList = ({
   }, {
     title: '操作',
     key: 'operation',
-    render: (text, record, index) => {
+    render: (text, record) => {
       return (
         <div>
           <a onClick={() => onEditItem(record)}>编辑</a>

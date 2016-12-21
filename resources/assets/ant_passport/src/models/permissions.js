@@ -1,9 +1,8 @@
-import { hashHistory } from 'dva/router';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
 import { message } from 'antd';
 import { query, create, remove, update } from '../services/permissions';
-import { getLocalStorage, setLocalStorage } from '../utils/helper';
+import { setLocalStorage } from '../utils/helper';
 
 export default {
   namespace: 'permissions',
@@ -18,13 +17,13 @@ export default {
     modalType: 'create',
   },
   reducers: {
-    showLoading(state, action) {
+    showLoading(state) {
       return { ...state, loading: true };
     },
     showModal(state, action) {
       return { ...state, ...action.payload, modalVisible: true };
     },
-    hideModal(state, action) {
+    hideModal(state) {
       return { ...state, modalVisible: false };
     },
     querySuccess(state, action) {

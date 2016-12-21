@@ -1,6 +1,4 @@
 import { parse } from 'qs';
-import { routerRedux, hashHistory } from 'dva/router';
-import pathToRegexp from 'path-to-regexp';
 import { message } from 'antd';
 import { query, update, password } from '../services/auth';
 import { getLocalStorage, setLocalStorage } from '../utils/helper';
@@ -13,10 +11,10 @@ export default {
     currentMenu: [],
   },
   reducers: {
-    showLoading(state, action) {
+    showLoading(state) {
       return { ...state, loading: true };
     },
-    hideLoading(state, action) {
+    hideLoading(state) {
       return { ...state, loading: false };
     },
     activeMenu(state, action) {
@@ -27,7 +25,7 @@ export default {
     },
   },
   effects: {
-    *query({ payload }, { select, call, put }) {
+    *query({ payload }, { call, put }) {
       const { data } = yield call(query, parse(payload));
 
       if (data && data.err_msg === 'SUCCESS') {
@@ -40,7 +38,7 @@ export default {
         });
       }
     },
-    *update({ payload }, { call, put }) {
+    *update({ payload }, { call }) {
       const { data } = yield call(update, payload);
       if (data && data.err_msg === 'SUCCESS') {
         message.success('用户信息修改成功!');
@@ -49,7 +47,7 @@ export default {
         message.error(data.err_msg);
       }
     },
-    *password({ payload }, { call, put }) {
+    *password({ payload }, { call }) {
       const { data } = yield call(password, payload);
       if (data && data.err_msg === 'SUCCESS') {
         message.success('密码修改成功!');
@@ -59,7 +57,7 @@ export default {
     },
   },
   subscriptions: {
-    setup({ dispatch, history }) {
+    setup({ dispatch }) {
       const data = getLocalStorage('user');
       if (!data) {
         dispatch({

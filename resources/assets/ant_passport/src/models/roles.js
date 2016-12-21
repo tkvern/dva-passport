@@ -1,8 +1,7 @@
-import { hashHistory } from 'dva/router';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
 import { message } from 'antd';
-import { query, create, remove, update, grant, rolePermissions } from '../services/roles';
+import { query, create, remove, update, grant } from '../services/roles';
 import { getLocalStorage, setLocalStorage } from '../utils/helper';
 
 export default {
@@ -19,19 +18,19 @@ export default {
     modalGrantVisible: false,
   },
   reducers: {
-    showLoading(state, action) {
+    showLoading(state) {
       return { ...state, loading: true };
     },
     showModal(state, action) {
       return { ...state, ...action.payload, modalVisible: true };
     },
-    hideModal(state, action) {
+    hideModal(state) {
       return { ...state, modalVisible: false };
     },
     showModalGrant(state, action) {
       return { ...state, ...action.payload, modalGrantVisible: true };
     },
-    hideModalGrant(state, action) {
+    hideModalGrant(state) {
       return { ...state, modalGrantVisible: false };
     },
     querySuccess(state, action) {
@@ -67,7 +66,7 @@ export default {
         }
         return role;
       });
-      return { ...state, ...action.payload, loading: false };
+      return { ...state, ...newList, loading: false };
     },
     operationFailed(state, action) {
       return { ...state, ...action.payload, loading: false };
@@ -148,11 +147,11 @@ export default {
             id,
             permissions: data.data,
           },
-        })
+        });
         message.success('授权成功!');
       }
     },
-    *updateCache({ payload }, { call, put }) {
+    *updateCache({ payload }, { call }) {
       const { data } = yield call(query, parse({ ...payload, page_size: 10000 }));
       if (data && data.err_msg === 'SUCCESS') {
         setLocalStorage('roles', data.data.list);

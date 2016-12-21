@@ -8,7 +8,7 @@ import PermissionSearch from '../components/permission/PermissionSearch';
 import PermissionPanel from '../components/permission/PermissionPanel';
 import PermissionModal from '../components/permission/PermissionModal';
 
-function Permissions({ location, dispatch, permissions }) {
+function Permissions({ dispatch, permissions }) {
   const {
     list,
     keyword,

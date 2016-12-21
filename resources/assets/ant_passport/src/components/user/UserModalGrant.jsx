@@ -1,12 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import {
-  Form, Row, Col, Checkbox, Card,
-  Modal,
+  Form, Row, Col, Checkbox,
+  Modal
 } from 'antd';
 
 import { getLocalStorage } from '../../utils/helper';
 
-const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
 
 const UserModalGrant = ({
@@ -34,8 +33,6 @@ const UserModalGrant = ({
   const listRoles = getLocalStorage('roles') || [];
   const defaultCheckedList = [];
   const plainOptions = [];
-  let map = {};
-  let dest = [];
   roles.map((role) => {
     return defaultCheckedList.push(role.id);
   });
@@ -54,15 +51,6 @@ const UserModalGrant = ({
     onCancel,
     width: 720,
   }
-
-  const formItemLayout = {
-    // labelCol: { span: 5 },
-    wrapperCol: { span: 24 },
-  };
-
-  const config = {
-    rules: [{ type: 'string', required: true, message: '不能为空' }],
-  };
 
   return (
     <Modal {...modalOpts}>

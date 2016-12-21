@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Table, Popconfirm, Pagination } from 'antd';
-import { getRoleStatus, getIsAdminStatus } from '../../utils/helper';
+import { getRoleStatus } from '../../utils/helper';
 
 const RoleList = ({
   total,
@@ -35,7 +35,7 @@ const RoleList = ({
   }, {
     title: '操作',
     key: 'operation',
-    render: (text, record, index) => {
+    render: (text, record) => {
       return (
         <div>
           <a onClick={() => onGrant(record)}>授权</a>

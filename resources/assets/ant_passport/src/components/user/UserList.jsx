@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Table, Popconfirm, Pagination, Badge, Tag } from 'antd';
+import { Table, Popconfirm, Pagination, Badge } from 'antd';
 import { getUserStatus, getIsAdminStatus } from '../../utils/helper';
 
 const UserList = ({
@@ -17,7 +17,7 @@ const UserList = ({
     dataIndex: 'avatar',
     key: 'avatar',
     width: '47px',
-    render: (text, record, index) => {
+    render: (text, record) => {
       const imgUrl = record.avatar || 'https://gtms03.alicdn.com/tps/i3/TB1opXxHXXXXXahXpXXvBLt6FXX-230-230.png';
       return (
         <img
@@ -33,7 +33,7 @@ const UserList = ({
     title: '姓名',
     dataIndex: 'name',
     key: 'name',
-    render: (text, record, index) => {
+    render: (text, record) => {
       const cname = record.name;
       return (
         cname
@@ -43,7 +43,7 @@ const UserList = ({
     title: '手机',
     dataIndex: 'mobile',
     key: 'mobile',
-    render: (text, record, index) => {
+    render: (text, record) => {
       const mobile = record.mobile || '未填写';
       return (
         mobile
@@ -53,7 +53,7 @@ const UserList = ({
     title: '邮箱',
     dataIndex: 'email',
     key: 'email',
-    render: (text, record, index) => {
+    render: (text, record) => {
       const email = record.email || '未填写';
       return (
         email
@@ -63,7 +63,7 @@ const UserList = ({
     title: '状态',
     dataIndex: 'status',
     key: 'status',
-    render: (text, record, index) => {
+    render: (text, record) => {
       const userStatus = getUserStatus(record.status);
       return (
         <Badge status={userStatus.status} text={userStatus.text} />
@@ -73,7 +73,7 @@ const UserList = ({
     title: '管理员',
     dataIndex: 'isadmin',
     key: 'isadmin',
-    render: (text, record, index) => {
+    render: (text, record) => {
       const adminStatus = getIsAdminStatus(record.isadmin);
       return (
         <Badge status={adminStatus.status} text={adminStatus.text} />
@@ -82,7 +82,7 @@ const UserList = ({
   }, {
     title: '操作',
     key: 'operation',
-    render: (text, record, index) => {
+    render: (text, record) => {
       const { id, status } = record;
       let enable;
       let displayText;

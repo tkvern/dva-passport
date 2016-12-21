@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Router, Route } from 'dva/router';
 import { authenticated } from './utils/auth';
 import Dashboard from './routes/Dashboard';
