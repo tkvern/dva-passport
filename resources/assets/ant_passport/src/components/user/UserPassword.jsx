@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import {
-  Form, Row, Col, Input,
-  Button } from 'antd';
+  Form, Row, Col, Input, 
+  Button
+} from 'antd';
 
 const FormItem = Form.Item;
 
@@ -25,7 +26,7 @@ const UserPassword = ({
       }
       const data = { ...getFieldsValue() };
       onUpdate(data);
-      // resetFields();
+      resetFields();
     });
   }
 
@@ -34,15 +35,14 @@ const UserPassword = ({
     passwordDirty = passwordDirty || !!value;
   }
 
-  function checkConfirm(value, callback) {
-    debugger
+  function checkConfirm(rule, value, callback) {
     if (value && passwordDirty) {
       validateFields(['confirm_password'], { force: true });
     }
     callback();
   }
 
-  function checkPassword(value, callback) {
+  function checkPassword(rule, value, callback) {
     if (value && value !== getFieldValue('new_password')) {
       callback('两次密码输入不一致');
     } else {
@@ -71,14 +71,14 @@ const UserPassword = ({
           <FormItem {...formItemLayout} hasFeedback label="新密码">
             {getFieldDecorator('new_password', {
               rules: [{
+                type: "string",
                 required: true,
-                // range: { min: 6 },
-                message: '必须填写正确的新密码',
+                range: {min: 6}
               }, {
                 validator: checkConfirm,
               }],
             })(
-              <Input placeholder="新密码" type="password" onBlur={handlePasswordBlur} />
+              <Input placeholder="新密码" type="password" onBlur={handlePasswordBlur}/>
             )}
           </FormItem>
         </Col>
@@ -87,9 +87,8 @@ const UserPassword = ({
             {getFieldDecorator('confirm_password', {
               rules: [{
                 required: true,
-                message: '必须确认新密码',
               }, {
-                // validator: checkPassword,
+                validator: checkPassword,
               }],
             })(
               <Input placeholder="确认新密码" type="password" />
@@ -101,8 +100,8 @@ const UserPassword = ({
             <Button type="primary" htmlType="submit">
               更新
             </Button>
-            <Button style={{ marginLeft: 8 }}>
-              取消
+            <Button style={{ marginLeft: 8 }} onClick={() => { resetFields() }}>
+              清空
             </Button>
           </FormItem>
         </Col>
@@ -112,7 +111,7 @@ const UserPassword = ({
 }
 
 UserPassword.propTypes = {
-  // onUpdate: PropTypes.func,
+  onUpdate: PropTypes.func,
 }
 
 export default Form.create()(UserPassword);
