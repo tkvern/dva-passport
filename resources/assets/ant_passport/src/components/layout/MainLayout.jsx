@@ -29,7 +29,7 @@ function MainLayout({ children, dispatch, auth }) {
     });
   }
 
-  const menu = (
+  const menuPanel = (
     <Menu onClick={handleClick}>
       <Menu.Item key="0">
         <Link
@@ -50,6 +50,26 @@ function MainLayout({ children, dispatch, auth }) {
     </Menu>
   );
 
+  const menuChildren = [
+    <Menu.Item key="1">
+      <Link to="/"><Icon type="appstore" />应用中心</Link>
+    </Menu.Item>,
+    <SubMenu key="sub3" title={<span><Icon type="user" />个人中心</span>}>
+      <Menu.Item key="8"><Link to="/user">修改资料</Link></Menu.Item>
+      <Menu.Item key="9"><Link to="/password">修改密码</Link></Menu.Item>
+    </SubMenu>,
+  ];
+
+  if (user.isadmin === 1) {
+    menuChildren.push(
+      <SubMenu key="sub2" title={<span><Icon type="solution" />用户模块</span>}>
+        <Menu.Item key="5"><Link to="/users">用户管理</Link></Menu.Item>
+        <Menu.Item key="6"><Link to="/roles">角色管理</Link></Menu.Item>
+        <Menu.Item key="7"><Link to="/permissions">权限管理</Link></Menu.Item>
+      </SubMenu>
+    );
+  }
+
   return (
     <div className="ant-layout-aside">
       <header className="main-header">
@@ -61,7 +81,7 @@ function MainLayout({ children, dispatch, auth }) {
           <div className="navbar-custom-menu">
             <ul className="nav navbar-nav">
               <li className="dropdown">
-                <Dropdown overlay={menu} trigger={['click']}>
+                <Dropdown overlay={menuPanel} trigger={['click']}>
                   <a className="ant-dropdown-link">
                     <Icon type="user" /> { user.nickname } <Icon type="down" />
                   </a>
@@ -73,18 +93,7 @@ function MainLayout({ children, dispatch, auth }) {
       </header>
       <aside className="ant-layout-sider">
         <Menu mode="inline" theme="dark" defaultSelectedKeys={currentMenu} defaultOpenKeys={['sub2', 'sub3']} onClick={onClickMenu}>
-          <Menu.Item key="1">
-            <Link to="/"><Icon type="appstore" />应用中心</Link>
-          </Menu.Item>
-          <SubMenu key="sub2" title={<span><Icon type="solution" />用户模块</span>}>
-            <Menu.Item key="5"><Link to="/users">用户管理</Link></Menu.Item>
-            <Menu.Item key="6"><Link to="/roles">角色管理</Link></Menu.Item>
-            <Menu.Item key="7"><Link to="/permissions">权限管理</Link></Menu.Item>
-          </SubMenu>
-          <SubMenu key="sub3" title={<span><Icon type="user" />个人中心</span>}>
-            <Menu.Item key="8"><Link to="/user">修改资料</Link></Menu.Item>
-            <Menu.Item key="9"><Link to="/password">修改密码</Link></Menu.Item>
-          </SubMenu>
+          {menuChildren}
         </Menu>
       </aside>
       <div className="ant-layout-main">
