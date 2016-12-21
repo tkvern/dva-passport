@@ -63,7 +63,7 @@ function MainLayout({ children, dispatch, auth }) {
               <li className="dropdown">
                 <Dropdown overlay={menu} trigger={['click']}>
                   <a className="ant-dropdown-link">
-                    <Icon type="user" /> { user.name } <Icon type="down" />
+                    <Icon type="user" /> { user.nickname } <Icon type="down" />
                   </a>
                 </Dropdown>
               </li>

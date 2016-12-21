@@ -37,6 +37,19 @@ const UserInfo = ({
       <Row>
         <Col>
           <FormItem {...formItemLayout} hasFeedback label="昵称">
+            {getFieldDecorator('name', {
+              rules: [{
+                required: true,
+                message: '昵称不能为空',
+              }],
+              initialValue: user.name,
+            })(
+              <Input placeholder="请输入姓名" required disabled={!!user.name}  />
+            )}
+          </FormItem>
+        </Col>
+        <Col>
+          <FormItem {...formItemLayout} hasFeedback label="昵称">
             {getFieldDecorator('nickname', {
               rules: [{
                 required: true,
@@ -44,7 +57,7 @@ const UserInfo = ({
               }],
               initialValue: user.nickname,
             })(
-              <Input placeholder="请输入昵称" />
+              <Input placeholder="请输入昵称" required />
             )}
           </FormItem>
         </Col>
@@ -58,7 +71,7 @@ const UserInfo = ({
               }],
               initialValue: user.mobile,
             })(
-              <Input placeholder="请输入任务名称" />
+              <Input placeholder="请输入任务名称" required />
             )}
           </FormItem>
         </Col>
@@ -72,7 +85,7 @@ const UserInfo = ({
               }],
               initialValue: user.email,
             })(
-              <Input placeholder="请输入邮箱地址" />
+              <Input placeholder="请输入邮箱地址" required />
             )}
           </FormItem>
         </Col>

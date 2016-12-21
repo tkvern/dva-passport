@@ -8,7 +8,7 @@ import UserSearch from '../components/user/UserSearch';
 import UserModalGrant from '../components/user/UserModalGrant';
 import UserModal from '../components/user/UserModal';
 
-function Users({ dispatch, users }) {
+function Users({ dispatch, users, auth }) {
   const {
     list,
     keyword,
@@ -22,10 +22,13 @@ function Users({ dispatch, users }) {
     modalGrantVisible,
   } = users;
 
+  const currentUser = auth.user;
+
   const userListProps = {
     total,
     current,
     loading,
+    currentUser,
     dataSource: list,
     onPageChange(page) {
       dispatch(
@@ -153,8 +156,8 @@ Users.propTypes = {
   users: PropTypes.object,
 }
 
-function mapStateToProps({ users }) {
-  return { users };
+function mapStateToProps({ users, auth }) {
+  return { users, auth };
 }
 
 export default connect(mapStateToProps)(Users);

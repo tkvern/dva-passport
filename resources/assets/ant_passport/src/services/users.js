@@ -26,7 +26,3 @@ export async function grant(params) {
     body: JSON.stringify(params),
   });
 }
-
-export async function userRoles(params) {
-  return request(`${config.domain}/api/users/${params.id}/roles`);
-}

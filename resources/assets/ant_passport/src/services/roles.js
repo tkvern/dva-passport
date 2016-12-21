@@ -32,7 +32,3 @@ export async function grant(params) {
     body: JSON.stringify(params),
   });
 }
-
-export async function rolePermissions(params) {
-  return request(`${config.domain}/api/roles/${params.id}/permissions`);
-}

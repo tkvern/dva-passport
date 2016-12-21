@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { Table, Popconfirm, Pagination } from 'antd';
-import { getPermissionStatus } from '../../utils/helper';
 
 const PermissionList = ({
   total,

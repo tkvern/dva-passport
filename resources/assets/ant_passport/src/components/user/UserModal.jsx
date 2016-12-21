@@ -47,7 +47,7 @@ const UserModal = ({
       <Form>
         <Row>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="姓名">
+            <FormItem {...formItemLayout} hasFeedback label="姓名">
               {getFieldDecorator('name', {
                 rules: [{
                   required: true,

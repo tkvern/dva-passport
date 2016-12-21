@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { Table, Popconfirm, Pagination } from 'antd';
-import { getRoleStatus } from '../../utils/helper';
 
 const RoleList = ({
   total,

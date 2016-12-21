@@ -27,7 +27,6 @@ export default {
   effects: {
     *query({ payload }, { call, put }) {
       const { data } = yield call(query, parse(payload));
-
       if (data && data.err_msg === 'SUCCESS') {
         setLocalStorage('user', data.data);
         yield put({
@@ -38,11 +37,17 @@ export default {
         });
       }
     },
-    *update({ payload }, { call }) {
+    *update({ payload }, { call, put }) {
       const { data } = yield call(update, payload);
       if (data && data.err_msg === 'SUCCESS') {
-        message.success('用户信息修改成功!');
         setLocalStorage('user', data.data);
+        yield put({
+          type: 'querySuccess',
+          payload: {
+            user: data.data,
+          },
+        });
+        message.success('用户信息修改成功!');
       } else {
         message.error(data.err_msg);
       }
