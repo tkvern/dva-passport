@@ -46,15 +46,25 @@ const UserModal = ({
     onCancel,
     // width: 720,
   }
-
-  const config = {
-    rules: [{ type: 'string', required: true, message: '不能为空' }],
-  };
-
+  
   return (
     <Modal {...modalOpts}>
       <Form>
         <Row>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="姓名">
+              {getFieldDecorator('name', {
+                rules: [{
+                  required: true,
+                  type: 'string',
+                  message: '不能为空',
+                }],
+                initialValue: user.name,
+              })(
+                <Input disabled={!!user.name} />
+              )}
+            </FormItem>
+          </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} hasFeedback label="昵称">
               {getFieldDecorator('nickname', {
