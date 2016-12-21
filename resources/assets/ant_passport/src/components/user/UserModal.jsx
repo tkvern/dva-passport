@@ -56,10 +56,14 @@ const UserModal = ({
       <Form>
         <Row>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="昵称">
+            <FormItem {...formItemLayout} hasFeedback label="昵称">
               {getFieldDecorator('nickname', {
-                ...config,
-                initialValue: user.nickname
+                rules: [{
+                  required: true,
+                  type: 'string',
+                  message: '不能为空',
+                }],
+                initialValue: user.nickname,
               })(
                 <Input />
               )}

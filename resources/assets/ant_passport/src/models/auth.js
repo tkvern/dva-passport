@@ -33,7 +33,7 @@ export default {
       const { data } = yield call(query, parse(payload));
 
       if (data && data.err_msg === 'SUCCESS') {
-        setLocalStorage('user', data);
+        setLocalStorage('user', data.data);
         yield put({
           type: 'querySuccess',
           payload: {
@@ -74,7 +74,7 @@ export default {
         dispatch({
           type: 'querySuccess',
           payload: {
-            user: data.data,
+            user: data,
           },
         });
       }

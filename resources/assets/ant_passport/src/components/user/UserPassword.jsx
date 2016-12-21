@@ -79,7 +79,8 @@ const UserPassword = ({
               rules: [{
                 type: "string",
                 required: true,
-                range: {min: 6}
+                range: {min: 6},
+                message: '必须填写正确的新密码',
               }, {
                 validator: checkConfirm,
               }],
@@ -93,6 +94,7 @@ const UserPassword = ({
             {getFieldDecorator('confirm_password', {
               rules: [{
                 required: true,
+                message: '必须确认新密码',
               }, {
                 validator: checkPassword,
               }],

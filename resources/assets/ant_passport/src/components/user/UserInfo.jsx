@@ -37,13 +37,22 @@ const UserInfo = ({
     wrapperCol: { span: 10 },
   };
 
-  const config = {
-
-  };
-
   return (
     <Form style={{ width: 720 }} onSubmit={handleSubmit}>
       <Row>
+        <Col>
+          <FormItem {...formItemLayout} hasFeedback label="昵称">
+            {getFieldDecorator('nickname', {
+              rules: [{
+                required: true,
+                message: '昵称不能为空',
+              }],
+              initialValue: user.nickname,
+            })(
+              <Input placeholder="请输入昵称" />
+            )}
+          </FormItem>
+        </Col>
         <Col>
           <FormItem {...formItemLayout} hasFeedback label="手机号">
             {getFieldDecorator('mobile', {
@@ -73,19 +82,8 @@ const UserInfo = ({
           </FormItem>
         </Col>
         <Col>
-          <FormItem {...formItemLayout} label="昵称">
-            {getFieldDecorator('nickname', {
-              ...config,
-              initialValue: user.nickname,
-            })(
-              <Input placeholder="请输入昵称" />
-            )}
-          </FormItem>
-        </Col>
-        <Col>
           <FormItem {...formItemLayout} label="分机号">
             {getFieldDecorator('tel', {
-              ...config,
               initialValue: user.tel,
             })(
               <Input placeholder="请输入分机号" />
@@ -95,7 +93,6 @@ const UserInfo = ({
         <Col>
           <FormItem {...formItemLayout} label="备注">
             {getFieldDecorator('remark', {
-              ...config,
               initialValue: user.remark,
             })(
               <Input
