@@ -43,7 +43,6 @@ export default {
       }
     },
     *update({ payload }, { call, put }) {
-      // yield put({ type: 'showLoading' });
       const { data } = yield call(update, payload);
       if (data && data.err_msg === 'SUCCESS') {
         message.success('用户信息修改成功!');
@@ -53,7 +52,6 @@ export default {
       }
     },
     *password({ payload }, { call, put }) {
-      // yield put({ type: 'showLoading' });
       const { data } = yield call(password, payload);
       if (data && data.err_msg === 'SUCCESS') {
         message.success('密码修改成功!');

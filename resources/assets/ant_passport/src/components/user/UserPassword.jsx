@@ -21,6 +21,7 @@ const UserPassword = ({
     validateFields,
     getFieldsValue,
     getFieldValue,
+    resetFields,
   },
 }) => {
   function handleSubmit(e) {
@@ -31,6 +32,7 @@ const UserPassword = ({
       }
       const data = { ...getFieldsValue() };
       onUpdate(data);
+      resetFields();
     });
   }
 
