@@ -123,20 +123,18 @@ export default {
       }
     },
     *update({payload}, {call, put, select}) {
-      yield put({type: 'hideModal'});
-      yield put({type: 'showLoading'});
       const id = yield select(({ users }) => users.currentItem.id);
       const { data } = yield call(update, { ...payload, id });
       if (data && data.err_code == '0') {
+        yield put({type: 'hideModal'});
+        yield put({type: 'showLoading'});
         yield put({
           type: 'updateSuccess',
           payload: data.data
         });
-
         message.success('用户信息修改成功');
       } else {
         message.error(data.err_msg);
-        yield put({type: 'hideLoading'});
       }
     },
     *deny({ payload }, { call, put }) {
