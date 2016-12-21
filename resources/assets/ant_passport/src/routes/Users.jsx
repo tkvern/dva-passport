@@ -41,8 +41,8 @@ function Users({ location, dispatch, users }) {
         type: 'users/showModal',
         payload: {
           modalType: 'update',
-          currentItem: user
-        }
+          currentItem: user,
+        },
       });
     },
     onDeny(id, enable) {
@@ -117,7 +117,7 @@ function Users({ location, dispatch, users }) {
     visible: modalGrantVisible,
     onOk(data) {
       dispatch({
-        type: `users/grant`,
+        type: 'users/grant',
         payload: data,
       });
     },
@@ -143,7 +143,7 @@ function Users({ location, dispatch, users }) {
   }
 
   const UserModalGen = () =>
-    <UserModal {...userModalProps}/>;
+    <UserModal {...userModalProps} />;
 
   const UserModalGrantGen = () =>
     <UserModalGrant {...userModalGrantProps} />;

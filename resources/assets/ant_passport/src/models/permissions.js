@@ -1,9 +1,9 @@
 import { hashHistory } from 'dva/router';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
+import { message } from 'antd';
 import { query, create, remove, update } from '../services/permissions';
 import { getLocalStorage, setLocalStorage } from '../utils/helper';
-import { message } from 'antd';
 
 export default {
   namespace: 'permissions',
@@ -80,7 +80,7 @@ export default {
           type: 'query',
         });
         localStorage.removeItem('permissions');
-        message.success(`创建成功!`);
+        message.success('创建成功!');
       } else {
         message.error(`创建失败! ${data.err_msg}`);
       }
@@ -94,7 +94,7 @@ export default {
           payload,
         });
         localStorage.removeItem('permissions');
-        message.success(`删除成功!`);
+        message.success('删除成功!');
       } else {
         message.error(`删除失败! ${data.err_msg}`);
       }
@@ -111,10 +111,10 @@ export default {
           payload: newRole,
         });
         localStorage.removeItem('permissions');
-        message.success(`更新成功!`);
+        message.success('更新成功!');
       }
     },
-    *updateCache({ payload }, {call, put }) {
+    *updateCache({ payload }, { call, put }) {
       const { data } = yield call(query, parse({ ...payload, page_size: 10000 }));
       if (data && data.err_msg === 'SUCCESS') {
         setLocalStorage('permissions', data.data.list);

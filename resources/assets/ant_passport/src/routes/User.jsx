@@ -3,10 +3,10 @@ import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
 
 import MainLayout from '../components/layout/MainLayout';
-import UserInfo from '../components/user/UserInfo.jsx';
+import UserInfo from '../components/user/UserInfo';
 
 
-function User({ location, dispatch, auth}) {
+function User({ location, dispatch, auth }) {
   const {
     user,
   } = auth;
@@ -18,12 +18,12 @@ function User({ location, dispatch, auth}) {
         type: 'auth/update',
         payload: data,
       })
-    }
+    },
   }
 
   return (
     <MainLayout>
-      <UserInfo { ...userInfoProps } />
+      <UserInfo {...userInfoProps} />
     </MainLayout>
   );
 }

@@ -105,7 +105,7 @@ function Roles({ location, dispatch, roles }) {
     visible: modalGrantVisible,
     onOk(data) {
       dispatch({
-        type: `roles/grant`,
+        type: 'roles/grant',
         payload: data,
       });
     },

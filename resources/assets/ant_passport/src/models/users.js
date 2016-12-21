@@ -1,9 +1,9 @@
 import { hashHistory } from 'dva/router';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
+import { message } from 'antd';
 import { query, updateSelf, update, deny, grant, userRoles } from '../services/users';
 import { getLocalStorage, setLocalStorage } from '../utils/helper';
-import { message } from 'antd';
 
 export default {
 
@@ -52,13 +52,13 @@ export default {
     },
     deleteSuccess() {},
     updateSuccess(state, action) {
-      let list = state.list.map(function(item) {
-        if (item.id == action.payload.id) {
-          return {...item, ...action.payload};
+      const newList = state.list.map((item) => {
+        if (item.id === action.payload.id) {
+          return { ...item, ...action.payload };
         }
         return item;
       });
-      return {...state, list, loading: false};
+      return { ...state, newList, loading: false };
     },
     updateQueryKey(state, action) {
       return { ...state, ...action.payload };
@@ -106,31 +106,31 @@ export default {
         });
       }
     },
-    *create({ payload }, { call, put }) {
-      yield put({ type: 'hideModal' });
-      yield put({ type: 'showLoading' });
-      const { data } = yield call(create, payload);
-      if (data && data.success) {
-        yield put({
-          type: 'createSuccess',
-          payload: {
-            list: data.data.list,
-            total: data.data.total,
-            current: data.data.current,
-            keyword: '',
-          },
-        });
-      }
-    },
-    *update({payload}, {call, put, select}) {
+    // *create({ payload }, { call, put }) {
+    //   yield put({ type: 'hideModal' });
+    //   yield put({ type: 'showLoading' });
+    //   const { data } = yield call(create, payload);
+    //   if (data && data.success) {
+    //     yield put({
+    //       type: 'createSuccess',
+    //       payload: {
+    //         list: data.data.list,
+    //         total: data.data.total,
+    //         current: data.data.current,
+    //         keyword: '',
+    //       },
+    //     });
+    //   }
+    // },
+    *update({ payload }, { call, put, select }) {
       const id = yield select(({ users }) => users.currentItem.id);
       const { data } = yield call(update, { ...payload, id });
-      if (data && data.err_code == '0') {
-        yield put({type: 'hideModal'});
-        yield put({type: 'showLoading'});
+      if (data && data.err_code === '0') {
+        yield put({ type: 'hideModal' });
+        yield put({ type: 'showLoading' });
         yield put({
           type: 'updateSuccess',
-          payload: data.data
+          payload: data.data,
         });
         message.success('用户信息修改成功');
       } else {
@@ -145,7 +145,7 @@ export default {
           type: 'denySuccess',
           payload,
         });
-        message.success(`操作成功!`);
+        message.success('操作成功!');
       } else {
         message.error(`操作失败! ${data.err_msg}`);
       }
@@ -164,7 +164,7 @@ export default {
             roles: data.data,
           },
         });
-        message.success(`授权成功!`);
+        message.success('授权成功!');
       }
     },
   },

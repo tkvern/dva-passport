@@ -62,7 +62,7 @@ const RoleModalGrant = ({
     } else {
       for (let j = 0; j < dest.length; j++) {
         const dj = dest[j];
-        if (dj.scope == permission.scope) {
+        if (dj.scope === permission.scope) {
           dj.children.push(permission);
           dj.options.push({
             label: permission.name,

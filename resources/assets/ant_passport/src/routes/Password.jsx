@@ -2,10 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'dva';
 
 import MainLayout from '../components/layout/MainLayout';
-import UserPassword from '../components/user/UserPassword.jsx';
+import UserPassword from '../components/user/UserPassword';
 
 
-function Password({ location, dispatch, auth}) {
+function Password({ location, dispatch, auth }) {
   const {
     user,
   } = auth;
@@ -17,12 +17,12 @@ function Password({ location, dispatch, auth}) {
         type: 'auth/password',
         payload: data,
       })
-    }
+    },
   };
 
   return (
     <MainLayout>
-      <UserPassword { ...userPasswordProps } />
+      <UserPassword {...userPasswordProps} />
     </MainLayout>
   );
 }

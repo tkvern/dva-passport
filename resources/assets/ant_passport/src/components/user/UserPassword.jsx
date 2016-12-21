@@ -42,7 +42,6 @@ const UserPassword = ({
   }
 
   function checkConfirm(rule, value, callback) {
-    console.log('Dirty: ' + passwordDirty);
     if (value && passwordDirty) {
       validateFields(['confirm_password'], { force: true });
     }
@@ -79,15 +78,15 @@ const UserPassword = ({
           <FormItem {...formItemLayout} hasFeedback label="新密码">
             {getFieldDecorator('new_password', {
               rules: [{
-                type: "string",
+                type: 'string',
                 required: true,
-                range: {min: 6},
+                range: { min: 6 },
                 message: '必须填写正确的新密码',
               }, {
                 validator: checkConfirm,
               }],
             })(
-              <Input placeholder="新密码" type="password" onBlur={handlePasswordBlur}/>
+              <Input placeholder="新密码" type="password" onBlur={handlePasswordBlur} />
             )}
           </FormItem>
         </Col>

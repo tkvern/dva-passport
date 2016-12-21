@@ -108,7 +108,7 @@ const UserInfo = ({
             <Button type="primary" htmlType="submit">
               更新
             </Button>
-            <Button style={{ marginLeft: 8 }} onClick={()=>{resetFields()}}>
+            <Button style={{ marginLeft: 8 }} onClick={() => { resetFields() }}>
               取消
             </Button>
           </FormItem>

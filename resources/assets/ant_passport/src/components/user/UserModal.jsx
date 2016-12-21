@@ -46,7 +46,7 @@ const UserModal = ({
     onCancel,
     // width: 720,
   }
-  
+
   return (
     <Modal {...modalOpts}>
       <Form>
@@ -120,7 +120,7 @@ const UserModal = ({
             <FormItem {...formItemLayout} label="密码">
               {getFieldDecorator('password', {
               })(
-                <Input type="password"/>
+                <Input type="password" />
               )}
             </FormItem>
           </Col>

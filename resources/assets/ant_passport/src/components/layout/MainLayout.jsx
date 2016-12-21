@@ -32,8 +32,9 @@ function MainLayout({ children, dispatch, location, auth }) {
   const menu = (
     <Menu onClick={handleClick}>
       <Menu.Item key="0">
-        <Link to="/user" 
-          onClick={()=>{
+        <Link
+          to="/user"
+          onClick={() => {
             dispatch({
               type: 'auth/activeMenu',
               payload: {

@@ -1,11 +1,9 @@
-import { hashHistory } from 'dva/router';
 import { parse } from 'qs';
-import { routerRedux } from 'dva/router';
+import { routerRedux, hashHistory } from 'dva/router';
 import pathToRegexp from 'path-to-regexp';
+import { message } from 'antd';
 import { query, update, password } from '../services/auth';
 import { getLocalStorage, setLocalStorage } from '../utils/helper';
-
-import { message } from 'antd';
 
 export default {
   namespace: 'auth',
