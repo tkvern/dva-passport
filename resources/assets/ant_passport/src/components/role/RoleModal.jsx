@@ -74,4 +74,11 @@ const RoleModal = ({
   );
 }
 
+RoleModal.propsTypes = {
+  item: PropTypes.object,
+  visible: PropTypes.bool,
+  onOk: PropTypes.func,
+  onCancel: PropTypes.func,
+}
+
 export default Form.create()(RoleModal);

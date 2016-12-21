@@ -25,7 +25,7 @@ const UserPassword = ({
       }
       const data = { ...getFieldsValue() };
       onUpdate(data);
-      resetFields();
+      // resetFields();
     });
   }
 
@@ -35,6 +35,7 @@ const UserPassword = ({
   }
 
   function checkConfirm(value, callback) {
+    debugger
     if (value && passwordDirty) {
       validateFields(['confirm_password'], { force: true });
     }
@@ -70,9 +71,8 @@ const UserPassword = ({
           <FormItem {...formItemLayout} hasFeedback label="新密码">
             {getFieldDecorator('new_password', {
               rules: [{
-                type: 'string',
                 required: true,
-                range: { min: 6 },
+                // range: { min: 6 },
                 message: '必须填写正确的新密码',
               }, {
                 validator: checkConfirm,
@@ -89,7 +89,7 @@ const UserPassword = ({
                 required: true,
                 message: '必须确认新密码',
               }, {
-                validator: checkPassword,
+                // validator: checkPassword,
               }],
             })(
               <Input placeholder="确认新密码" type="password" />
@@ -112,6 +112,7 @@ const UserPassword = ({
 }
 
 UserPassword.propTypes = {
+  // onUpdate: PropTypes.func,
 }
 
 export default Form.create()(UserPassword);

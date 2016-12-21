@@ -135,9 +135,12 @@ UserList.propTypes = {
   total: PropTypes.number,
   current: PropTypes.number,
   loading: PropTypes.bool,
+  currentUser: PropTypes.object,
   dataSource: PropTypes.array,
   onPageChange: PropTypes.func,
+  onEdit: PropTypes.func,
   onDeny: PropTypes.func,
+  onGrant: PropTypes.func,
 }
 
 export default UserList;

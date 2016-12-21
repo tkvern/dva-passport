@@ -16,4 +16,8 @@ const RolePanel = ({
   );
 }
 
+RolePanel.propTypes = {
+  onAdd: PropTypes.func,
+}
+
 export default RolePanel;

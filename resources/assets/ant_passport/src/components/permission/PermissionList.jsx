@@ -71,6 +71,13 @@ const PermissionList = ({
 }
 
 PermissionList.propTypes = {
+  total: PropTypes.number,
+  current: PropTypes.number,
+  loading: PropTypes.bool,
+  dataSource: PropTypes.array,
+  onPageChange: PropTypes.func,
+  onDeleteItem: PropTypes.func,
+  onEditItem: PropTypes.func,
 }
 
 export default PermissionList;

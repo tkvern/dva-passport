@@ -71,7 +71,7 @@ const UserInfo = ({
               }],
               initialValue: user.mobile,
             })(
-              <Input placeholder="请输入任务名称" required />
+              <Input placeholder="请输入手机号" required />
             )}
           </FormItem>
         </Col>
@@ -127,6 +127,8 @@ const UserInfo = ({
 }
 
 UserInfo.propTypes = {
+  user: PropTypes.object,
+  onUpdate: PropTypes.func,
 }
 
 export default Form.create()(UserInfo);

@@ -5,13 +5,9 @@ import MainLayout from '../components/layout/MainLayout';
 import UserPassword from '../components/user/UserPassword';
 
 
-function Password({ dispatch, auth }) {
-  const {
-    user,
-  } = auth;
+function Password({ dispatch }) {
 
   const userPasswordProps = {
-    user: user,
     onUpdate(data) {
       dispatch({
         type: 'auth/password',

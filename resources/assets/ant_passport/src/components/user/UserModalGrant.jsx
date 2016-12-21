@@ -67,4 +67,11 @@ const UserModalGrant = ({
   );
 }
 
+UserModalGrant.propTypes = {
+  item: PropTypes.object,
+  onOk: PropTypes.func,
+  visible: PropTypes.bool,
+  onCancel: PropTypes.func,
+}
+
 export default Form.create()(UserModalGrant);

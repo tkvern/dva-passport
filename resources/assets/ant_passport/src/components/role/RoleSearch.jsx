@@ -48,7 +48,7 @@ const RoleSearch = ({
     </Row>
   ];
 
-  const showCount = true ? children.length : 1;
+  const showCount = 1;
 
   return (
     <Form
@@ -69,6 +69,12 @@ const RoleSearch = ({
       </Row>
     </Form>
   );
+}
+
+RoleSearch.prpoTypes = {
+  keyword: PropTypes.string,
+  onSearch: PropTypes.func,
+  onReset: PropTypes.func,
 }
 
 export default Form.create()(RoleSearch);

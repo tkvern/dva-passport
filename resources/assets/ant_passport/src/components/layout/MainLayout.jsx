@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
 import { Menu, Dropdown, Icon } from 'antd';
@@ -105,6 +105,8 @@ function MainLayout({ children, dispatch, auth }) {
 
 MainLayout.propTypes = {
   children: PropTypes.element.isRequired,
+  user: PropTypes.object,
+  currentMenu: PropTypes.array,
 };
 
 function mapStateToProps({ auth }) {

@@ -48,7 +48,7 @@ const PermissionSearch = ({
     </Row>
   ];
 
-  const showCount = true ? children.length : 1;
+  const showCount = 1;
 
   return (
     <Form
@@ -69,6 +69,12 @@ const PermissionSearch = ({
       </Row>
     </Form>
   );
+}
+
+PermissionSearch.prpoTypes = {
+  keyword: PropTypes.string,
+  onSearch: PropTypes.func,
+  onReset: PropTypes.func,
 }
 
 export default Form.create()(PermissionSearch);

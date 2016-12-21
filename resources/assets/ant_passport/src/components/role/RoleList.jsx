@@ -70,6 +70,14 @@ const RoleList = ({
 }
 
 RoleList.propTypes = {
+  total: PropTypes.number,
+  current: PropTypes.number,
+  loading: PropTypes.bool,
+  dataSource: PropTypes.array,
+  onPageChange: PropTypes.func,
+  onDeleteItem: PropTypes.func,
+  onEditItem: PropTypes.func,
+  onGrant: PropTypes.func,
 }
 
 export default RoleList;

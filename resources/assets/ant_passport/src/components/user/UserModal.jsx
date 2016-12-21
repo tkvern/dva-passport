@@ -56,7 +56,7 @@ const UserModal = ({
                 }],
                 initialValue: user.name,
               })(
-                <Input disabled={!!user.name} />
+                <Input disabled={!!user.name} required />
               )}
             </FormItem>
           </Col>
@@ -70,7 +70,7 @@ const UserModal = ({
                 }],
                 initialValue: user.nickname,
               })(
-                <Input />
+                <Input placeholder="请输入昵称" required />
               )}
             </FormItem>
           </Col>
@@ -84,7 +84,7 @@ const UserModal = ({
                 }],
                 initialValue: user.mobile,
               })(
-                <Input />
+                <Input placeholder="请输入手机号" required />
               )}
             </FormItem>
           </Col>
@@ -93,12 +93,12 @@ const UserModal = ({
               {getFieldDecorator('email', {
                 rules: [{
                   type: 'email',
-                  required: 'true',
+                  required: true,
                   message: '必须填写正确的邮箱地址',
                 }],
                 initialValue: user.email,
               })(
-                <Input placeholder="xyz@xx.com" />
+                <Input placeholder="xyz@xx.com" required />
               )}
             </FormItem>
           </Col>
@@ -107,7 +107,7 @@ const UserModal = ({
               {getFieldDecorator('tel', {
                 initialValue: user.tel,
               })(
-                <Input />
+                <Input placeholder="请输入分机号" />
               )}
             </FormItem>
           </Col>

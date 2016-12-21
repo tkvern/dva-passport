@@ -16,4 +16,8 @@ const PermissionPanel = ({
   );
 }
 
+PermissionPanel.propTypes = {
+  onAdd: PropTypes.func,
+}
+
 export default PermissionPanel;

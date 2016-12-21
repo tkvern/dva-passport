@@ -5,7 +5,6 @@ const FormItem = Form.Item;
 
 const UserSearch = ({
   keyword,
-  expand,
   onSearch,
   onReset,
   form: {
@@ -49,7 +48,7 @@ const UserSearch = ({
     </Row>
   ];
 
-  const showCount = expand ? children.length : 1;
+  const showCount = 1;
 
   return (
     <Form
@@ -74,8 +73,6 @@ const UserSearch = ({
 
 UserSearch.propTypes = {
   keyword: PropTypes.string,
-  expand: PropTypes.bool,
-  onExpand: PropTypes.func,
   onSearch: PropTypes.func,
   onReset: PropTypes.func,
 }
